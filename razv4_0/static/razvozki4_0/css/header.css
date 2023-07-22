@@ -1,0 +1,133 @@
+.header {
+    width: 100%;
+    background-color: #2e8b57;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.menu {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 2px;
+    padding: 2px;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: rgba(255, 255, 255, .55);
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.menu-item:hover {
+    color: #fff;
+}
+
+.menu-end {
+    align-items: center;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 6px;
+    display: flex;
+}
+
+.menu-button {
+    color: rgba(255, 255, 255, .55);
+    background-color: inherit;
+    border-style: none;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: inherit;
+}
+
+.menu-button:hover {
+    color: #fff;
+}
+
+.list-button {
+    display: none;
+}
+
+.search {
+    font: inherit;
+    padding: 6px;
+    border-radius: 6px;
+    border-style: none;
+}
+
+
+.active {
+    color: #fff;
+}
+
+
+/* Стили для модального окна входа*/
+.login {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.login-header {
+    padding: 4px;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #2e8b57;
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+    align-items: center;
+}
+
+.login-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 16px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 8px;
+
+}
+
+.close {
+    color: #fff;
+    float: right;
+    font-size: 16px;
+    padding: 8px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-text {
+    margin: 6px;
+    tab-size: 16px;
+}
+
+.modal-buttons {
+    width: 100%;
+    text-align: right;
+}
+
+.login-input {
+    font: inherit;
+    padding: 4px;
+    border-radius: 6px;
+    border-style: solid;
+    margin: 4px;
+}
