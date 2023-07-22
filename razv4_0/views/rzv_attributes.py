@@ -1,20 +1,31 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 from razv4_0.models import Razvozka, Razvozka_returns, Customer
 
 
 def razvozka_fulfilled(request, razv_id):
-    return HttpResponseRedirect(reverse('razv4_0: current_rzv'))
-
-
-def razvozka_unfulfilled(request, razv_id):
-    return HttpResponseRedirect(reverse('razv4_0: current_rzv'))
+    razv = Razvozka.objects.get(id=razv_id)
+    razv.fulfilled = not razv.fulfilled
+    razv.save()
+    return HttpResponse()
 
 
 def razvozka_returned_all(request, razv_id):
-    return HttpResponseRedirect(reverse('razv4_0: current_rzv'))
+    razv = Razvozka.objects.get(id=razv_id)
+    razv.return_all = not razv.return_all
+    razv.save()
+    return HttpResponse()
 
 
 def razvozka_deliver_to(request, razv_id):
-    return HttpResponseRedirect(reverse('razv4_0: current_rzv'))
+    razv = Razvozka.objects.get(id=razv_id)
+    razv.deliver_to = not razv.deliver_to
+    razv.save()
+    return HttpResponse()
+
+
+def razvozka_delete(request, razv_id):
+    razv_to_delete = Razvozka.objects.get(id=razv_id)
+    razv_to_delete.delete()
+    return HttpResponse()
