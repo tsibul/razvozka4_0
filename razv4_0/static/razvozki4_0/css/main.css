@@ -15,7 +15,7 @@
     align-self: center;
 }
 
-.un-show{
+.un-show {
     display: none;
 }
 
@@ -30,12 +30,12 @@
     background-color: inherit;
 }
 
-.submit-neg{
+.submit-neg {
     color: #fff;
     background-color: #2e8b57;
 }
 
-.submit-neg:hover{
+.submit-neg:hover {
     color: #2e8b57;
     background-color: #fff;
 }
@@ -55,12 +55,12 @@
     background-color: inherit;
 }
 
-.delete-neg{
+.delete-neg {
     color: #fff;
     background-color: indianred;
 }
 
-.delete-neg:hover{
+.delete-neg:hover {
     color: indianred;
     background-color: #fff;
 }
@@ -70,25 +70,27 @@
     background-color: indianred;
 }
 
-.btn-bg{
+.btn-bg {
     padding: 10px;
 }
 
 
 /* table */
 
-.table{
+.table {
     margin-top: 2px;
     min-width: 60%;
     border: 2px solid dimgray;
     border-collapse: collapse;
 }
 
-.table thead{
-    background-color: #2e8b5750;
+
+.table thead {
+    text-align: left;
+    background-color: #96c5ab;
 }
 
-.table tr{
+.table tr {
     border: 2px solid dimgray;
 }
 
@@ -98,25 +100,46 @@
 
 .table td {
 }
+
 .table tbody tr:hover {
     background-color: #dddddd;
 }
+
+.planned-table {
+    max-width: 70%;
+    border: 1px solid;
+    max-height: 180px; /* Set the maximum height to 140px */
+    overflow-y: auto; /* Add vertical scrollbar when needed */
+}
+
+.planned-thead {
+    position: sticky;
+    top: 0;
+}
+
 
 /* current */
 .planned {
     position: fixed;
     margin-top: 60px;
-    align-items: center;
+    margin-left: 6px;
+    align-items: start;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     max-height: 190px;
-    overflow: auto;
+    overflow: hidden;
     background-color: #fff;
 }
 
-.current{
+.table-container {
+    max-height: 140px; /* Set the maximum height to 140px */
+    overflow-y: auto; /* Add vertical scrollbar when needed */
+}
+
+
+.current {
     margin-top: 230px;
     margin-left: 6px;
     width: 99%;
