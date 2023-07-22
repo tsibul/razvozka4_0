@@ -16,8 +16,3 @@ def current_rzv(request):
     context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan}
     return render(request, 'current.html', context)
 
-
-def razvozka_delete(request, razv_id):
-    razv_to_delete = Razvozka.objects.get(id=razv_id)
-    razv_to_delete.delete()
-    return HttpResponseRedirect(reverse('razv4_0: current_rzv'))
