@@ -1,15 +1,83 @@
 <!DOCTYPE html>
-{%  load static %}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Развозки 4.0</title>
 
-    <link href="{%  static 'razvozki4_0/css/main.css' %}" rel="stylesheet">
-    <link href="{%  static 'razvozki4_0/css/header.css' %}" rel="stylesheet">
+    <link href="{% static 'razvozki4_0/css/header.css' %}" rel="stylesheet">
+    <link href="{% static 'razvozki4_0/css/main.css' %}" rel="stylesheet">
+
+{#    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>#}
 
 </head>
 <body>
+<div class="header">
+    <ul class="menu">
+        <li class="list-button"><img src="{% static 'razvozki4_0/icons/list.svg' %}" width="30" alt="menu-icon"></li>
+        <li><a href="{% url 'razv4_0:current_rzv' %}" class="menu-item {% if navi == 'current' %}active{% endif %}">Текущее</a>
+        </li>
+        <li><a href="#" class="menu-item {% if navi == 'razv' %}active{% endif %}">Все развозки</a></li>
+        <li><a href="#" class="menu-item {% if navi == 'customer' %}active{% endif %}">Клиенты</a></li>
+        <li><a href="#" class="menu-item {% if navi == 'deliver' %}active{% endif %}">Товары у подрядчиков</a></li>
+    </ul>
+    <span class="menu-end">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Поиск" class="search">
+            <button type="submit" class="menu-button  {% if navi == 'search' %}active{% endif %}">Поиск</button>
+        </form>
+     <img src="{% static 'razvozki4_0/icons/person-check-fill.svg' %}" alt="lod icon">
+        {% if request.user.is_authenticated %}
+            <p class="menu-item active">{{ request.user }} </p>
+            <button type="button" class="menu-button" id="logout-button"> выход </button>
+            <button type="button" class="menu-button" id="login-button" hidden> вход </button>
+        {% else %}
+            <p class="menu-item active">Неизвестный</p>
+            <button type="button" class="menu-button" id="logout-button" hidden> выход </button>
+            <button type="button" class="menu-button" id="login-button"> вход </button>
+        {% endif %}
+    </span>
+</div>
+<div class="page-content">
+    {% block content %}
+    {% endblock %}
+</div>
 
+
+<!-- Модальное окно для входа и выхода -->
+<div id="authModal" class="login">
+    <div class="login-content">
+        <!-- Форма для входа -->
+        <form method="post" id="login-form" action="{% url 'razv4_0:custom_login' %}">
+            {% csrf_token %}
+            <div class="login-header">
+                <p class="">Вход</p>
+                <span class="close">&times;</span>
+            </div>
+
+            <input type="text" name="username" placeholder="Имя пользователя" required class="login-input">
+            <input type="password" name="password" placeholder="Пароль" required class="login-input">
+            <div class="modal-buttons">
+                <button type="submit" class="btn-submit">Войти</button>
+            </div>
+        </form>
+
+        <!-- Форма для выхода -->
+        <form method="post" id="logout-form" action="{% url 'razv4_0:custom_logout' %}">
+            {% csrf_token %}
+            <div class="login-header">
+                <p class="">Выход</p>
+                <span class="close">&times;</span>
+            </div>
+            <p class="modal-text">Вы уверены, что хотите выйти?</p>
+            <div class="modal-buttons">
+                <button type="submit" class="btn-submit">Выйти</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'razvozki4_0/js/login.js' %}"></script>
 </body>
 </html>
