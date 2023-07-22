@@ -1,4 +1,6 @@
 from django.db import models
+from auditlog.registry import auditlog
+
 
 
 class Customer(models.Model):
@@ -16,7 +18,7 @@ class Customer(models.Model):
 
 
 class Razvozka(models.Model):
-    date = models.DateField(help_text='date of transportation')
+    date = models.DateField(help_text='date of transportation', null=True)
     date_id = models.SmallIntegerField(default=0, help_text='order inside date')
     customer = models.ForeignKey(Customer, models.SET_NULL, null=True, blank=True, help_text='customer base if exist')
     customer_name = models.CharField(max_length=100, help_text='customer as text could differ from db')
@@ -29,13 +31,17 @@ class Razvozka(models.Model):
     deliver_to = models.BooleanField(default=False, help_text='transportation to processing')
     return_from = models.BooleanField(default=False, help_text='return products from processing')
     return_all = models.BooleanField(default=False, help_text='False if some part was not return')
+
     return_goods = models.ForeignKey('self', models.SET_NULL, null=True, blank=True,
                                      help_text='from which delivery return')
-    date_until = models.DateField(default='2022-08-01', null=True, blank=True, help_text='plan (last) date of transportation')
-    date_create = models.DateField(default='2022-08-01', null=True, blank=True, help_text='date of create razvozka')
+
+    date_until = models.DateField(default='2022-08-01',
+                                  help_text='plan (last) date of transportation')
+    date_create = models.DateField(default='2022-08-01', help_text='date of create razvozka')
 
     def __str__(self):
-        return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver)+ '| ' + str(self.to_do_take)
+        return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(
+            self.to_do_take)
 
     def __repr__(self):
         return f"razvozka_list(date={self.date!r}, customer={self.customer_name!r}, deliver={self.to_do_deliver!r}, " \
@@ -49,3 +55,22 @@ class Razvozka(models.Model):
         if self.to_do_deliver != '':
             to_do_deliver = ' СДАТЬ: ' + str(self.to_do_deliver)
         return f"{to_do_take} {to_do_deliver}"
+
+
+class Razvozka_returns(models.Model):
+    take = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='take')
+    deliver = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='deliver')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    returned = models.BooleanField(default=False)
+
+    def __init__(self, take, deliver, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if take.customer == deliver.customer:
+            self.take = take
+            self.deliver = deliver
+            self.customer = take.customer
+
+
+auditlog.register(Customer)
+auditlog.register(Razvozka)
+auditlog.register(Razvozka_returns)
