@@ -14,5 +14,11 @@ urlpatterns = [
     path('current/razvozka_returned_all/<int:razv_id>', views.razvozka_returned_all, name='razvozka_returned_all'),
     path('current/razvozka_deliver_to/<int:razv_id>', views.razvozka_deliver_to, name='razvozka_deliver_to'),
 
+    path('json_razvozka/<int:razv_id>', views.razvozka_as_json),
+    path('json_customer/', views.customers_as_json),
+    path('json_open_deliveries/', views.open_deliveries_as_json),
+    path('json_deliveries/<int:cust_id>', views.deliveries_as_json),
+    path('json_date_id/<str:date_str>', views.data_id_as_json),
+
 ]
 
