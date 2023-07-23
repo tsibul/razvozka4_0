@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #2e8b57;
+    background-color: #293d32;
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
@@ -85,7 +85,7 @@
     justify-content: space-between;
     width: 100%;
     border-radius: 4px;
-    background-color: #2e8b57;
+    background-color: #293d32;
     display: flex;
     flex-direction: row;
     color: #fff;
@@ -116,12 +116,12 @@
     cursor: pointer;
 }
 
-.modal-text {
+.login-text {
     margin: 6px;
     tab-size: 16px;
 }
 
-.modal-buttons {
+.login-buttons {
     width: 100%;
     text-align: right;
 }
