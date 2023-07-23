@@ -23,28 +23,28 @@
 
 .btn-submit {
     font-size: 16px;
-    border: 1px solid #2e8b57;
+    border: 1px solid #293d32;
     border-radius: 4px;
-    color: #2e8b57;
+    color: #293d32;
     padding: 8px;
     background-color: inherit;
 }
 
 .submit-neg {
     color: #fff;
-    background-color: #2e8b57;
+    background-color: #293d32;
 }
-
-.submit-neg:hover {
-    color: #2e8b57;
-    background-color: #fff;
-}
-
 
 .btn-submit:hover {
     color: #fff;
-    background-color: #2e8b57;
+    background-color: #293d32;
 }
+
+.submit-neg:hover {
+    color: #293d32;
+    background-color: inherit;
+}
+
 
 .btn-delete {
     font-size: 16px;
@@ -60,14 +60,14 @@
     background-color: indianred;
 }
 
-.delete-neg:hover {
-    color: indianred;
-    background-color: #fff;
-}
-
 .btn-delete:hover {
     color: #fff;
     background-color: indianred;
+}
+
+.delete-neg:hover {
+    color: indianred;
+    background-color: inherit;
 }
 
 .btn-bg {
@@ -87,7 +87,7 @@
 
 .table thead {
     text-align: left;
-    background-color: #96c5ab;
+    background-color: #a4c1b1;
 }
 
 .table tr {
@@ -102,7 +102,7 @@
 }
 
 .table tbody tr:hover {
-    background-color: #dddddd;
+    background-color: #e1e7ea;
 }
 
 .planned-table {
