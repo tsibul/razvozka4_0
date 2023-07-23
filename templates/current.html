@@ -4,8 +4,8 @@
 {% block content %}
     {% if request.user.is_authenticated %}
         <div class="planned">
-            <button type="button" class="btn-submit btn-bg ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <button type="button" class="btn-submit btn-bg edit-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="22" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                 </svg>&nbsp;Новая развозка
             </button>
@@ -13,7 +13,7 @@
                 <table class="table ">
                     <thead class="planned-thead">
                     <tr>
-                        <th colspan="4">Плановые развозки</th>
+                        <th colspan="5">Плановые развозки</th>
                         <th>
                             <button type="button" class="btn-submit" onclick="planShow();">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" fill="currentColor"
@@ -25,15 +25,21 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody class="plan-body  un-show">
+                    <tbody class="plan-body un-show">
                     {% for plan in razvozki_plan %}
-                        <tr>
+                        <tr class="edit-modal" data-id="{{ plan.id }}" data-dateId="{{ plan.date_id }}"
+                            data-dateUntil="{{ plan.date_until }}" data-deliverTo="{{ plan.deliver_to }}"
+                            data-returnFrom="{{ plan.return_from }}"
+                            data-customer="{{ plan.customer }}" data-customer-name="{{ plan.customer_name }}"
+                            data-address="{{ plan.address }}" data-contact="{{ plan.contact }}"
+                            data-deliver="{{ plan.to_do_deliver }}" data-take="{{ plan.to_do_take }}">
                             <td>{{ plan.date_until|date:'d.m.Y' }}</td>
+                            <td>(от&nbsp;{{ plan.date_create|date:'d.m.y' }})</td>
                             <td><strong>{{ plan.customer_name }}</strong></td>
                             <td>{{ plan.address }}</td>
                             <td>{{ plan.get_all_todo }}</td>
-                            <td>
-                                <button type="submit" class="btn-delete" onclick="razvozkaDelete(this, {{ plan.id }});">
+                            <td onclick="event.stopPropagation()">
+                                <button type="button" class="btn-delete" onclick="razvozkaDelete(this, {{ plan.id }});">
                                     Удалить
                                 </button>
                             </td>
@@ -52,7 +58,8 @@
                     <thead>
                     <tr>
                         <th colspan="4">
-                            <button type="button" class="btn-submit btn-bg" data-date="{{ date.grouper|date:'Y-m-d' }}">
+                            <button type="button" class="btn-submit btn-bg edit-modal"
+                                    data-date="{{ date.grouper|date:'Y-m-d' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" fill="currentColor"
                                      viewBox="0 0 16 16">
                                     <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
@@ -77,9 +84,9 @@
                     </thead>
                     <tbody>
                     {% for rzv in date.list %}
-                        <tr>
+                        <tr class="edit-modal" data-id="{{ rzv.id }}">
                             <td><h3>{{ rzv.date_id }}</h3></td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 {% if rzv.fulfilled %}
                                     <button type="button" class="btn-submit btn-bg"
                                             onclick="razvozkaFulfilled(this, {{ rzv.id }})">
@@ -90,7 +97,7 @@
                                     </button>
                                 {% else %}
                                     <button type="button" class="btn-delete btn-bg"
-                                            onclick="razvozkaFulfilled(this, {{ rzv.return_goods.id }})">
+                                            onclick="razvozkaFulfilled(this, {{ rzv.id }})">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
                                              fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
                                             <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
@@ -98,9 +105,9 @@
                                     </button>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 {% if rzv.return_from %}
-                                    <button type="button" onclick="razvozkaReturnAll(this, {{ rzv.id }});"
+                                    <button type="button" onclick="razvozkaReturnAll(this, {{ rzv.return_goods.id }});"
                                             class="{% if rzv.return_all %}btn-submit{% else %}btn-delete{% endif %} btn-bg">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                              viewBox="0 0 640 512">
@@ -121,7 +128,7 @@
                                     <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 {% if rzv.return_from %}
                                     <a href="#">
                                         <button type="submit" class="btn-submit btn-bg">
@@ -134,7 +141,7 @@
                                     </a>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
                                     <button type="submit" onclick="razvozkaDeliverTo(this, {{ rzv.id }})"
                                             class="btn-delete btn-bg {% if rzv.deliver_to %}delete-neg{% endif %}">
@@ -147,7 +154,7 @@
                                     </button>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 <button type="button" class="btn-delete btn-bg"
                                         onclick="razvozkaDelete(this, {{ rzv.id }});">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
@@ -166,6 +173,38 @@
     {% else %}
         <h1 class="auth-required">требуется вход</h1>
     {% endif %}
+    {#    edit Modal #}
+    <div id="razvModal" class="modal">
+        <div class="modal-content">
+            <!-- Форма для входа -->
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <p id="modal-title">Редактировать</p>
+                    <span class="close">&times;</span>
+                </div>
+
+                <input name="razv_id" type="text" id="razv_id" readonly>
+                <input name="date_id" type="number" id="date_id">
+                <input name="date" type="date" id="date">
+                <input name="date_until" type="date" id="date_until">
+                <input name="customer_id" type="text" id="customer_id">
+                <input name="customer_name" type="text" id="customer_name">
+                <input name="address" type="text" id="address">
+                <input name="contact" type="text" id="contact">
+                <input name="map_point" type="text" id="map_point" hidden>
+                <input name="to_do_deliver" type="text" id="to_do_deliver">
+                <input name="to_do_take" type="text" id="to_do_take">
+
+                <div class="modal-buttons">
+                    <button type="reset" class="btn-delete close">Отменить</button>
+                    <button type="submit" class="btn-submit">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/razvmodal.js' %}"></script>
 
 {% endblock %}
