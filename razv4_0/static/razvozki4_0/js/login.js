@@ -3,6 +3,8 @@ const authModal = document.getElementById('authModal');
 const closeButtons = document.querySelectorAll('.close');
 const loginForm = document.getElementById('login-form');
 const logoutForm = document.getElementById('logout-form');
+const editModal = document.querySelector("#razvModal");
+
 
 function openModal() {
     authModal.style.display = 'block';
@@ -10,6 +12,7 @@ function openModal() {
 
 function closeModal() {
     authModal.style.display = 'none';
+    editModal.style.display = 'none';
 }
 
 closeButtons.forEach(function (row) {
