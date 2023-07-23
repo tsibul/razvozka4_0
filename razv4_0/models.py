@@ -27,7 +27,7 @@ class Razvozka(models.Model):
     to_do_deliver = models.CharField(max_length=255, help_text='things for delivery')
     to_do_take = models.CharField(max_length=255, help_text='things to take from')
     map_point = models.CharField(max_length=255, help_text='Yandex mappoint')
-    fulfilled = models.BooleanField(default=True, help_text='True is fulfilled')
+    fulfilled = models.BooleanField(default=False, help_text='True is fulfilled')
     deliver_to = models.BooleanField(default=False, help_text='transportation to processing')
     return_from = models.BooleanField(default=False, help_text='return products from processing')
     return_all = models.BooleanField(default=False, help_text='False if some part was not return')
@@ -35,9 +35,9 @@ class Razvozka(models.Model):
     return_goods = models.ForeignKey('self', models.SET_NULL, null=True, blank=True,
                                      help_text='from which delivery return')
 
-    date_until = models.DateField(default='2022-08-01',
+    date_until = models.DateField(null=True,
                                   help_text='plan (last) date of transportation')
-    date_create = models.DateField(default='2022-08-01', help_text='date of create razvozka')
+    date_create = models.DateField(null=True, help_text='date of create razvozka')
 
     def __str__(self):
         return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(
