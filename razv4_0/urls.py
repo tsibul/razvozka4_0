@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -10,9 +10,9 @@ urlpatterns = [
 
     path('current/', views.current_rzv, name='current_rzv'),
     path('current/razvozka_delete/<int:razv_id>', views.razvozka_delete, name='razvozka_delete'),
-    path('current/razvozka_fulfilled/<int:razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
+    path('current/razvozka_fulfilled/<razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
     path('current/razvozka_returned_all/<int:razv_id>', views.razvozka_returned_all, name='razvozka_returned_all'),
-    path('razvozka_deliver_to/<int:razv_id>', views.razvozka_returned_all, name='razvozka_deliver_to'),
+    path('current/razvozka_deliver_to/<int:razv_id>', views.razvozka_deliver_to, name='razvozka_deliver_to'),
 
 ]
 

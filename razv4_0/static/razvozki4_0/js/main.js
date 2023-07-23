@@ -24,26 +24,30 @@ function razvozkaFulfilled(obj, razvId) {
     } else {
         obj.childNodes[1].innerHTML = hourGlass;
     }
-    const xhr = new XMLHttpRequest();
     const url = 'razvozka_fulfilled/' + razvId;
+    fetch(url)
+    /*const xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.send();
+
+     */
 }
 
 function razvozkaReturnAll(obj, razvId){
     obj.classList.toggle('btn-submit');
     obj.classList.toggle('btn-delete');
-    const xhr = new XMLHttpRequest();
     const url = 'razvozka_returned_all/' + razvId;
-    xhr.open("GET", url, true);
-    xhr.send();
+    fetch(url);
 }
 
 function razvozkaDelete(obj, razvId){
     obj.parentElement.parentElement.style.display = 'none';
-    const xhr = new XMLHttpRequest();
     const url = 'razvozka_delete/' + razvId;
-    xhr.open("GET", url, true);
-    xhr.send();
+    fetch(url);
+}
 
+function razvozkaDeliverTo(obj, razvId){
+    obj.classList.toggle('delete-neg');
+    const url = 'razvozka_deliver_to/' + razvId;
+    fetch(url)
 }
