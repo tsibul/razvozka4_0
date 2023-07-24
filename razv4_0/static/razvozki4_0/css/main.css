@@ -28,6 +28,8 @@
     color: #293d32;
     padding: 8px;
     background-color: inherit;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .submit-neg {
@@ -53,6 +55,8 @@
     color: indianred;
     padding: 8px;
     background-color: inherit;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .delete-neg {
