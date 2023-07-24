@@ -32,44 +32,88 @@
     border-radius: 8px;
 }
 
-.modal-body{
+.modal-body {
     display: flex;
     flex-direction: column;
 }
 
-.modal-input{
+.modal-input {
     font-size: inherit;
     border-radius: 4px;
     padding: 6px;
     margin: 6px;
 }
 
-.modal-id{
+.modal-id {
     max-width: 20%;
 }
 
-.modal-buttons{
+.modal-buttons {
     display: flex;
     flex-direction: row;
     justify-content: right;
     margin-top: 8px;
 }
 
-.input-line{
+.input-line {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.customer{
+.customer {
     display: flex;
     flex-direction: column;
-    min-width: 70%;
+    min-width: 72%;
 }
 
-.customer-id{
+.customer-id {
     display: flex;
     flex-direction: column;
-    max-width: 25%;
+    max-width: 28%;
 }
 
+/* Dropdown styles*/
+/* Dropdown Button */
+.btn-dropdown {
+    cursor: pointer;
+    align-self: end;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #e1e7ea;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style: none;
+    background-color: #fff;
+}
+
+/* Links inside the dropdown */
+.dropdown-content li {
+    color: black;
+    padding: 4px 6px;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content li:hover {
+    background-color: #e1e7ea;
+}
+
+.show {
+    display: block;
+}
