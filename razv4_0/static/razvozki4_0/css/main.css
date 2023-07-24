@@ -37,12 +37,12 @@
     background-color: #293d32;
 }
 
-.btn-submit:hover, .btn-submit:focus {
+.btn-submit:hover {
     color: #fff;
     background-color: #293d32;
 }
 
-.submit-neg:hover, .submit-neg:focus {
+.submit-neg:hover {
     color: #293d32;
     background-color: inherit;
 }
@@ -64,12 +64,12 @@
     background-color: indianred;
 }
 
-.btn-delete:hover, .btn-delete:focus {
+.btn-delete:hover {
     color: #fff;
     background-color: indianred;
 }
 
-.delete-neg:hover, .delete-neg:focus {
+.delete-neg:hover {
     color: indianred;
     background-color: inherit;
 }
