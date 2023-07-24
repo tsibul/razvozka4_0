@@ -24,6 +24,8 @@ def update_rzv(request):
         razvozka = Razvozka(date_create=date.today())
     else:
         razvozka = Razvozka.objects.get(id=razv_id)
+        if razvozka.fulfilled:
+            return HttpResponseRedirect(reverse('razv4_0:current_rzv'))
     razvozka.date = datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
     razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
     razvozka.date_id = request.POST['date_id']
