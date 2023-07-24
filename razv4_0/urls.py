@@ -11,8 +11,8 @@ urlpatterns = [
     path('current/', views.current_rzv, name='current_rzv'),
     path('current/update', views.update_rzv, name='update_rzv'),
 
-    path('print/', views.print_all, name='print_all'),
-    path('print/<int:id>', views.print_one, name='print_one'),
+    path('print/<str:date_rzv>', views.print_all, name='print_all'),
+    path('print/<str:date_rzv>/<int:driver_id>', views.print_one, name='print_one'),
 
     path('current/razvozka_delete/<int:razv_id>', views.razvozka_delete, name='razvozka_delete'),
     path('current/razvozka_fulfilled/<razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
