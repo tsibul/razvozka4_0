@@ -23,6 +23,7 @@ function openEditModal(titleText, modalData) {
     modalTitle.textContent = titleText;
     for (const key in inputs(modal)) {
         inputs(modal)[key].value = modalData[key] || "";
+        inputs(modal)[key].textContent = modalData[key] || "";
     }
     modal.style.display = "block";
 }
