@@ -2,6 +2,19 @@ from django.db import models
 from auditlog.registry import auditlog
 
 
+class Driver(models.Model):
+    code = models.CharField(max_length=2)
+    description = models.CharField(max_length=100)
+    phone1 = models.CharField(max_length=11)
+    phone2 = models.CharField(max_length=11, null=True, blank=True)
+    car_no = models.CharField(max_length=9, null=True, blank=True)
+
+    def __repr__(self):
+        return self.description
+
+    def __str__(self):
+        return self.description
+
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)
@@ -38,6 +51,7 @@ class Razvozka(models.Model):
     date_until = models.DateField(null=True,
                                   help_text='plan (last) date of transportation')
     date_create = models.DateField(null=True, help_text='date of create razvozka')
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(
@@ -74,3 +88,4 @@ class Razvozka_returns(models.Model):
 auditlog.register(Customer)
 auditlog.register(Razvozka)
 auditlog.register(Razvozka_returns)
+auditlog.register(Driver)
