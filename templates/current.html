@@ -177,7 +177,7 @@
     <div id="razvModal" class="modal">
         <div class="modal-content">
             <!-- Форма для входа -->
-            <form method="post" action="">
+            <form method="post" action="{% url 'razv4_0:update_rzv' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
@@ -193,24 +193,30 @@
                         <label for="date_until"><strong>контр. срок</strong></label>
                         <input name="date_until" type="date" id="date_until" class="modal-input">
                     </div>
+                    <label for="customer_name"><strong>клиент</strong></label>
                     <div class="input-line">
                         <div class="customer">
-                            <label for="customer_name"><strong>клиент</strong></label>
-                            <input name="customer_name" id="customer_name" class="modal-input">
+                            <input name="customer_name" id="customer_name" class="modal-input" required>
                         </div>
-                        <div class="customer-id">
-                                <input name="customer_id" type="text" class="modal-input"
-                                       placeholder="выбрать клиента" id="customer_id">
-                            <select >
+                        <div class="dropdown">
+                            <input name="customer_id" type="text"
+                                   hidden id="customer_id">
+                            <button type="button" class="btn-submit btn-dropdown" onclick="dropDown();">Выбрать
+                                клиента
+                            </button>
+                            <ul class="dropdown-content" id="cstDropdown">
+                                <input id="customer_customer_name" type="text" class="modal-input"
+                                       placeholder="Поиск.." onkeyup="filterCust();">
                                 {% for customer in customers %}
-                                    <option value="{{ customer.id }}">{{ customer.name }} </option>
+                                    <li value="{{ customer.id }}"
+                                        onclick="selectCustomer(this);">{{ customer.name }} </li>
                                 {% endfor %}
-                            </select>
+                            </ul>
                         </div>
 
                     </div>
                     <label for="address"><strong>адрес</strong></label>
-                    <textarea name="address" id="address" class="modal-input"></textarea>
+                    <textarea name="address" id="address" class="modal-input" required></textarea>
                     <label for="contact"><strong>контакт</strong></label>
                     <textarea name="contact" id="contact" class="modal-input"></textarea>
                     <input name="map_point" id="map_point" hidden class="modal-input">
