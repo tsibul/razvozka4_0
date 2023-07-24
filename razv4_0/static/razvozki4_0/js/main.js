@@ -33,20 +33,24 @@ function razvozkaFulfilled(obj, razvId) {
      */
 }
 
-function razvozkaReturnAll(obj, razvId){
+function razvozkaReturnAll(obj, razvId) {
     obj.classList.toggle('btn-submit');
     obj.classList.toggle('btn-delete');
     const url = 'razvozka_returned_all/' + razvId;
     fetch(url);
 }
 
-function razvozkaDelete(obj, razvId){
-    obj.parentElement.parentElement.style.display = 'none';
-    const url = 'razvozka_delete/' + razvId;
-    fetch(url);
+async function razvozkaDelete(obj, razvId) {
+    const rzvUrl = '/rzv/json_razvozka/' + razvId;
+    const razvozka = JSON.parse(await fetchJsonData(rzvUrl));
+    if (!razvozka['fulfilled']) {
+        obj.parentElement.parentElement.style.display = 'none';
+        const url = 'razvozka_delete/' + razvId;
+        fetch(url);
+    }
 }
 
-function razvozkaDeliverTo(obj, razvId){
+function razvozkaDeliverTo(obj, razvId) {
     obj.classList.toggle('delete-neg');
     const url = 'razvozka_deliver_to/' + razvId;
     fetch(url)
