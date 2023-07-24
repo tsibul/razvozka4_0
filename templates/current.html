@@ -67,7 +67,7 @@
                             </button>
                         </th>
                         <th colspan="2">Развозка на {{ date.grouper|date:'d.m.Y' }}</th>
-                        <th colspan="2"><a href="{% url 'razv4_0:print_all' %}" target="_blank">
+                        <th colspan="2"><a href="{% url 'razv4_0:print_all'  date.grouper|date:'Y-m-d' %}" target="_blank">
                             <button type="button" class="btn-submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
                                      class="bi bi-printer" viewBox="0 0 16 16">
