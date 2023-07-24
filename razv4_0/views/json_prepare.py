@@ -8,9 +8,15 @@ from django.db.models import Max
 
 def razvozka_as_json(request, razv_id):
     razv = Razvozka.objects.get(id=razv_id).__dict__
-#    json_razvozka = serialize('python', razv)
+    #    json_razvozka = serialize('python', razv)
     json_razvozka = json.dumps(razv, ensure_ascii=False, default=str)
     return JsonResponse(json_razvozka, safe=False)
+
+
+def customer_as_json(request, cst_id):
+    cst = Customer.objects.get(id=cst_id).__dict__
+    json_customer = json.dumps(cst, ensure_ascii=False, default=str)
+    return JsonResponse(json_customer, safe=False)
 
 
 def customers_as_json(request):
@@ -41,3 +47,8 @@ def data_id_as_json(request, date_str):
     except:
         date_id = 1
     return JsonResponse(date_id, safe=False)
+
+
+def customer_name_as_json(request, cst_id):
+    customer_name = Customer.objects.get(id=cst_id).name
+    return JsonResponse(customer_name,safe=False)
