@@ -183,18 +183,42 @@
                     <p id="modal-title">Редактировать</p>
                     <span class="close">&times;</span>
                 </div>
+                <input name="razv_id" type="text" id="razv_id" hidden>
+                <div class="modal-body">
+                    <div class="input-line">
+                        <label for="date_id"><strong>#</strong></label>
+                        <input name="date_id" type="number" id="date_id" class="modal-input modal-id">
+                        <label for="date"><strong>дата</strong></label>
+                        <input name="date" type="date" id="date" class="modal-input">
+                        <label for="date_until"><strong>контр. срок</strong></label>
+                        <input name="date_until" type="date" id="date_until" class="modal-input">
+                    </div>
+                    <div class="input-line">
+                        <div class="customer">
+                            <label for="customer_name"><strong>клиент</strong></label>
+                            <input name="customer_name" id="customer_name" class="modal-input">
+                        </div>
+                        <div class="customer-id">
+                                <input name="customer_id" type="text" class="modal-input"
+                                       placeholder="выбрать клиента" id="customer_id">
+                            <select >
+                                {% for customer in customers %}
+                                    <option value="{{ customer.id }}">{{ customer.name }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                <input name="razv_id" type="text" id="razv_id" readonly>
-                <input name="date_id" type="number" id="date_id">
-                <input name="date" type="date" id="date">
-                <input name="date_until" type="date" id="date_until">
-                <input name="customer_id" type="text" id="customer_id">
-                <input name="customer_name" type="text" id="customer_name">
-                <input name="address" type="text" id="address">
-                <input name="contact" type="text" id="contact">
-                <input name="map_point" type="text" id="map_point" hidden>
-                <input name="to_do_deliver" type="text" id="to_do_deliver">
-                <input name="to_do_take" type="text" id="to_do_take">
+                    </div>
+                    <label for="address"><strong>адрес</strong></label>
+                    <textarea name="address" id="address" class="modal-input"></textarea>
+                    <label for="contact"><strong>контакт</strong></label>
+                    <textarea name="contact" id="contact" class="modal-input"></textarea>
+                    <input name="map_point" id="map_point" hidden class="modal-input">
+                    <label for="to_do_deliver"><strong>сдать</strong></label>
+                    <textarea name="to_do_deliver" id="to_do_deliver" class="modal-input"></textarea>
+                    <label for="to_do_take"><strong>забрать</strong></label>
+                    <textarea name="to_do_take" id="to_do_take" class="modal-input"></textarea>
+                </div>
 
                 <div class="modal-buttons">
                     <button type="reset" class="btn-delete close">Отменить</button>
