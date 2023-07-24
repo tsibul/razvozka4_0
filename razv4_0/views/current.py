@@ -13,6 +13,7 @@ def current_rzv(request):
     date_end = current_date + timedelta(days=(14 - current_date.weekday()))
     razvozki = Razvozka.objects.filter(date__gt=date_begin, date__lte=date_end).order_by('-date', 'date_id')
     razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
-    context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan}
+    customers = Customer.objects.all().order_by('name')
+    context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan, 'customers': customers}
     return render(request, 'current.html', context)
 
