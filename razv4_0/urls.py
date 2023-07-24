@@ -9,16 +9,20 @@ urlpatterns = [
     path('accounts/logout/', views.custom_logout, name='custom_logout'),
 
     path('current/', views.current_rzv, name='current_rzv'),
+    path('current/update', views.update_rzv, name='update_rzv'),
+
     path('current/razvozka_delete/<int:razv_id>', views.razvozka_delete, name='razvozka_delete'),
     path('current/razvozka_fulfilled/<razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
     path('current/razvozka_returned_all/<int:razv_id>', views.razvozka_returned_all, name='razvozka_returned_all'),
     path('current/razvozka_deliver_to/<int:razv_id>', views.razvozka_deliver_to, name='razvozka_deliver_to'),
 
     path('json_razvozka/<int:razv_id>', views.razvozka_as_json),
+    path('json_customer_select/<int:cst_id>', views.customer_as_json),
     path('json_customer/', views.customers_as_json),
     path('json_open_deliveries/', views.open_deliveries_as_json),
     path('json_deliveries/<int:cust_id>', views.deliveries_as_json),
     path('json_date_id/<str:date_str>', views.data_id_as_json),
+    path('json_customer_name/<int:cst_id>', views.customer_name_as_json),
 
 ]
 
