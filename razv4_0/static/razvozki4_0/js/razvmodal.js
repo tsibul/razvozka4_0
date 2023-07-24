@@ -36,30 +36,26 @@ function fetchJsonData(jsonUrl) {
 
 clickElements.forEach(function (element) {
     element.addEventListener("click", async () => {
-            const razvId = element.dataset.id;
-            const razvDate = element.dataset.date;
-            const jsonUrl = '/rzv/json_razvozka/' + razvId;
-            let razvozka = {date_id: 1};
-            if (razvId != null) {
-                razvozka = JSON.parse(await fetchJsonData(jsonUrl));
-                if (razvozka['customer_id'] != null) {
-                    const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
-                    razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
-                }
-            } else if (razvDate != null) {
-                razvozka = {
-                    date: razvDate,
-                    date_until: razvDate,
-                    date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate)
-                };
+        const razvId = element.dataset.id;
+        const razvDate = element.dataset.date;
+        const jsonUrl = '/rzv/json_razvozka/' + razvId;
+        let razvozka = {date_id: 1};
+        if (razvId != null) {
+            razvozka = JSON.parse(await fetchJsonData(jsonUrl));
+            if (razvozka['customer_id'] != null) {
+                const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
+                razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
             }
-
-            const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
-
-            openEditModal(titleText, razvozka);
+        } else if (razvDate != null) {
+            razvozka = {
+                date: razvDate,
+                date_until: razvDate,
+                date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate)
+            };
         }
-    )
-    ;
+        const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
+        if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
+    });
 });
 
 function dropDown() {
