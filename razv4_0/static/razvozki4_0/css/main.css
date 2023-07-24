@@ -149,7 +149,7 @@
     width: 99%;
 }
 
-Sp/* Not printable elements*/
+/* Not printable elements*/
 @media print {
     @page {
         size: A4 landscape;
