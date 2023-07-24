@@ -28,7 +28,48 @@
     margin: 15% auto;
     padding: 16px;
     border: 1px solid #888;
-    width: 300px;
+    width: 700px;
     border-radius: 8px;
-
 }
+
+.modal-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-input{
+    font-size: inherit;
+    border-radius: 4px;
+    padding: 6px;
+    margin: 6px;
+}
+
+.modal-id{
+    max-width: 20%;
+}
+
+.modal-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-top: 8px;
+}
+
+.input-line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customer{
+    display: flex;
+    flex-direction: column;
+    min-width: 70%;
+}
+
+.customer-id{
+    display: flex;
+    flex-direction: column;
+    max-width: 25%;
+}
+
