@@ -40,5 +40,6 @@ def update_rzv(request):
     customer_id = request.POST['customer_id']
     if customer_id != '':
         razvozka.customer = Customer.objects.get(id=customer_id)
+    razvozka.driver = Driver.objects.get(id=request.POST['driver'])
     razvozka.save()
     return HttpResponseRedirect(reverse('razv4_0:current_rzv'))

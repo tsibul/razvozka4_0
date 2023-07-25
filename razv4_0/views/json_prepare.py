@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from django.http import JsonResponse
-from razv4_0.models import Razvozka, Razvozka_returns, Customer
+from razv4_0.models import Razvozka, Razvozka_returns, Customer, Driver
 from django.core.serializers import serialize
 from django.db.models import Max
 
@@ -51,4 +51,11 @@ def data_id_as_json(request, date_str):
 
 def customer_name_as_json(request, cst_id):
     customer_name = Customer.objects.get(id=cst_id).name
-    return JsonResponse(customer_name,safe=False)
+    return JsonResponse(customer_name, safe=False)
+
+
+def driver_icon_as_json(request, driver_id):
+    icon_url = '/static/' + Driver.objects.get(id=driver_id).icon_code
+    return JsonResponse(icon_url, safe=False)
+
+

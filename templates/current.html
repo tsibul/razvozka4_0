@@ -144,7 +144,8 @@
                                     </a>
                                 {% endif %}
                             </td>
-                            <td onclick="event.stopPropagation()" {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
+                            <td onclick="event.stopPropagation()"
+                                    {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
                                 class="title-icon" data-title="Отправить на переработку" {% endif %}>
                                 {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
                                     <button type="submit" onclick="razvozkaDeliverTo(this, {{ rzv.id }})"
@@ -181,7 +182,6 @@
     {#    edit Modal #}
     <div id="razvModal" class="modal">
         <div class="modal-content">
-            <!-- Форма для входа -->
             <form method="post" action="{% url 'razv4_0:update_rzv' %}">
                 {% csrf_token %}
                 <div class="modal-header">
@@ -190,6 +190,17 @@
                 </div>
                 <input name="razv_id" type="text" id="razv_id" hidden>
                 <div class="modal-body">
+                    <div class="menu ">
+                        <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <p ><img src="{% static drivers.first.icon_code %}" id="driver-icon"></p>&nbsp;
+                        <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
+                            {% for driver in drivers %}
+                                <option value="{{ driver.id }}"
+{#                                        {% if driver.id == '1' %}selected{% endif %}#}
+                                >{{ driver.description }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="input-line">
                         <label for="date_id"><strong>#</strong></label>
                         <input name="date_id" type="number" id="date_id" class="modal-input modal-id">
@@ -230,10 +241,18 @@
                     <label for="to_do_take"><strong>забрать</strong></label>
                     <textarea name="to_do_take" id="to_do_take" class="modal-input"></textarea>
                 </div>
-
-                <div class="modal-buttons">
-                    <button type="reset" class="btn-delete close">Отменить</button>
-                    <button type="submit" class="btn-submit">Сохранить</button>
+                <div class="input-line">
+                    <select class="modal-input modal-id">
+                        {% for driver in drivers %}
+                            <option value="{{ driver.id }}" {% if driver.id == '1' %}selected{% endif %}>
+                                <img src="{% static driver.icon_code %}" alt="icon">&nbsp;{{ driver.description }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="modal-buttons">
+                        <button type="reset" class="btn-delete close">Отменить</button>
+                        <button type="submit" class="btn-submit">Сохранить</button>
+                    </div>
                 </div>
             </form>
         </div>

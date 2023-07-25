@@ -105,3 +105,9 @@ async function selectCustomer(obj) {
     address.value = customer['address'];
     contact.value = customer['contact'];
 }
+
+async function selectDriver(obj){
+    const driverId = obj.value;
+    const urlDriver = await fetchJsonData('/rzv/json_driver_url/' + driverId);
+    document.querySelector('#driver-icon').src = urlDriver;
+}
