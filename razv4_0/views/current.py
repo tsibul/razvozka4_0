@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
-from razv4_0.models import Razvozka, Razvozka_returns, Customer
+from razv4_0.models import Razvozka, Razvozka_returns, Customer, Driver
 from datetime import date, timedelta, datetime
 
 
@@ -14,7 +14,9 @@ def current_rzv(request):
     razvozki = Razvozka.objects.filter(date__gt=date_begin, date__lte=date_end).order_by('-date', 'date_id')
     razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
     customers = Customer.objects.all().order_by('name')
-    context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan, 'customers': customers}
+    drivers = Driver.objects.all().order_by('id')
+    context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan, 'customers': customers,
+               'drivers': drivers}
     return render(request, 'current.html', context)
 
 

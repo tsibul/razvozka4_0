@@ -78,6 +78,25 @@
     padding: 10px;
 }
 
+/* title for icon*/
+.title-icon {
+    position: relative;
+}
+
+.title-icon:hover:after {
+    content: attr(data-title);
+    position: absolute;
+    left: -20%;
+    top: 80%; /* Положение подсказки */
+    padding: 2px 4px; /* Поля */
+    z-index: 1;
+    font: inherit;
+    color: inherit;
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 2px;
+}
+
 
 /* table */
 

@@ -57,7 +57,7 @@
                 {% for date in razvozki_list %}
                     <thead>
                     <tr>
-                        <th colspan="4">
+                        <th colspan="5">
                             <button type="button" class="btn-submit btn-bg edit-modal"
                                     data-date="{{ date.grouper|date:'Y-m-d' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" fill="currentColor"
@@ -67,7 +67,8 @@
                             </button>
                         </th>
                         <th colspan="1">Развозка на {{ date.grouper|date:'d.m.Y' }}</th>
-                        <th colspan="1"><a href="{% url 'razv4_0:print_all'  date.grouper|date:'Y-m-d' %}" target="_blank">
+                        <th colspan="1"><a href="{% url 'razv4_0:print_all'  date.grouper|date:'Y-m-d' %}"
+                                           target="_blank">
                             <button type="button" class="btn-submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
                                      class="bi bi-printer" viewBox="0 0 16 16">
@@ -86,7 +87,9 @@
                     {% for rzv in date.list %}
                         <tr class="edit-modal" data-id="{{ rzv.id }}">
                             <td><h3>{{ rzv.date_id }}</h3></td>
-                            <td onclick="event.stopPropagation()">
+                            <td {% if rzv.driver %}data-title="{{ rzv.driver.description }}"
+                                class="title-icon" {% endif %}><img src="{% static rzv.driver.icon_code %}" alt=""></td>
+                            <td onclick="event.stopPropagation()" data-title="Поменять статус" class="title-icon">
                                 {% if rzv.fulfilled %}
                                     <button type="button" class="btn-submit btn-bg"
                                             onclick="razvozkaFulfilled(this, {{ rzv.id }})">
@@ -141,7 +144,8 @@
                                     </a>
                                 {% endif %}
                             </td>
-                            <td onclick="event.stopPropagation()">
+                            <td onclick="event.stopPropagation()" {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
+                                class="title-icon" data-title="Отправить на переработку" {% endif %}>
                                 {% if rzv.customer.subcontractor and rzv.to_do_deliver != '' %}
                                     <button type="submit" onclick="razvozkaDeliverTo(this, {{ rzv.id }})"
                                             class="btn-delete btn-bg {% if rzv.deliver_to %}delete-neg{% endif %}">
@@ -154,7 +158,8 @@
                                     </button>
                                 {% endif %}
                             </td>
-                            <td onclick="event.stopPropagation()">
+                            <td onclick="event.stopPropagation()" data-title="Удалить"
+                                class="title-icon">
                                 <button type="button" class="btn-delete btn-bg"
                                         onclick="razvozkaDelete(this, {{ rzv.id }});">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
