@@ -24,7 +24,6 @@ function openEditModal(titleText, modalData) {
     modalTitle.textContent = titleText;
     for (const key in inputs(modal)) {
         inputs(modal)[key].value = modalData[key] || "";
-//        inputs(modal)[key].textContent = modalData[key] || "";
     }
     modal.style.display = "block";
     if(modalData['customer_id'] != null) {
@@ -124,7 +123,6 @@ async function returnList(custId){
     }
     let i = 0;
     razvozkiList.forEach(function (razvozka) {
-        // optionString += '<option value="' + razvozka['pk'] + '">' + razvozka.fields['date'] + ' ' + razvozka.fields['to_do_deliver'] + '</option>'
         let dateRus = razvozka.fields['date'].slice(8) + '.' + razvozka.fields['date'].slice(5, 7) + '.' + razvozka.fields['date'].slice(2, 4);
         optionString += '<span><input type="checkbox" class="checkbox" name="rzv_check_' + i + '" id="rzv_check_' + i + '">' +
             '<input type="text" value="' + razvozka['pk'] + '" + name="rzv_no_' + i + '" hidden>&nbsp;' +

@@ -26,11 +26,6 @@ function razvozkaFulfilled(obj, razvId) {
     }
     const url = 'razvozka_fulfilled/' + razvId;
     fetch(url)
-    /*const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.send();
-
-     */
 }
 
 function razvozkaReturnAll(obj, razvId) {
