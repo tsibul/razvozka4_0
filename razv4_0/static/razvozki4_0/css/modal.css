@@ -114,6 +114,12 @@
     background-color: #e1e7ea;
 }
 
+.check-input {
+    display: flex;
+    flex-direction: column;
+    line-height: 22px;
+}
+
 .show {
     display: block;
 }
