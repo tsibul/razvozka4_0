@@ -3,7 +3,6 @@ const authModal = document.getElementById('authModal');
 const closeButtons = document.querySelectorAll('.close');
 const loginForm = document.getElementById('login-form');
 const logoutForm = document.getElementById('logout-form');
-const editModal = document.querySelector("#razvModal");
 
 
 function openModal() {
@@ -12,7 +11,11 @@ function openModal() {
 
 function closeModal() {
     authModal.style.display = 'none';
-    editModal.style.display = 'none';
+    if (document.querySelector("#razvModal") != null) {
+        document.querySelector("#razvModal").style.display = 'none';
+        document.querySelector('#rzv-quantity').value = 0;
+        document.querySelector('#delivered_to_customer').innerHTML = '';
+    }
 }
 
 closeButtons.forEach(function (row) {
@@ -23,15 +26,15 @@ closeButtons.forEach(function (row) {
 });
 
 // При клике на кнопку "вход" отображаем форму входа и скрываем форму выхода
-    document.getElementById('login-button').addEventListener('click', function () {
-        loginForm.style.display = 'block';
-        logoutForm.style.display = 'none';
-        openModal();
-    });
+document.getElementById('login-button').addEventListener('click', function () {
+    loginForm.style.display = 'block';
+    logoutForm.style.display = 'none';
+    openModal();
+});
 
 // При клике на кнопку "выход" отображаем форму выхода и скрываем форму входа
-    document.getElementById('logout-button').addEventListener('click', function () {
-        logoutForm.style.display = 'block';
-        loginForm.style.display = 'none';
-        openModal();
-    });
+document.getElementById('logout-button').addEventListener('click', function () {
+    logoutForm.style.display = 'block';
+    loginForm.style.display = 'none';
+    openModal();
+});
