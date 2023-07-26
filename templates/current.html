@@ -192,11 +192,11 @@
                 <div class="modal-body">
                     <div class="menu ">
                         <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <p ><img src="{% static drivers.first.icon_code %}" id="driver-icon"></p>&nbsp;
+                        <p><img src="{% static drivers.first.icon_code %}" id="driver-icon"></p>&nbsp;
                         <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
                             {% for driver in drivers %}
                                 <option value="{{ driver.id }}"
-{#                                        {% if driver.id == '1' %}selected{% endif %}#}
+                                        {#                                        {% if driver.id == '1' %}selected{% endif %}#}
                                 >{{ driver.description }}</option>
                             {% endfor %}
                         </select>
@@ -242,13 +242,9 @@
                     <textarea name="to_do_take" id="to_do_take" class="modal-input"></textarea>
                 </div>
                 <div class="input-line">
-                    <select class="modal-input modal-id">
-                        {% for driver in drivers %}
-                            <option value="{{ driver.id }}" {% if driver.id == '1' %}selected{% endif %}>
-                                <img src="{% static driver.icon_code %}" alt="icon">&nbsp;{{ driver.description }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <input type="text" id="rzv-quantity" hidden value="0" name="rzv_quantity">
+                    <div class="check-input" id="delivered_to_customer">
+                    </div>
                     <div class="modal-buttons">
                         <button type="reset" class="btn-delete close">Отменить</button>
                         <button type="submit" class="btn-submit">Сохранить</button>

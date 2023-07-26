@@ -27,6 +27,9 @@ function openEditModal(titleText, modalData) {
 //        inputs(modal)[key].textContent = modalData[key] || "";
     }
     modal.style.display = "block";
+    if(modalData['customer_id'] != null) {
+        returnList(modalData['customer_id']);
+    }
 }
 
 function fetchJsonData(jsonUrl) {
@@ -98,16 +101,41 @@ async function selectCustomer(obj) {
     const customerName = document.querySelector('#customer_name');
     const address = document.querySelector('#address');
     const contact = document.querySelector('#contact');
-    const urlCustomer = '/rzv/json_customer_select/' + custId;
-    const customer = JSON.parse(await fetchJsonData(urlCustomer));
+    const customer = await customerById(custId);
     customerId.value = customer['id'];
     customerName.value = customer['name'];
     address.value = customer['address'];
     contact.value = customer['contact'];
+    await returnList(custId);
 }
 
-async function selectDriver(obj){
+async function selectDriver(obj) {
     const driverId = obj.value;
-    const urlDriver = await fetchJsonData('/rzv/json_driver_url/' + driverId);
-    document.querySelector('#driver-icon').src = urlDriver;
+    document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' + driverId);
+}
+
+async function returnList(custId){
+    const urlRazvozki = '/rzv/json_deliveries/' + custId;
+    const razvozkiList = JSON.parse(await fetchJsonData(urlRazvozki));
+    let optionString = '';
+    if (razvozkiList.length > 0) {
+        const customer = await customerById(custId);
+        optionString += '<p><strong>возврат поставленого ' + customer['name'] + '</strong></p>'
+    }
+    let i = 0;
+    razvozkiList.forEach(function (razvozka) {
+        // optionString += '<option value="' + razvozka['pk'] + '">' + razvozka.fields['date'] + ' ' + razvozka.fields['to_do_deliver'] + '</option>'
+        let dateRus = razvozka.fields['date'].slice(8) + '.' + razvozka.fields['date'].slice(5, 7) + '.' + razvozka.fields['date'].slice(2, 4);
+        optionString += '<span><input type="checkbox" class="checkbox" name="rzv_check_' + i + '" id="rzv_check_' + i + '">' +
+            '<input type="text" value="' + razvozka['pk'] + '" + name="rzv_no_' + i + '" hidden>&nbsp;' +
+            '<label for="rzv_check_' + i + '">от&nbsp;<strong>' + dateRus + '</strong> ' + razvozka.fields['to_do_deliver'] + '</label></span>'
+        i++;
+    });
+    document.querySelector('#rzv-quantity').value = razvozkiList.length;
+    document.querySelector('#delivered_to_customer').innerHTML = optionString;
+}
+
+async function customerById(custId){
+    const urlCustomer = '/rzv/json_customer_select/' + custId;
+    return JSON.parse(await fetchJsonData(urlCustomer));
 }

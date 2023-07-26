@@ -41,5 +41,24 @@ def update_rzv(request):
     if customer_id != '':
         razvozka.customer = Customer.objects.get(id=customer_id)
     razvozka.driver = Driver.objects.get(id=request.POST['driver'])
+    rzv_return_quantity = int(request.POST['rzv_quantity'])
+    j = 0
+    if rzv_return_quantity:
+        for i in range(0, rzv_return_quantity):
+            razvozka_delivered = Razvozka.objects.get(id=request.POST['rzv_no_' + str(i)])
+            try:
+                razvozka_return = Razvozka_returns.objects.get(take=razvozka, deliver=razvozka_delivered)
+            except:
+                razvozka_return = Razvozka_returns(take=razvozka, deliver=razvozka_delivered)
+            try:
+                request.POST['rzv_check_' + str(i)]
+                razvozka_return.save()
+                razvozka.return_from = True
+            except:
+                j += 1
+                if razvozka_return.id:
+                    razvozka_return.delete()
+    if j == rzv_return_quantity:
+        razvozka.return_from = False
     razvozka.save()
     return HttpResponseRedirect(reverse('razv4_0:current_rzv'))
