@@ -158,6 +158,7 @@ input[type=checkbox] {
     max-height: 190px;
     overflow: hidden;
     background-color: #fff;
+    z-index: 2;
 }
 
 .table-container {
