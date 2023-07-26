@@ -75,15 +75,7 @@ class Razvozka(models.Model):
 class Razvozka_returns(models.Model):
     take = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='take')
     deliver = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='deliver')
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     returned = models.BooleanField(default=False)
-
-    def __init__(self, take, deliver, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if take.customer == deliver.customer:
-            self.take = take
-            self.deliver = deliver
-            self.customer = take.customer
 
 
 auditlog.register(Customer)
