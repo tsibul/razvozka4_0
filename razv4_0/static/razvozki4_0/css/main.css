@@ -4,6 +4,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+input[type=checkbox] {
+  accent-color: #293d32;
+}
+
 .auth-required {
     margin: 16px;
     text-align: center;
