@@ -112,6 +112,7 @@ async function selectDriver(obj) {
     const driverId = obj.value;
     document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' + driverId);
 }
+// TODO change driver in modal on open
 
 async function returnList(custId){
     const urlRazvozki = '/rzv/json_deliveries/' + custId;
