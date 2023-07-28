@@ -27,7 +27,7 @@ async function openEditModal(titleText, modalData) {
         inputs(modal)[key].value = modalData[key] || "";
     }
     modal.style.display = "block";
-    if(modalData['customer_id'] != null) {
+    if (modalData['customer_id'] != null) {
         await returnList(modalData['customer_id']);
         await returnCheckList(modalData['id']);
     }
@@ -49,9 +49,12 @@ clickElements.forEach(function (element) {
             razvozka = {
                 date: razvDate,
                 date_until: razvDate,
-                date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate)
+                date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate),
+                driver_id: 1,
             };
         }
+        document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
+            razvozka['driver_id']);
         const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
         if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
     });
@@ -109,9 +112,8 @@ async function selectDriver(obj) {
     const driverId = obj.value;
     document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' + driverId);
 }
-// TODO change driver in modal on open
 
-async function returnList(custId){
+async function returnList(custId) {
     const urlRazvozki = '/rzv/json_deliveries/' + custId;
     const razvozkiList = JSON.parse(await fetchJsonData(urlRazvozki));
     let optionString = '';
@@ -130,20 +132,20 @@ async function returnList(custId){
     document.querySelector('#delivered_to_customer').innerHTML = optionString;
 }
 
-async function customerById(custId){
+async function customerById(custId) {
     const urlCustomer = '/rzv/json_customer_select/' + custId;
     return JSON.parse(await fetchJsonData(urlCustomer));
 }
 
-async function razvozkaReturnsById(razvId){
+async function razvozkaReturnsById(razvId) {
     const returnUrl = '/rzv/json_returns/' + razvId;
     return await fetchJsonData(returnUrl);
 }
 
-async function returnCheckList(razvId){
+async function returnCheckList(razvId) {
     const returnCheckedList = await razvozkaReturnsById(razvId);
-    returnCheckedList.forEach( function (returnRazvozkaId){
-    document.querySelector('.returnNo' + returnRazvozkaId).checked = true;
+    returnCheckedList.forEach(function (returnRazvozkaId) {
+        document.querySelector('.returnNo' + returnRazvozkaId).checked = true;
     });
 }
 
