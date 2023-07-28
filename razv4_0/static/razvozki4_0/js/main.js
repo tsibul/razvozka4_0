@@ -1,3 +1,12 @@
+function fetchJsonData(jsonUrl) {
+    return fetch(jsonUrl)
+        .then(response => response.json());
+}
+
+function dateRus (dateString){
+    return dateString.slice(8) + '.' +  dateString.slice(5, 7) + '.' + dateString.slice(2, 4);
+}
+
 function planShow() {
     const planBody = document.querySelector(".plan-body");
     planBody.classList.toggle('un-show');
