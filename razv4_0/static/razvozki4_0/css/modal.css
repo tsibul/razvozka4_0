@@ -32,6 +32,10 @@
     border-radius: 8px;
 }
 
+.modal-content-md {
+    width: 460px;
+}
+
 .modal-body {
     display: flex;
     flex-direction: column;
@@ -60,6 +64,13 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.input-line-left {
+    justify-content: start;
+    margin-top: 12px;
+}
+
+
 
 .customer {
     display: flex;
