@@ -11,13 +11,6 @@ def razvozka_fulfilled(request, razv_id):
     return HttpResponse()
 
 
-def razvozka_returned_all(request, razv_id):
-    razv = Razvozka.objects.get(id=razv_id)
-    razv.return_all = not razv.return_all
-    razv.save()
-    return HttpResponse()
-
-
 def razvozka_deliver_to(request, razv_id):
     razv = Razvozka.objects.get(id=razv_id)
     razv.deliver_to = not razv.deliver_to
