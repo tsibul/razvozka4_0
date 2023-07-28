@@ -9,15 +9,15 @@ urlpatterns = [
     path('accounts/logout/', views.custom_logout, name='custom_logout'),
 
     path('current/', views.current_rzv, name='current_rzv'),
-    path('current/update', views.update_rzv, name='update_rzv'),
+    path('current/update/<str:navi>', views.update_rzv, name='update_rzv'),
 
     path('print/<str:date_rzv>', views.print_all, name='print_all'),
     path('print/<str:date_rzv>/<int:driver_id>', views.print_one, name='print_one'),
 
-    path('current/razvozka_delete/<int:razv_id>', views.razvozka_delete, name='razvozka_delete'),
-    path('current/razvozka_fulfilled/<razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
-    path('current/razvozka_returned_all/<int:razv_id>', views.razvozka_returned_all, name='razvozka_returned_all'),
-    path('current/razvozka_deliver_to/<int:razv_id>', views.razvozka_deliver_to, name='razvozka_deliver_to'),
+    path('razvozka_delete/<int:razv_id>', views.razvozka_delete, name='razvozka_delete'),
+    path('razvozka_fulfilled/<razv_id>', views.razvozka_fulfilled, name='razvozka_fulfilled'),
+    path('razvozka_returned_all/', views.razvozka_returned_all, name='razvozka_returned_all'),
+    path('razvozka_deliver_to/<int:razv_id>', views.razvozka_deliver_to, name='razvozka_deliver_to'),
 
     path('json_razvozka/<int:razv_id>', views.razvozka_as_json),
     path('json_customer_select/<int:cst_id>', views.customer_as_json),
