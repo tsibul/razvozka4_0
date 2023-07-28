@@ -59,3 +59,17 @@ function razvozkaDeliverTo(obj, razvId) {
     const url = 'razvozka_deliver_to/' + razvId;
     fetch(url)
 }
+
+async function plannedReturnsList(razvId, obj){
+    const plannedReturns = await razvozkaReturnsInfoById(razvId);
+    let titleText = ''
+    plannedReturns.forEach(function (element){
+        titleText += dateRus(element['deliver__date']) + ' ' + element['deliver__to_do_deliver'] + ' || ';
+    });
+    obj.dataset.title = titleText;
+}
+
+async function razvozkaReturnsInfoById(razvId){
+    const returnUrl = '/rzv/json_returns_full_info/' + razvId;
+    return await fetchJsonData(returnUrl);
+}
