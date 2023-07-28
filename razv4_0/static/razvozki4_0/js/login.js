@@ -16,6 +16,11 @@ function closeModal() {
         document.querySelector('#rzv-quantity').value = 0;
         document.querySelector('#delivered_to_customer').innerHTML = '';
     }
+    if(document.querySelector('#deliverModal') !=  null){
+        document.querySelector("#deliverModal").style.display = 'none';
+        document.querySelector('#rzv-return-quantity').value = 0;
+        document.querySelector('#to_return_from_customer').innerHTML = '';
+    }
 }
 
 closeButtons.forEach(function (row) {
