@@ -44,6 +44,7 @@ clickElements.forEach(function (element) {
             if (razvozka['customer_id'] != null) {
                 const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
                 razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
+                if(razvozka['driver_id'] == null){razvozka['driver_id'] = 1;}
             }
         } else if (razvDate != null) {
             razvozka = {
