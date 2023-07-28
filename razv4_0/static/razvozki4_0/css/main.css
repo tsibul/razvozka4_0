@@ -101,6 +101,24 @@ input[type=checkbox] {
     border-radius: 2px;
 }
 
+.title-icon-big {
+    position: relative;
+}
+
+.title-icon-big:hover:after {
+    content: attr(data-title);
+    position: absolute;
+    left: -120%;
+    top: 80%; /* Положение подсказки */
+    padding: 2px 4px; /* Поля */
+    z-index: 1;
+    font: inherit;
+    color: inherit;
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 2px;
+    width: 200px;
+}
 
 /* table */
 
