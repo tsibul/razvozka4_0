@@ -110,8 +110,8 @@
                             </td>
                             <td onclick="event.stopPropagation()">
                                 {% if rzv.return_from %}
-                                    <button type="button" onclick="razvozkaReturnAll(this, {{ rzv.return_goods.id }});"
-                                            class="{% if rzv.return_all %}btn-submit{% else %}btn-delete{% endif %} btn-bg">
+                                    <button type="button" onclick="razvozkaReturnAll(this, {{ rzv.id }});" id="but-{{ rzv.id }}"
+                                            class="{% if rzv.returned_all %}btn-submit{% else %}btn-delete{% endif %} btn-bg">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                              viewBox="0 0 640 512">
                                             <path fill="currentColor"
@@ -133,7 +133,7 @@
                             </td>
                             <td onclick="event.stopPropagation()" data-title=""
                                 {% if rzv.return_from %}class="title-icon-big"{% endif %}
-                            onmouseenter="plannedReturnsList({{ rzv.id }}, this);">
+                                onmouseenter="plannedReturnsList({{ rzv.id }}, this);">
                                 {% if rzv.return_from %}
                                     <button type="button" class="btn-submit btn-bg">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="1em"
@@ -182,7 +182,7 @@
     {#    edit Modal #}
     <div id="razvModal" class="modal">
         <div class="modal-content">
-            <form method="post" action="{% url 'razv4_0:update_rzv' %}">
+            <form method="post" action="{% url 'razv4_0:update_rzv' navi %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
@@ -253,6 +253,30 @@
             </form>
         </div>
     </div>
+    {# deliver modal#}
+    <div id="deliverModal" class="modal">
+        <div class="modal-content modal-content-md">
+            <form method="post" action="{% url 'razv4_0:razvozka_returned_all' %}" id="deliverModalForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <p id="modal-title">Список планируемых возвратов</p>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input name="razv_id" type="text" id="razv-id" hidden>
+                    <input type="text" id="rzv-return-quantity" hidden value="0" name="rzv_return_quantity">
+                    <div id="to_return_from_customer" class="check-input">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="reset" class="btn-delete close">Отменить</button>
+                    <button type="submit" class="btn-submit" >Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
     <script src="{% static 'razvozki4_0/js/razvmodal.js' %}"></script>
