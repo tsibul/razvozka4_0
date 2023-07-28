@@ -15,6 +15,7 @@ function inputs(modal) {
         map_point: modal.querySelector("#map_point"),
         to_do_deliver: modal.querySelector("#to_do_deliver"),
         to_do_take: modal.querySelector("#to_do_take"),
+        driver_id: modal.querySelector("#driver-input")
     };
 }
 
@@ -37,7 +38,7 @@ clickElements.forEach(function (element) {
         const razvId = element.dataset.id;
         const razvDate = element.dataset.date;
         const jsonUrl = '/rzv/json_razvozka/' + razvId;
-        let razvozka = {date_id: 1};
+        let razvozka = {date_id: 1, driver_id: 1};
         if (razvId != null) {
             razvozka = JSON.parse(await fetchJsonData(jsonUrl));
             if (razvozka['customer_id'] != null) {
