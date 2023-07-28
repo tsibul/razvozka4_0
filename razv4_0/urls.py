@@ -27,7 +27,8 @@ urlpatterns = [
     path('json_date_id/<str:date_str>', views.data_id_as_json),
     path('json_customer_name/<int:cst_id>', views.customer_name_as_json),
     path('json_driver_url/<int:driver_id>', views.driver_icon_as_json),
-    path('json_returns/<int:razv_id>', views.returns_as_json),
+    path('json_returns/<int:razv_id>', views.returns_as_id_json),
+    path('json_returns_full_info/<int:razv_id>', views.returns_as_json),
 
 ]
 
