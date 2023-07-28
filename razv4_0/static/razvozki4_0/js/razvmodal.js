@@ -32,11 +32,6 @@ async function openEditModal(titleText, modalData) {
     }
 }
 
-function fetchJsonData(jsonUrl) {
-    return fetch(jsonUrl)
-        .then(response => response.json());
-}
-
 clickElements.forEach(function (element) {
     element.addEventListener("click", async () => {
         const razvId = element.dataset.id;
@@ -125,10 +120,9 @@ async function returnList(custId){
     }
     let i = 0;
     razvozkiList.forEach(function (razvozka) {
-        let dateRus = razvozka.fields['date'].slice(8) + razvozka.fields['date'].slice(5, 7) + '.' + razvozka.fields['date'].slice(2, 4);
         optionString += '<span><input type="checkbox" class="checkbox ' + 'returnNo' + razvozka['pk'] + '" name="rzv_check_' + i + '" id="rzv_check_' + i + '">' +
             '<input type="text" value="' + razvozka['pk'] + '" + name="rzv_no_' + i + '" hidden>&nbsp;' +
-            '<label for="rzv_check_' + i + '">от&nbsp;<strong>' + dateRus + '</strong> ' + razvozka.fields['to_do_deliver'] + '</label></span>'
+            '<label for="rzv_check_' + i + '">от&nbsp;<strong>' + dateRus(razvozka.fields['date']) + '</strong> ' + razvozka.fields['to_do_deliver'] + '</label></span>'
         i++;
     });
     document.querySelector('#rzv-quantity').value = razvozkiList.length;
@@ -151,3 +145,4 @@ async function returnCheckList(razvId){
     document.querySelector('.returnNo' + returnRazvozkaId).checked = true;
     });
 }
+
