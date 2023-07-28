@@ -11,7 +11,7 @@ def current_rzv(request):
     current_date = date.today()
     date_begin = current_date - timedelta(days=(current_date.weekday() + 7))
     date_end = current_date + timedelta(days=(14 - current_date.weekday()))
-    razvozki = Razvozka.objects.filter(date__gt=date_begin, date__lte=date_end).order_by('-date', 'date_id')
+    razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end).order_by('-date', 'date_id')
     razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')
