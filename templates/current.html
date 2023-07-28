@@ -88,7 +88,7 @@
                         <tr class="edit-modal" data-id="{{ rzv.id }}">
                             <td><h3>{{ rzv.date_id }}</h3></td>
                             <td {% if rzv.driver %}data-title="{{ rzv.driver.description }}"
-                                class="title-icon" {% endif %}><img src="{% static rzv.driver.icon_code %}" alt=""></td>
+                                class="title-icon" ><img src="{% static rzv.driver.icon_code %}" alt=""{% endif %}></td>
                             <td onclick="event.stopPropagation()" data-title="Поменять статус" class="title-icon">
                                 {% if rzv.fulfilled %}
                                     <button type="button" class="btn-submit btn-bg"
