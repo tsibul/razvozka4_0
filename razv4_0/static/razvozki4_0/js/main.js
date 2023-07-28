@@ -3,8 +3,8 @@ function fetchJsonData(jsonUrl) {
         .then(response => response.json());
 }
 
-function dateRus (dateString){
-    return dateString.slice(8) + '.' +  dateString.slice(5, 7) + '.' + dateString.slice(2, 4);
+function dateRus(dateString) {
+    return dateString.slice(8) + '.' + dateString.slice(5, 7) + '.' + dateString.slice(2, 4);
 }
 
 function planShow() {
@@ -33,15 +33,33 @@ function razvozkaFulfilled(obj, razvId) {
     } else {
         obj.childNodes[1].innerHTML = hourGlass;
     }
-    const url = 'razvozka_fulfilled/' + razvId;
+    const url = '/rzv/razvozka_fulfilled/' + razvId;
     fetch(url)
 }
 
-function razvozkaReturnAll(obj, razvId) {
-    obj.classList.toggle('btn-submit');
-    obj.classList.toggle('btn-delete');
-    const url = 'razvozka_returned_all/' + razvId;
-    fetch(url);
+async function razvozkaReturnAll(obj, razvId) {
+    const modal = document.querySelector('#deliverModal')
+    modal.style.display = 'block';
+    let returnList = '';
+    let returnAll = '';
+    let i = 0;
+    const toReturn = await razvozkaReturnsInfoById(razvId);
+    toReturn.forEach(function (delivery) {
+        if (delivery['deliver__return_all']) {
+            returnAll = ' checked ';
+        } else {
+            returnAll = '';
+        }
+        returnList += '<div class="input-line input-line-left"><input type="checkbox" class="check-input" id="delivery-chk-' +
+            i + '"' + 'name="delivery-chk-' + i + '"' + returnAll + '>&nbsp;&nbsp;&nbsp;' +
+            '<label for="delivery-' + delivery['deliver__id'] + '"><strong>' + dateRus(delivery['deliver__date']) +
+            '</strong>' + delivery['deliver__to_do_deliver'] + '</label>' +
+            '<input hidden name="delivery-' + i + '" value="' + delivery['deliver__id'] + '"></div>';
+        i += 1;
+    });
+    modal.querySelector('#razv-id').value = razvId;
+    modal.querySelector('#rzv-return-quantity').value = toReturn.length;
+    modal.querySelector('#to_return_from_customer').innerHTML = returnList;
 }
 
 async function razvozkaDelete(obj, razvId) {
@@ -49,27 +67,65 @@ async function razvozkaDelete(obj, razvId) {
     const razvozka = JSON.parse(await fetchJsonData(rzvUrl));
     if (!razvozka['fulfilled']) {
         obj.parentElement.parentElement.style.display = 'none';
-        const url = 'razvozka_delete/' + razvId;
+        const url = '/rzv/razvozka_delete/' + razvId;
         fetch(url);
     }
 }
 
 function razvozkaDeliverTo(obj, razvId) {
     obj.classList.toggle('delete-neg');
-    const url = 'razvozka_deliver_to/' + razvId;
+    const url = '/rzv/razvozka_deliver_to/' + razvId;
     fetch(url)
 }
 
-async function plannedReturnsList(razvId, obj){
+async function plannedReturnsList(razvId, obj) {
     const plannedReturns = await razvozkaReturnsInfoById(razvId);
     let titleText = ''
-    plannedReturns.forEach(function (element){
+    plannedReturns.forEach(function (element) {
         titleText += dateRus(element['deliver__date']) + ' ' + element['deliver__to_do_deliver'] + ' || ';
     });
     obj.dataset.title = titleText;
 }
 
-async function razvozkaReturnsInfoById(razvId){
+async function razvozkaReturnsInfoById(razvId) {
     const returnUrl = '/rzv/json_returns_full_info/' + razvId;
     return await fetchJsonData(returnUrl);
 }
+
+
+const returnAllForm = document.getElementById('deliverModalForm');
+
+returnAllForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(returnAllForm);
+
+    fetch('/rzv/razvozka_returned_all/', {
+        method: 'POST',
+        body: formData,
+    })
+        .then((response) => {
+            closeModal()
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    const returnClause = returnAllForm.querySelector('#to_return_from_customer')
+    const returnObjects = returnClause.querySelectorAll('.check-input')
+    let checked = true;
+    returnObjects.forEach(function (checkbox){
+        if(checkbox.checked == false){
+            checked = false
+        }
+    });
+       const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
+       if(checked){
+           document.getElementById(butId).classList.remove('btn-delete')
+           document.getElementById(butId).classList.add('btn-submit')
+       }else{
+           document.getElementById(butId).classList.add('btn-delete')
+           document.getElementById(butId).classList.remove('btn-submit')
+       }
+
+
+});
