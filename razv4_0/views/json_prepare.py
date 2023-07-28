@@ -66,5 +66,5 @@ def returns_as_id_json(request, razv_id):
 
 def returns_as_json(request, razv_id):
     returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values(
-        'deliver__id', 'deliver__date', 'deliver__to_do_deliver'))
+        'deliver__id', 'deliver__date', 'deliver__to_do_deliver', 'deliver__return_all'))
     return JsonResponse(returns, safe=False)
