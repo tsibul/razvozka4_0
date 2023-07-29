@@ -12,6 +12,7 @@ urlpatterns = [
     path('current/update/<str:navi>', views.update_rzv, name='update_rzv'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
+    path('deliver_nO_return/', views.deliver_no_return, name='deliver_no_return'),
 
     path('print/<str:date_rzv>', views.print_all, name='print_all'),
     path('print/<str:date_rzv>/<int:driver_id>', views.print_one, name='print_one'),

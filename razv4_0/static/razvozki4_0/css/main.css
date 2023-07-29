@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
 }
 
 input[type=checkbox] {
@@ -9,7 +10,7 @@ input[type=checkbox] {
 }
 
 .auth-required {
-    margin: 16px;
+    margin: 80px;
     text-align: center;
     text-transform: uppercase;
 }
@@ -179,6 +180,14 @@ input[type=checkbox] {
     z-index: 2;
 }
 
+.razvozki-thead {
+    position: sticky;
+    top: 59px;
+    z-index: 2;
+    padding: 6px;
+}
+
+
 .table-container {
     max-height: 140px; /* Set the maximum height to 140px */
     overflow-y: auto; /* Add vertical scrollbar when needed */
@@ -192,7 +201,7 @@ input[type=checkbox] {
 }
 
 .current-pure{
-    margin-top: 60px;
+    margin-top: 59px;
 }
 
 /* Not printable elements*/

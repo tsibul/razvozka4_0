@@ -19,7 +19,7 @@
         <li><a href="{% url 'razv4_0:current_rzv' %}" class="menu-item {% if navi == 'current' %}active{% endif %}">Текущее</a>
         </li>
         <li><a href="{% url 'razv4_0:total_rzv' %}" class="menu-item {% if navi == 'razv' %}active{% endif %}">Все развозки</a></li>
-        <li><a href="#" class="menu-item {% if navi == 'deliver' %}active{% endif %}">Товары у подрядчиков</a></li>
+        <li><a href="{% url 'razv4_0:deliver_no_return' %}" class="menu-item {% if navi == 'deliver' %}active{% endif %}">Товары у подрядчиков</a></li>
         <li><a href="#" class="menu-item {% if navi == 'customer' %}active{% endif %}">Клиенты</a></li>
         <li><a href="#" class="menu-item {% if navi == 'cars' %}active{% endif %}">Транспорт</a></li>
     </ul>
