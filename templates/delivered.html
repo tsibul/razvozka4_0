@@ -4,7 +4,7 @@
 {% block content %}
     {% if request.user.is_authenticated %}
         <div class="current current-pure">
-            <table class="table">
+            <table class="table razv-table">
                 <thead class="razvozki-thead">
                 <tr>
                     <th>дата</th>
@@ -50,8 +50,8 @@
                                 <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
                             {% endif %}
                         </td>
-                    <td><button type="button" class="btn-submit submit-neg">Запланировать</td>
-                    <td><button type="button" class="btn-neutral neutral-neg">Закрыть</td>
+                        <td><button type="button" class="btn-submit submit-neg">Запланировать</button></td>
+                        <td><button type="button" class="btn-neutral neutral-neg">Закрыть</button></td>
                     </tr>
                 {% endfor %}
                 </tbody>
