@@ -79,6 +79,33 @@ input[type=checkbox] {
     background-color: inherit;
 }
 
+.btn-neutral {
+    font-size: 16px;
+    border: 1px solid #86A0AC;
+    border-radius: 4px;
+    color: #86A0AC;
+    padding: 8px;
+    background-color: inherit;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.neutral-neg {
+    color: #fff;
+    background-color: #86A0AC;
+}
+
+.btn-neutral:hover {
+    color: #fff;
+    background-color: #86A0AC;
+}
+
+.neutral-neg:hover {
+    color: #86A0AC;
+    background-color: inherit;
+}
+
+
 .btn-bg {
     padding: 10px;
 }
