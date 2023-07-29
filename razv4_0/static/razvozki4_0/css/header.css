@@ -134,3 +134,13 @@
     border-style: solid;
     margin: 4px;
 }
+
+.top-index {
+    color: #fff;
+    background-color: indianred;
+    font-weight: bold;
+    font-size: 80%;
+    padding: 2px 6px;
+    margin-left: 4px;
+    border-radius: 4px;
+}
