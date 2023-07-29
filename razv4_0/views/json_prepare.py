@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from razv4_0.models import Razvozka, Razvozka_returns, Customer, Driver
 from django.core.serializers import serialize
-from django.db.models import Max
+from django.db.models import Max, Min
 
 
 def razvozka_as_json(request, razv_id):
@@ -76,14 +76,16 @@ def returns_as_json(request, razv_id):
 
 
 def razvozki_list_as_json(request, last_element):
-    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[last_element:last_element + 19]
+    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id').annotate(
+        returned_all=Min('take__deliver__return_all'))[last_element:last_element + 19]
     razvozki = serialize('python', razvozki_query)
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
     return JsonResponse(razvozki, safe=False)
 
 
 def razvozki_last_list_as_json(request, last_element):
-    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[last_element + 19:last_element + 20]
+    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id').annotate(
+        returned_all=Min('take__deliver__return_all'))[last_element + 19:last_element + 20]
     razvozki = serialize('python', razvozki_query)
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
     return JsonResponse(razvozki, safe=False)
