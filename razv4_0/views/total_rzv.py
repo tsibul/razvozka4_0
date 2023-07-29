@@ -11,6 +11,8 @@ def total_rzv(request):
     razvozki = razvozki_plan.union(razvozki)
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')
+    to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
+                                                   fulfilled=True, customer__subcontractor=True).count()
     context = {'razvozki': razvozki, 'navi': navi, 'customers': customers,
-               'drivers': drivers}
+               'drivers': drivers, 'to_return': to_return}
     return render(request, 'total_rzv.html', context)

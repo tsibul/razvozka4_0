@@ -17,8 +17,11 @@ def current_rzv(request):
     razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')
+    to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
+                                                   fulfilled=True, customer__subcontractor=True).count()
+
     context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan, 'customers': customers,
-               'drivers': drivers}
+               'drivers': drivers, 'to_return': to_return}
     return render(request, 'current.html', context)
 
 
