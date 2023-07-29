@@ -191,6 +191,10 @@ input[type=checkbox] {
     width: 99%;
 }
 
+.current-pure{
+    margin-top: 60px;
+}
+
 /* Not printable elements*/
 @media print {
     @page {
