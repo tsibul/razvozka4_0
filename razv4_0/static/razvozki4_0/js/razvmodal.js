@@ -1,5 +1,7 @@
 const modal = document.querySelector("#razvModal");
-const clickElements = document.querySelectorAll(".edit-modal");
+const table = document.querySelector(".razv-table");
+
+//const clickElements = document.querySelectorAll(".edit-modal");
 
 function inputs(modal) {
     return {
@@ -33,8 +35,7 @@ async function openEditModal(titleText, modalData) {
     }
 }
 
-clickElements.forEach(function (element) {
-    element.addEventListener("click", async () => {
+async function prepareToOpenModal(element){
         const razvId = element.dataset.id;
         const razvDate = element.dataset.date;
         const jsonUrl = '/rzv/json_razvozka/' + razvId;
@@ -44,7 +45,9 @@ clickElements.forEach(function (element) {
             if (razvozka['customer_id'] != null) {
                 const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
                 razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
-                if(razvozka['driver_id'] == null){razvozka['driver_id'] = 1;}
+            }
+            if (razvozka['driver_id'] == null) {
+                razvozka['driver_id'] = 1;
             }
         } else if (razvDate != null) {
             razvozka = {
@@ -52,14 +55,25 @@ clickElements.forEach(function (element) {
                 date_until: razvDate,
                 date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate),
                 driver_id: 1,
-            };
+            }
+        } else {
+            razvozka['driver_id'] = 1
         }
         document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
             razvozka['driver_id']);
         const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
         if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
-    });
+}
+
+table.addEventListener("click", async (event) => {
+    const target = event.target;
+    const element = target.closest(".edit-modal");
+    if (element && table.contains(element)) {
+        await prepareToOpenModal(element);
+    }
 });
+
+//});
 
 function dropDown() {
     document.querySelector("#cstDropdown").classList.toggle("show")
