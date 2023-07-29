@@ -7,6 +7,11 @@ function dateRus(dateString) {
     return dateString.slice(8) + '.' + dateString.slice(5, 7) + '.' + dateString.slice(2, 4);
 }
 
+function dateRusLong(dateString) {
+    return dateString.slice(8) + '.' + dateString.slice(5, 7) + '.' + dateString.slice(0, 4);
+}
+
+
 function planShow() {
     const planBody = document.querySelector(".plan-body");
     planBody.classList.toggle('un-show');
