@@ -38,59 +38,53 @@ const deliverToIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height
 const deleteIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" ' +
     'viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 ' +
     '8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>';
-const row = document.querySelector('.end-element');
-const lastElement = row.id;
+const tableRender = document.querySelector("#render");
+
 let cachedRazvozkiLast = null;
 let cachedRazvozkiList = null;
 
-async function razvLast() {
-    if (!cachedRazvozkiLast) {
-        try {
-            const data = await fetchJsonData('/rzv/json_razvozki_last/' + lastElement);
-            cachedRazvozkiLast = JSON.parse(data);
-        } catch (error) {
-            console.error('Ошибка при загрузке последнего элемента:', error);
-        }
-    }
+async function razvLast(lastElement) {
+    let data = await fetchJsonData('/rzv/json_razvozki_last/' + lastElement);
+    cachedRazvozkiLast = JSON.parse(data);
     return cachedRazvozkiLast;
 }
 
-async function razvList() {
-    if (!cachedRazvozkiList) {
-        try {
-            const data = await fetchJsonData('/rzv/json_razvozki_list/' + lastElement);
-            cachedRazvozkiList = JSON.parse(data);
-        } catch (error) {
-            console.error('Ошибка при загрузке списка элементов:', error);
-        }
-    }
+async function razvList(lastElement) {
+    let data = await fetchJsonData('/rzv/json_razvozki_list/' + lastElement);
+    cachedRazvozkiList = JSON.parse(data);
     return cachedRazvozkiList;
 }
 
-row.addEventListener("mouseover", onMouseOver);
-row.addEventListener("focus", onFocus);
+tableRender.addEventListener("mouseover", async (event) => {
+        const target = event.target;
+        const element = target.closest(".end-element");
+        if (element && tableRender.contains(element)) {
+            await addRows(element);
+        }
+    }
+);
 
-async function onMouseOver() {
-  await addRows();
-  row.removeEventListener("mouseover", onMouseOver);
-}
+// tableRender.addEventListener("focus", async (event) => {
+//         const target = event.target;
+//         const element = target.closest(".end-element");
+//         if (element && tableRender.contains(element)) {
+//             await addRows(element);
+//         }
+//     }
+// );
 
-async function onFocus() {
-  await addRows();
-  row.removeEventListener("focus", onFocus);
-}
 
-
-async function addRows() {
+async function addRows(row) {
     row.classList.remove('end-element');
+    let lastElement = row.id;
 
     try {
-        const razvozkiList = await razvList();
+        const razvozkiList = await razvList(lastElement);
         for (const element of razvozkiList) {
             const newRow = await buildRow(element)
             row.parentElement.appendChild(newRow);
         }
-        const razvozkiLast = await razvLast();
+        const razvozkiLast = await razvLast(lastElement);
         await row.parentElement.appendChild(await buildLastRow(razvozkiLast[0], lastElement));
     } catch (error) {
         console.error('Ошибка при добавлении строк:', error);
@@ -223,7 +217,7 @@ async function buildRow(element) {
     return newRow;
 }
 
-async function buildLastRow(element, number){
+async function buildLastRow(element, number) {
     const newRow = buildRow(element);
     (await newRow).classList.add('end-element');
     (await newRow).id = Number(number) + 20;
