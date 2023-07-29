@@ -40,31 +40,61 @@ const deleteIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="1
     '8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>';
 const row = document.querySelector('.end-element');
 const lastElement = row.id;
-const razvozkiLast = razvLast();
-const razvozkiList = razvList();
+let cachedRazvozkiLast = null;
+let cachedRazvozkiList = null;
 
-async function razvLast(){
-    fetchJsonData('/rzv/json_razvozki_last/' + lastElement).then(razvozkiLast => {
-        return JSON.parse(razvozkiLast);
-    });
+async function razvLast() {
+    if (!cachedRazvozkiLast) {
+        try {
+            const data = await fetchJsonData('/rzv/json_razvozki_last/' + lastElement);
+            cachedRazvozkiLast = JSON.parse(data);
+        } catch (error) {
+            console.error('Ошибка при загрузке последнего элемента:', error);
+        }
+    }
+    return cachedRazvozkiLast;
 }
 
-async function razvList(){
-    return JSON.parse(await fetchJsonData('/rzv/json_razvozki_list/' + lastElement));
+async function razvList() {
+    if (!cachedRazvozkiList) {
+        try {
+            const data = await fetchJsonData('/rzv/json_razvozki_list/' + lastElement);
+            cachedRazvozkiList = JSON.parse(data);
+        } catch (error) {
+            console.error('Ошибка при загрузке списка элементов:', error);
+        }
+    }
+    return cachedRazvozkiList;
 }
 
-row.addEventListener("mouseover", async () => {
-    addRows()
-});
-row.addEventListener("focus", async () => {
-    addRows()
-});
+row.addEventListener("mouseover", onMouseOver);
+row.addEventListener("focus", onFocus);
 
-function addRows() {
+async function onMouseOver() {
+  await addRows();
+  row.removeEventListener("mouseover", onMouseOver);
+}
+
+async function onFocus() {
+  await addRows();
+  row.removeEventListener("focus", onFocus);
+}
+
+
+async function addRows() {
     row.classList.remove('end-element');
-    razvozkiList.forEach( function(element){
-        row.parentElement.appendChild(buildRow(element));
-    });
+
+    try {
+        const razvozkiList = await razvList();
+        for (const element of razvozkiList) {
+            const newRow = await buildRow(element)
+            row.parentElement.appendChild(newRow);
+        }
+        const razvozkiLast = await razvLast();
+        await row.parentElement.appendChild(await buildLastRow(razvozkiLast[0], lastElement));
+    } catch (error) {
+        console.error('Ошибка при добавлении строк:', error);
+    }
 }
 
 async function buildRow(element) {
@@ -73,14 +103,14 @@ async function buildRow(element) {
     newRow.dataset.id = element['pk'];
     //date
     let newCell = document.createElement('td');
-    let cellContent = document.createTextNode(element.fields['date']);
+    let cellContent = document.createTextNode(dateRusLong(element.fields['date']));
     newCell.appendChild(cellContent);
     newRow.appendChild(newCell);
     // driver icon
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     if (element.fields['driver'] != null) {
-        const driverIcon = await fetchJsonData('/rzv/json_driver_url/' + element.fields['driver_id']);
-        newCell.dataset.title = await fetchJsonData('/rzv/json_driver_description/' + element.fields['driver_id']);
+        const driverIcon = await fetchJsonData('/rzv/json_driver_url/' + element.fields['driver']);
+        newCell.dataset.title = await fetchJsonData('/rzv/json_driver_description/' + element.fields['driver']);
         newCell.classList.add('title-icon');
         const newImage = document.createElement('img');
         newImage.src = driverIcon;
@@ -89,13 +119,13 @@ async function buildRow(element) {
     }
     newRow.appendChild(newCell);
     // fulfilled icon
-    newCell = new document.createElement('td');
-    newCell.onclick = 'event.stopPropagation();';
+    newCell = document.createElement('td');
+//    newCell.onclick ('event.stopPropagation()');
     newCell.dataset.title = 'Поменять статус';
     newCell.classList.add('title-icon');
     let button = document.createElement('button');
     button.classList.add('btn-bg');
-    button.onclick = 'razvozkaFulfilled(this,' + element['pk'] + ');';
+//    button.onclick (razvozkaFulfilled(this, element['pk']));
     if (element.fields['fulfilled']) {
         button.classList.add('btn-submit');
         button.innerHTML = fulfilledIcon;
@@ -106,10 +136,10 @@ async function buildRow(element) {
     newCell.appendChild(button);
     newRow.appendChild(newCell)
     // return_All icon
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     newCell.onclick = 'event.stopPropagation()';
     if (element.fields['return_from']) {
-        button = new document.createElement('button');
+        button = document.createElement('button');
         button.type = 'button';
         button.id = 'but-' + element['pk'];
         button.onclick = 'razvozkaReturnAll(this, ' + element['pk'] + ');';
@@ -123,19 +153,19 @@ async function buildRow(element) {
     }
     newRow.appendChild(newCell);
     // customer_name
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     newCell.innerHTML = '<strong>' + element.fields['customer_name'] + '</strong>';
     newRow.appendChild(newCell);
     // address
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     newCell.innerHTML = element.fields['address'];
     newRow.appendChild(newCell);
     //contact
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     newCell.innerHTML = element.fields['contact'];
     newRow.appendChild(newCell);
     // to_do
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     let toDoString = '';
     if (element.fields['to_do_take']) {
         toDoString += '<div><strong>ЗАБРАТЬ: </strong>' + element.fields['to_do_take'] + '</div>';
@@ -146,12 +176,12 @@ async function buildRow(element) {
     newCell.innerHTML = toDoString;
     newRow.appendChild(newCell);
     // return from icon
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     if (element.fields['return_from']) {
         newCell.onclick = 'event.stopPropagation()';
         newCell.classList.add('title-icon-big');
         newCell.onmouseenter = 'plannedReturnsList(' + element['pk'] + ', this);';
-        button = new document.createElement('button');
+        button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn-submit', 'btn-bg');
         button.innerHTML = diggingIcon;
@@ -159,35 +189,44 @@ async function buildRow(element) {
     }
     newRow.appendChild(newCell);
     // deliver_to icon
-    newCell = new document.createElement('td');
-    const customer = fetchJsonData('rzv/json_customer_select/' + element.fields['customer']);
-    if (customer['subcontractor'] && element.fields['to_do_deliver'] != null) {
-        newCell.onclick = 'event.stopPropagation()';
-        newCell.classList.add('title-icon');
-        newCell.dataset.title = 'Отправить на переработку';
-        button = new document.createElement('button');
-        button.type = 'button';
-        button.classList.add('btn-delete', 'btn-bg');
-        button.onclick = 'razvozkaDeliverTo(this, ' + element['pk'] + ');';
-        button.innerHTML = deliverToIcon;
-        if (element.fields['deliver_to']) {
-            button.classList.add('delete-neg');
+    newCell = document.createElement('td');
+    if (element.fields['customer'] != null) {
+        const customer = fetchJsonData('/rzv/json_customer_select/' + element.fields['customer']);
+        if (customer['subcontractor'] && element.fields['to_do_deliver'] != null) {
+            newCell.onclick = 'event.stopPropagation()';
+            newCell.classList.add('title-icon');
+            newCell.dataset.title = 'Отправить на переработку';
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('btn-delete', 'btn-bg');
+            button.onclick = 'razvozkaDeliverTo(this, ' + element['pk'] + ');';
+            button.innerHTML = deliverToIcon;
+            if (element.fields['deliver_to']) {
+                button.classList.add('delete-neg');
+            }
+            newCell.appendChild(button);
         }
-        newCell.appendChild(button);
     }
     newRow.appendChild(newCell);
     // delete icon
-    newCell = new document.createElement('td');
+    newCell = document.createElement('td');
     newCell.onclick = 'event.stopPropagation()';
     newCell.classList.add('title-icon');
     newCell.dataset.title = 'Удалить';
-    button = new  document.createElement('button');
+    button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn-delete', 'btn-bg');
     button.onclick = 'razvozkaDelete(this, ' + element['pk'] + ');';
     button.innerHTML = deleteIcon;
     newCell.appendChild(button);
     newRow.appendChild(newCell);
+    return newRow;
+}
+
+async function buildLastRow(element, number){
+    const newRow = buildRow(element);
+    (await newRow).classList.add('end-element');
+    (await newRow).id = Number(number) + 20;
     return newRow;
 }
 
