@@ -58,6 +58,12 @@ def driver_icon_as_json(request, driver_id):
     return JsonResponse(icon_url, safe=False)
 
 
+def driver_description_as_json(request, driver_id):
+    description_url = Driver.objects.get(id=driver_id).description
+    return JsonResponse(description_url, safe=False)
+
+
+
 def returns_as_id_json(request, razv_id):
     returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values_list('deliver__id', flat=True))
     return JsonResponse(returns, safe=False)
