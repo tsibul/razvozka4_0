@@ -1,0 +1,141 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block title %}Текущие развозки{% endblock %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="current current-pure">
+            <table class="table">
+                <thead class="razvozki-thead">
+                <tr>
+                    <th>дата</th>
+                    <th></th>
+                    <th>клиент</th>
+                    <th>адрес</th>
+                    <th>контакт</th>
+                    <th>сделать</th>
+                    <th colspan="2"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rzv in razvozki %}
+                    <tr class="edit-modal" data-id="{{ rzv.id }}">
+                        <td>{{ rzv.date|date:'d.m.Y' }}</td>
+                        <td onclick="event.stopPropagation()" data-title="Поменять статус" class="title-icon">
+                            {% if rzv.fulfilled %}
+                                <button type="button" class="btn-submit btn-bg"
+                                        onclick="razvozkaFulfilled(this, {{ rzv.id }})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
+                                         fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                    </svg>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn-delete btn-bg"
+                                        onclick="razvozkaFulfilled(this, {{ rzv.id }})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
+                                         fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
+                                        <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
+                                    </svg>
+                                </button>
+                            {% endif %}
+                        </td>
+                        <td><strong>{{ rzv.customer_name }}</strong></td>
+                        <td>{{ rzv.address }}</td>
+                        <td>{{ rzv.contact }}</td>
+                        <td>
+                            {% if rzv.to_do_take != '' %}
+                                <div><strong>ЗАБРАТЬ: </strong>{{ rzv.to_do_take }}</div>
+                            {% endif %}
+                            {% if rzv.to_do_deliver != '' %}
+                                <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
+                            {% endif %}
+                        </td>
+                    <td><button type="button" class="btn-submit submit-neg">Запланировать</td>
+                    <td><button type="button" class="btn-neutral neutral-neg">Закрыть</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+        <h1 class="auth-required">требуется вход</h1>
+    {% endif %}
+    {#    edit Modal #}
+    <div id="razvModal" class="modal">
+        <div class="modal-content">
+            <form method="post" action="{% url 'razv4_0:update_rzv' navi %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <p id="modal-title">Редактировать</p>
+                    <span class="close">&times;</span>
+                </div>
+                <input name="razv_id" type="text" id="razv_id" hidden>
+                <div class="modal-body">
+                    <div class="menu ">
+                        <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <p><img src="{% static drivers.first.icon_code %}" id="driver-icon"></p>&nbsp;
+                        <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
+                            {% for driver in drivers %}
+                                <option value="{{ driver.id }}"
+                                >{{ driver.description }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-line">
+                        <label for="date_id"><strong>#</strong></label>
+                        <input name="date_id" type="number" id="date_id" class="modal-input modal-id">
+                        <label for="date"><strong>дата</strong></label>
+                        <input name="date" type="date" id="date" class="modal-input">
+                        <label for="date_until"><strong>контр. срок</strong></label>
+                        <input name="date_until" type="date" id="date_until" class="modal-input">
+                    </div>
+                    <label for="customer_name"><strong>клиент</strong></label>
+                    <div class="input-line">
+                        <div class="customer">
+                            <input name="customer_name" id="customer_name" class="modal-input" required>
+                        </div>
+                        <div class="dropdown">
+                            <input name="customer_id" type="text"
+                                   hidden id="customer_id">
+                            <button type="button" class="btn-submit btn-dropdown" onclick="dropDown();">Выбрать
+                                клиента
+                            </button>
+                            <ul class="dropdown-content" id="cstDropdown">
+                                <input id="customer_customer_name" type="text" class="modal-input"
+                                       placeholder="Поиск.." onkeyup="filterCust();">
+                                {% for customer in customers %}
+                                    <li value="{{ customer.id }}"
+                                        onclick="selectCustomer(this);">{{ customer.name }} </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                    <label for="address"><strong>адрес</strong></label>
+                    <textarea name="address" id="address" class="modal-input" required></textarea>
+                    <label for="contact"><strong>контакт</strong></label>
+                    <textarea name="contact" id="contact" class="modal-input"></textarea>
+                    <input name="map_point" id="map_point" hidden class="modal-input">
+                    <label for="to_do_deliver"><strong>сдать</strong></label>
+                    <textarea name="to_do_deliver" id="to_do_deliver" class="modal-input"></textarea>
+                    <label for="to_do_take"><strong>забрать</strong></label>
+                    <textarea name="to_do_take" id="to_do_take" class="modal-input"></textarea>
+                </div>
+                <div class="input-line">
+                    <input type="text" id="rzv-quantity" hidden value="0" name="rzv_quantity">
+                    <div class="check-input" id="delivered_to_customer">
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="reset" class="btn-delete close">Отменить</button>
+                        <button type="submit" class="btn-submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/razvmodal.js' %}"></script>
+
+{% endblock %}
