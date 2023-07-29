@@ -114,18 +114,20 @@ async function buildRow(element) {
     newRow.appendChild(newCell);
     // fulfilled icon
     newCell = document.createElement('td');
-//    newCell.onclick ('event.stopPropagation()');
+    newCell.setAttribute('onclick', 'event.stopPropagation()');
     newCell.dataset.title = 'Поменять статус';
     newCell.classList.add('title-icon');
     let button = document.createElement('button');
     button.classList.add('btn-bg');
-//    button.onclick (razvozkaFulfilled(this, element['pk']));
+    button.setAttribute('onclick', 'razvozkaFulfilled(this, ' + element['pk'] + ')');
     if (element.fields['fulfilled']) {
         button.classList.add('btn-submit');
-        button.innerHTML = fulfilledIcon;
+        button.innerHTML =  fulfilledIcon;
+        button.insertBefore(document.createTextNode(''), button.firstChild);
     } else {
         button.classList.add('btn-delete');
         button.innerHTML = waitingIcon;
+        button.insertBefore(document.createTextNode(''), button.firstChild);
     }
     newCell.appendChild(button);
     newRow.appendChild(newCell)
