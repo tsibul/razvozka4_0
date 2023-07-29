@@ -8,7 +8,6 @@ from django.db.models import Max
 
 def razvozka_as_json(request, razv_id):
     razv = Razvozka.objects.get(id=razv_id).__dict__
-    #    json_razvozka = serialize('python', razv)
     json_razvozka = json.dumps(razv, ensure_ascii=False, default=str)
     return JsonResponse(json_razvozka, safe=False)
 
@@ -68,3 +67,18 @@ def returns_as_json(request, razv_id):
     returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values(
         'deliver__id', 'deliver__date', 'deliver__to_do_deliver', 'deliver__return_all'))
     return JsonResponse(returns, safe=False)
+
+
+def razvozki_list_as_json(request, last_element):
+    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[last_element:last_element + 19]
+    razvozki = serialize('python', razvozki_query)
+    razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
+    return JsonResponse(razvozki, safe=False)
+
+
+def razvozki_last_list_as_json(request, last_element):
+    razvozki_query = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[last_element + 19:last_element + 20]
+    razvozki = serialize('python', razvozki_query)
+    razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
+    return JsonResponse(razvozki, safe=False)
+
