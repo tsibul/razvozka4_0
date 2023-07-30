@@ -227,7 +227,8 @@ async function buildRow(element) {
         button.setAttribute('onclick', 'razvozkaReturnAll(this, ' + element['pk'] + ');');
         button.classList.add('btn-bg');
         button.innerHTML = handshakeIcon;
-        if (element.fields['returned_all']) {
+        const returned_all = await fetchJsonData('/rzv/json_return_all_min/'+ element['pk']);
+        if (returned_all) {
             button.classList.add('btn-submit');
         } else {
             button.classList.add('btn-delete');
@@ -364,7 +365,8 @@ async function buildRowForSingle(element) {
         button.setAttribute('onclick', 'razvozkaReturnAll(this, ' + element['id'] + ');');
         button.classList.add('btn-bg');
         button.innerHTML = handshakeIcon;
-        if (element['returned_all']) {
+        const returned_all = await fetchJsonData('/rzv/json_return_all_min/'+ element['id']);
+        if (returned_all) {
             button.classList.add('btn-submit');
         } else {
             button.classList.add('btn-delete');

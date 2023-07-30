@@ -63,7 +63,6 @@ def driver_description_as_json(request, driver_id):
     return JsonResponse(description_url, safe=False)
 
 
-
 def returns_as_id_json(request, razv_id):
     returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values_list('deliver__id', flat=True))
     return JsonResponse(returns, safe=False)
@@ -90,3 +89,9 @@ def razvozki_last_list_as_json(request, last_element):
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
     return JsonResponse(razvozki, safe=False)
 
+
+def returned_all_as_json(request, razv_id):
+    returned_all = \
+    Razvozka_returns.objects.filter(take_id=razv_id).annotate(minimum=Min('deliver__return_all')).values('minimum')[0][
+        'minimum']
+    return JsonResponse(returned_all, safe=False)
