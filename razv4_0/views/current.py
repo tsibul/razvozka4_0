@@ -25,17 +25,18 @@ def current_rzv(request):
     return render(request, 'current.html', context)
 
 
-def update_rzv(request, navi):
-    navi = 'razv4_0:' + navi + '_rzv'
+def update_rzv(request):
     razv_id = request.POST['razv_id']
     if razv_id == '':
         razvozka = Razvozka(date_create=date.today())
     else:
         razvozka = Razvozka.objects.get(id=razv_id)
         if razvozka.fulfilled:
-            return HttpResponseRedirect(reverse(navi))
-    razvozka.date = datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
-    razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
+            return HttpResponseRedirect(reverse('razv4_0:current_rzv'))
+    if request.POST['date']:
+        razvozka.date = datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
+    if request.POST['date_until']:
+        razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
     razvozka.date_id = request.POST['date_id']
     razvozka.customer_name = request.POST['customer_name']
     razvozka.address = request.POST['address']
@@ -67,11 +68,10 @@ def update_rzv(request, navi):
     if j == rzv_return_quantity:
         razvozka.return_from = False
     razvozka.save()
-    return HttpResponseRedirect(reverse(navi))
+    return HttpResponseRedirect(reverse('razv4_0:current_rzv'))
 
 
 def razvozka_returned_all(request):
-#    navi = 'razv4_0:' + navi + '_rzv'
     razv_id = request.POST['razv_id']
     number_deliveries = int(request.POST['rzv_return_quantity'])
     for i in range(0, number_deliveries):
