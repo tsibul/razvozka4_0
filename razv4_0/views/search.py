@@ -26,6 +26,15 @@ def search_all(request):
 
         context = {'razvozki': razvozki, 'navi': navi, 'customers': customers, 'url_list': url_list, 'url_last': url_last,
                    'drivers': drivers, 'to_return': to_return, 'end_razvozki': end_razvozki}
+    elif navi == 'customer':
+        customers = Customer.objects.filter(Q(name__icontains=search_string) |
+                                           Q(address__icontains=search_string) |
+                                           Q(contact__icontains=search_string)).order_by('name')[:49]
+        end_customer = Customer.objects.filter(Q(name__icontains=search_string) |
+                                           Q(address__icontains=search_string) |
+                                           Q(contact__icontains=search_string)).order_by('name')[49:50]
+        context = {'navi': navi, 'customers': customers, 'end_customer': end_customer}
+        return render(request, 'customer.html', context)
     else:
         context = {'navi': navi}
     return render(request, 'total_rzv.html', context)
