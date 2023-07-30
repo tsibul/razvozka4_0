@@ -11,7 +11,9 @@
                     <th>адрес</th>
                     <th>контакт</th>
                     <th>подрядчик</th>
-                    <th></th>
+                    <th class="cst-modal">
+                        <button type="button" class="btn-submit submit-neg btn-bg">добавить</button>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,11 +26,7 @@
                         <td onclick="event.stopPropagation()" data-title="Удалить"
                             class="title-icon">
                             <button type="button" class="btn-delete btn-bg"
-                                    onclick="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
-                                     fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                </svg>
+                                    onclick="">удалить
                             </button>
                         </td>
                     </tr>
@@ -41,13 +39,7 @@
                         <td>{% if cst.subcontractor %}Да{% else %}Нет{% endif %}</td>
                         <td onclick="event.stopPropagation()" data-title="Удалить"
                             class="title-icon">
-                            <button type="button" class="btn-delete btn-bg"
-                                    onclick="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
-                                     fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                </svg>
-                            </button>
+                            <button type="button" class="btn-delete btn-bg">удалить</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -59,7 +51,7 @@
         <h1 class="auth-required">требуется вход</h1>
     {% endif %}
     {#    customer Modal #}
-    <div id="cusromerModal" class="modal">
+    <div id="customerModal" class="modal">
         <div class="modal-content">
             <form method="post" action="" id="updateForm">
                 {% csrf_token %}
@@ -67,31 +59,26 @@
                     <p id="modal-title">Редактировать</p>
                     <span class="close">&times;</span>
                 </div>
-                <input name="razv_id" type="text" id="razv_id" hidden>
+                <input name="cst_id" type="text" id="cst_id" hidden>
                 <div class="modal-body">
-                    <div class="menu ">
-                        <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
-                            <option value="0">Нет</option>
-                            <option value="1">Да</option>
+                    <p>
+                        <label for="subcontractor"><strong>подрядчик</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select name="subcontractor" class="modal-input modal-id" id="subcontractor">
+                            <option value="false" selected>Нет</option>
+                            <option value="true">Да</option>
                         </select>
-                    </div>
-                    <label for="customer_name"><strong>клиент</strong></label>
-                    <input name="customer_name" id="customer_name" class="modal-input" required>
+                    </p>
+                    <label for="name"><strong>клиент</strong></label>
+                    <input name="name" id="name" class="modal-input" required>
                     <label for="address"><strong>адрес</strong></label>
                     <textarea name="address" id="address" class="modal-input" required></textarea>
                     <label for="contact"><strong>контакт</strong></label>
                     <textarea name="contact" id="contact" class="modal-input"></textarea>
                     <input name="map_point" id="map_point" hidden class="modal-input">
                 </div>
-                <div class="input-line">
-                    <input type="text" id="rzv-quantity" hidden value="0" name="rzv_quantity">
-                    <div class="check-input" id="delivered_to_customer">
-                    </div>
-                    <div class="modal-buttons">
-                        <button type="reset" class="btn-delete close">Отменить</button>
-                        <button type="submit" class="btn-submit">Сохранить</button>
-                    </div>
+                <div class="modal-buttons">
+                    <button type="reset" class="btn-delete close">Отменить</button>
+                    <button type="submit" class="btn-submit">Сохранить</button>
                 </div>
             </form>
         </div>
@@ -99,5 +86,6 @@
 
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
     <script src="{% static 'razvozki4_0/js/spread_table.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/customer.js' %}"></script>
 
 {% endblock %}
