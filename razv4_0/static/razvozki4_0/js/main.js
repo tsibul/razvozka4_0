@@ -9,7 +9,7 @@ const waitingIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
     '3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 ' +
     '1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 ' +
     '1.011-1.491A3.5 3.5 0 0 0 11.5 3V2h-7z"/></svg>';
-const handshakeIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">' +
+const handshakeIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" fill="currentColor">' +
     '<path d="M272.2 64.6l-51.1 51.1c-15.3 4.2-29.5 11.9-41.5 22.5L153 161.9C142.8 171 129.5 176 115.8 176H96V304c20.4 ' +
     '.6 39.8 8.9 54.3 23.4l35.6 35.6 7 7 0 0L219.9 397c6.2 6.2 16.4 6.2 22.6 0c1.7-1.7 3-3.7 3.7-5.8c2.8-7.7 9.3-13.5 ' +
     '17.3-15.3s16.4 .6 22.2 6.5L296.5 393c11.6 11.6 30.4 11.6 41.9 0c5.4-5.4 8.3-12.3 8.6-19.4c.4-8.8 5.6-16.6 ' +
@@ -230,7 +230,7 @@ async function buildRow(element) {
         if (element.fields['returned_all']) {
             button.classList.add('btn-submit');
         } else {
-            button.classList.add('delete');
+            button.classList.add('btn-delete');
         }
         newCell.appendChild(button);
 
@@ -367,7 +367,7 @@ async function buildRowForSingle(element) {
         if (element['returned_all']) {
             button.classList.add('btn-submit');
         } else {
-            button.classList.add('delete');
+            button.classList.add('btn-delete');
         }
         newCell.appendChild(button);
     }
