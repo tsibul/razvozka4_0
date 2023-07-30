@@ -18,6 +18,7 @@ def total_rzv(request):
                'drivers': drivers, 'to_return': to_return, 'end_razvozki': end_razvozki}
     return render(request, 'total_rzv.html', context)
 
+
 def update_total_rzv(request):
     razv_id = request.POST['razv_id']
     if razv_id == '':
@@ -26,9 +27,13 @@ def update_total_rzv(request):
         razvozka = Razvozka.objects.get(id=razv_id)
         if razvozka.fulfilled:
             return HttpResponse()
-    razvozka.date = datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
-    razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
+    if request.POST['date']:
+        razvozka.date = datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
+    if request.POST['date_until']:
+        razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
     razvozka.date_id = request.POST['date_id']
+    if razvozka.date_id == '':
+        razvozka.date_id = 0
     razvozka.customer_name = request.POST['customer_name']
     razvozka.address = request.POST['address']
     razvozka.contact = request.POST['contact']
