@@ -64,7 +64,7 @@
     {#    edit Modal #}
     <div id="razvModal" class="modal">
         <div class="modal-content">
-            <form method="post" action="{% url 'razv4_0:update_rzv' navi %}">
+            <form method="post" action="{% url 'razv4_0:update_rzv' %}" id="updateForm">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
