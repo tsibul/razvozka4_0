@@ -164,3 +164,29 @@ async function returnCheckList(razvId) {
     });
 }
 
+const updateForm = document.getElementById('updateForm');
+
+updateForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(updateForm);
+
+    fetch('/rzv/razvozka_update/razv', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(async (response) => {
+            closeModal()
+            const inputId = Array.from(updateForm.childNodes).find((node) => node.id === 'razv_id');
+            const razvId = inputId.value;
+            const modalRows = document.querySelectorAll(".edit-modal");
+            const editRow = Array.from(modalRows).find((node) => node.dataset.id === razvId);
+            const razvozkaEdit = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
+            const newRow = await buildRowForSingle(razvozkaEdit);
+            editRow.innerHTML = newRow.innerHTML;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});
+
