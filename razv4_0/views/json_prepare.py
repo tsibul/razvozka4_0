@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from razv4_0.models import Razvozka, Razvozka_returns, Customer, Driver
 from django.core.serializers import serialize
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Q
 
 
 def razvozka_as_json(request, razv_id):
@@ -92,6 +92,31 @@ def razvozki_last_list_as_json(request, last_element):
 
 def returned_all_as_json(request, razv_id):
     returned_all = \
-    Razvozka_returns.objects.filter(take_id=razv_id).annotate(minimum=Min('deliver__return_all')).values('minimum')[0][
-        'minimum']
+        Razvozka_returns.objects.filter(take_id=razv_id).annotate(minimum=Min('deliver__return_all')).values('minimum')[
+            0][
+            'minimum']
     return JsonResponse(returned_all, safe=False)
+
+
+def search_razvozki_list_as_json(request, search_string, last_element):
+    razvozki_query = Razvozka.objects.filter(Q(customer_name__icontains=search_string) |
+                                             Q(address__icontains=search_string) |
+                                             Q(contact__icontains=search_string) |
+                                             Q(to_do_take__icontains=search_string) |
+                                             Q(to_do_deliver__icontains=search_string)).order_by('-date')[
+                     last_element: last_element + 19]
+    razvozki = serialize('python', razvozki_query)
+    razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
+    return JsonResponse(razvozki, safe=False)
+
+
+def search_razvozki_last_as_json(request, search_string, last_element):
+    razvozki_query = Razvozka.objects.filter(Q(customer_name__icontains=search_string) |
+                                             Q(address__icontains=search_string) |
+                                             Q(contact__icontains=search_string) |
+                                             Q(to_do_take__icontains=search_string) |
+                                             Q(to_do_deliver__icontains=search_string))[
+                     last_element + 19: last_element + 20]
+    razvozki = serialize('python', razvozki_query)
+    razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
+    return JsonResponse(razvozki, safe=False)

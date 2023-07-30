@@ -25,10 +25,11 @@
         <li><a href="#" class="menu-item {% if navi == 'cars' %}active{% endif %}">Транспорт</a></li>
     </ul>
     <span class="menu-end">
-        <form action="#" method="post">
+        <form action="{%  url 'razv4_0:search_rzv' %}" method="post">
             {% csrf_token %}
-            <input type="text" placeholder="Поиск" class="search">
-            <button type="submit" class="menu-button  {% if navi == 'search' %}active{% endif %}">Поиск</button>
+            <input type="text" placeholder="Поиск" class="search" name="search_string">
+            <input type="text" hidden class="search" value="{{ navi }}" name="navi">
+            <button type="submit" class="menu-button">Поиск</button>
         </form>
      <img src="{% static 'razvozki4_0/icons/person-check-fill.svg' %}" alt="lod icon">
         {% if request.user.is_authenticated %}

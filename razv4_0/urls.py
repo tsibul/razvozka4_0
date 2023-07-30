@@ -11,6 +11,7 @@ urlpatterns = [
     path('current/', views.current_rzv, name='current_rzv'),
     path('current_update', views.update_rzv, name='update_current'),
     path('razvozka_update', views.update_total_rzv, name='update_rzv'),
+    path('search_rzv', views.search_all, name='search_rzv'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
@@ -38,6 +39,9 @@ urlpatterns = [
 
     path('json_razvozki_list/<int:last_element>', views.razvozki_list_as_json),
     path('json_razvozki_last/<int:last_element>', views.razvozki_last_list_as_json),
+
+    path('json_search_rzv_list/<str:search_string>/<int:last_element>', views.search_razvozki_list_as_json),
+    path('json_search_rzv_last/<str:search_string>/<int:last_element>', views.search_razvozki_last_as_json),
 
 ]
 

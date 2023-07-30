@@ -4,7 +4,7 @@
 {% block content %}
     {% if request.user.is_authenticated %}
         <div class="current current-pure">
-            <table id="render" class="table razv-table">
+            <table id="render" class="table razv-table" data-url="{{url_list}}" data-url_last="{{ url_last }}">
                 <thead class="razvozki-thead">
                 <tr>
                     <th>дата</th>
@@ -65,7 +65,7 @@
                                 <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
                             {% endif %}
                         </td>
-                        <td  data-title=""
+                        <td data-title=""
                             {% if rzv.return_from %}class="title-icon-big"{% endif %}
                             onmouseenter="plannedReturnsList({{ rzv.id }}, this);">
                             {% if rzv.return_from %}
@@ -203,7 +203,7 @@
     {#    edit Modal #}
     <div id="razvModal" class="modal">
         <div class="modal-content">
-            <form method="post" action="{% url 'razv4_0:update_rzv'%}" id="updateForm">
+            <form method="post" action="{% url 'razv4_0:update_rzv' %}" id="updateForm">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
