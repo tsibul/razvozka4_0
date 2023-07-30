@@ -1,0 +1,102 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block title %}Клиенты{% endblock %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="current current-pure">
+            <table id="render" class="table cust-table">
+                <thead class="razvozki-thead">
+                <tr>
+                    <th>название</th>
+                    <th>адрес</th>
+                    <th>контакт</th>
+                    <th>подрядчик</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cst in customers %}
+                    <tr class="cst-modal" data-id="{{ cst.id }}">
+                        <td><strong>{{ cst.name }}</strong></td>
+                        <td>{{ cst.address }}</td>
+                        <td>{{ cst.contact }}</td>
+                        <td>{% if cst.subcontractor %}Да{% else %}Нет{% endif %}</td>
+                        <td onclick="event.stopPropagation()" data-title="Удалить"
+                            class="title-icon">
+                            <button type="button" class="btn-delete btn-bg"
+                                    onclick="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
+                                     fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for cst in end_customer %}
+                    <tr class="cst-modal end-element" data-id="{{ cst.id }}" id="50">
+                        <td><strong>{{ cst.name }}</strong></td>
+                        <td>{{ cst.address }}</td>
+                        <td>{{ cst.contact }}</td>
+                        <td>{% if cst.subcontractor %}Да{% else %}Нет{% endif %}</td>
+                        <td onclick="event.stopPropagation()" data-title="Удалить"
+                            class="title-icon">
+                            <button type="button" class="btn-delete btn-bg"
+                                    onclick="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
+                                     fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+        <h1 class="auth-required">требуется вход</h1>
+    {% endif %}
+    {#    customer Modal #}
+    <div id="cusromerModal" class="modal">
+        <div class="modal-content">
+            <form method="post" action="" id="updateForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <p id="modal-title">Редактировать</p>
+                    <span class="close">&times;</span>
+                </div>
+                <input name="razv_id" type="text" id="razv_id" hidden>
+                <div class="modal-body">
+                    <div class="menu ">
+                        <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                        </select>
+                    </div>
+                    <label for="customer_name"><strong>клиент</strong></label>
+                    <input name="customer_name" id="customer_name" class="modal-input" required>
+                    <label for="address"><strong>адрес</strong></label>
+                    <textarea name="address" id="address" class="modal-input" required></textarea>
+                    <label for="contact"><strong>контакт</strong></label>
+                    <textarea name="contact" id="contact" class="modal-input"></textarea>
+                    <input name="map_point" id="map_point" hidden class="modal-input">
+                </div>
+                <div class="input-line">
+                    <input type="text" id="rzv-quantity" hidden value="0" name="rzv_quantity">
+                    <div class="check-input" id="delivered_to_customer">
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="reset" class="btn-delete close">Отменить</button>
+                        <button type="submit" class="btn-submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/spread_table.js' %}"></script>
+
+{% endblock %}

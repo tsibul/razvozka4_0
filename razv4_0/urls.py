@@ -12,6 +12,7 @@ urlpatterns = [
     path('current_update', views.update_rzv, name='update_current'),
     path('razvozka_update', views.update_total_rzv, name='update_rzv'),
     path('search_rzv', views.search_all, name='search_rzv'),
+    path('customer/', views.customer, name='customer'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
