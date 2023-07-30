@@ -9,7 +9,8 @@ urlpatterns = [
     path('accounts/logout/', views.custom_logout, name='custom_logout'),
 
     path('current/', views.current_rzv, name='current_rzv'),
-    path('current/update/<str:navi>', views.update_rzv, name='update_rzv'),
+    path('current_update', views.update_rzv, name='update_current'),
+    path('razvozka_update', views.update_total_rzv, name='update_rzv'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_nO_return/', views.deliver_no_return, name='deliver_no_return'),
