@@ -38,6 +38,8 @@ def update_rzv(request):
     if request.POST['date_until']:
         razvozka.date_until = datetime.strptime(request.POST['date_until'], '%Y-%m-%d').date()
     razvozka.date_id = request.POST['date_id']
+    if razvozka.date_id == '':
+        razvozka.date_id = 0
     razvozka.customer_name = request.POST['customer_name']
     razvozka.address = request.POST['address']
     razvozka.contact = request.POST['contact']
