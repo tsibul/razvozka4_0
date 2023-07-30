@@ -6,7 +6,7 @@ from razv4_0.models import Razvozka, Customer, Driver
 def search_all(request):
     navi = request.POST['navi']
     search_string = request.POST['search_string']
-    if navi == 'current' or navi == 'razv':
+    if navi == 'current' or navi == 'razv' or navi == 'deliver':
         razvozki = Razvozka.objects.filter(Q(customer_name__icontains=search_string) |
                                            Q(address__icontains=search_string) |
                                            Q(contact__icontains=search_string) |
