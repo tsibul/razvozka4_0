@@ -273,8 +273,8 @@ async function buildRow(element) {
     // deliver_to icon
     newCell = document.createElement('td');
     if (element.fields['customer'] != null) {
-        const customer = fetchJsonData('/rzv/json_customer_select/' + element.fields['customer']);
-        if (customer['subcontractor'] && element.fields['to_do_deliver'] != null) {
+        const customer = JSON.parse(await fetchJsonData('/rzv/json_customer_select/' + element.fields['customer']));
+        if (customer['subcontractor'] && element.fields['to_do_deliver'] != '') {
             newCell.setAttribute('obclick', 'event.stopPropagation()');
             newCell.classList.add('title-icon');
             newCell.dataset.title = 'Отправить на переработку';
@@ -324,9 +324,9 @@ async function buildRowForSingle(element) {
     newRow.appendChild(newCell);
     // driver icon
     newCell = document.createElement('td');
-    if (element['driver'] != null) {
-        const driverIcon = await fetchJsonData('/rzv/json_driver_url/' + element['driver']);
-        newCell.dataset.title = await fetchJsonData('/rzv/json_driver_description/' + element['driver']);
+    if (element['driver_id'] != null) {
+        const driverIcon = await fetchJsonData('/rzv/json_driver_url/' + element['driver_id']);
+        newCell.dataset.title = await fetchJsonData('/rzv/json_driver_description/' + element['driver_id']);
         newCell.classList.add('title-icon');
         const newImage = document.createElement('img');
         newImage.src = driverIcon;
@@ -408,7 +408,7 @@ async function buildRowForSingle(element) {
     // deliver_to icon
     newCell = document.createElement('td');
     if (element['customer'] != null) {
-        const customer = fetchJsonData('/rzv/json_customer_select/' + element['customer']);
+        const customer = JSON.parse(await fetchJsonData('/rzv/json_customer_select/' + element['customer']));
         if (customer['subcontractor'] && element['to_do_deliver'] != null) {
             newCell.setAttribute('obclick', 'event.stopPropagation()');
             newCell.classList.add('title-icon');
