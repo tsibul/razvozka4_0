@@ -127,7 +127,7 @@
                                     <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
                                 {% endif %}
                             </td>
-                            <td onclick="event.stopPropagation()" data-title=""
+                            <td  data-title=""
                                 {% if rzv.return_from %}class="title-icon-big"{% endif %}
                                 onmouseenter="plannedReturnsList({{ rzv.id }}, this);">
                                 {% if rzv.return_from %}

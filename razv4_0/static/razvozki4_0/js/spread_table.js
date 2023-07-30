@@ -174,7 +174,6 @@ async function buildRow(element) {
     // return from icon
     newCell = document.createElement('td');
     if (element.fields['return_from']) {
-        newCell.setAttribute('onclick', 'event.stopPropagation()');
         newCell.classList.add('title-icon-big');
         newCell.setAttribute('onmouseenter', 'plannedReturnsList(' + element['pk'] + ', this);');
         button = document.createElement('button');
