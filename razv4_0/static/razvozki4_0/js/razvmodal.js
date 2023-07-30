@@ -171,7 +171,7 @@ updateForm.addEventListener('submit', async function (event) {
 
     const formData = new FormData(updateForm);
 
-    fetch('/rzv/razvozka_update/razv', {
+    fetch('/rzv/razvozka_update', {
         method: 'POST',
         body: formData,
     })
