@@ -254,7 +254,7 @@ async function buildRow(element) {
         toDoString += '<div><strong>ЗАБРАТЬ: </strong>' + element.fields['to_do_take'] + '</div>';
     }
     if (element.fields['to_do_deliver']) {
-        toDoString += '<div><strong>ЗАБРАТЬ: </strong>' + element.fields['to_do_deliver'] + '</div>';
+        toDoString += '<div><strong>CДАТЬ: </strong>' + element.fields['to_do_deliver'] + '</div>';
     }
     newCell.innerHTML = toDoString;
     newRow.appendChild(newCell);
@@ -389,7 +389,7 @@ async function buildRowForSingle(element) {
         toDoString += '<div><strong>ЗАБРАТЬ: </strong>' + element['to_do_take'] + '</div>';
     }
     if (element['to_do_deliver']) {
-        toDoString += '<div><strong>ЗАБРАТЬ: </strong>' + element['to_do_deliver'] + '</div>';
+        toDoString += '<div><strong>СДАТЬ: </strong>' + element['to_do_deliver'] + '</div>';
     }
     newCell.innerHTML = toDoString;
     newRow.appendChild(newCell);
