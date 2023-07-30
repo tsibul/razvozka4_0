@@ -40,7 +40,6 @@ const deleteIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="1
     '8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>';
 
 
-
 function fetchJsonData(jsonUrl) {
     return fetch(jsonUrl)
         .then(response => response.json());
@@ -161,19 +160,19 @@ returnAllForm.addEventListener('submit', function (event) {
     const returnClause = returnAllForm.querySelector('#to_return_from_customer')
     const returnObjects = returnClause.querySelectorAll('.check-input')
     let checked = true;
-    returnObjects.forEach(function (checkbox){
-        if(checkbox.checked == false){
+    returnObjects.forEach(function (checkbox) {
+        if (checkbox.checked == false) {
             checked = false
         }
     });
-       const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
-       if(checked){
-           document.getElementById(butId).classList.remove('btn-delete')
-           document.getElementById(butId).classList.add('btn-submit')
-       }else{
-           document.getElementById(butId).classList.add('btn-delete')
-           document.getElementById(butId).classList.remove('btn-submit')
-       }
+    const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
+    if (checked) {
+        document.getElementById(butId).classList.remove('btn-delete')
+        document.getElementById(butId).classList.add('btn-submit')
+    } else {
+        document.getElementById(butId).classList.add('btn-delete')
+        document.getElementById(butId).classList.remove('btn-submit')
+    }
 
 
 });
@@ -209,7 +208,7 @@ async function buildRow(element) {
     button.setAttribute('onclick', 'razvozkaFulfilled(this, ' + element['pk'] + ')');
     if (element.fields['fulfilled']) {
         button.classList.add('btn-submit');
-        button.innerHTML =  fulfilledIcon;
+        button.innerHTML = fulfilledIcon;
         button.insertBefore(document.createTextNode(''), button.firstChild);
     } else {
         button.classList.add('btn-delete');
@@ -220,12 +219,12 @@ async function buildRow(element) {
     newRow.appendChild(newCell)
     // return_All icon
     newCell = document.createElement('td');
-    newCell.setAttribute('onclick','event.stopPropagation()');
+    newCell.setAttribute('onclick', 'event.stopPropagation()');
     if (element.fields['return_from']) {
         button = document.createElement('button');
         button.type = 'button';
         button.id = 'but-' + element['pk'];
-        button.setAttribute('onclick','razvozkaReturnAll(this, ' + element['pk'] + ');');
+        button.setAttribute('onclick', 'razvozkaReturnAll(this, ' + element['pk'] + ');');
         button.classList.add('btn-bg');
         button.innerHTML = handshakeIcon;
         if (element.fields['returned_all']) {
@@ -233,6 +232,8 @@ async function buildRow(element) {
         } else {
             button.classList.add('delete');
         }
+        newCell.appendChild(button);
+
     }
     newRow.appendChild(newCell);
     // customer_name
@@ -344,7 +345,7 @@ async function buildRowForSingle(element) {
     button.setAttribute('onclick', 'razvozkaFulfilled(this, ' + element['id'] + ')');
     if (element['fulfilled']) {
         button.classList.add('btn-submit');
-        button.innerHTML =  fulfilledIcon;
+        button.innerHTML = fulfilledIcon;
         button.insertBefore(document.createTextNode(''), button.firstChild);
     } else {
         button.classList.add('btn-delete');
@@ -355,12 +356,12 @@ async function buildRowForSingle(element) {
     newRow.appendChild(newCell)
     // return_All icon
     newCell = document.createElement('td');
-    newCell.setAttribute('onclick','event.stopPropagation()');
+    newCell.setAttribute('onclick', 'event.stopPropagation()');
     if (element['return_from']) {
         button = document.createElement('button');
         button.type = 'button';
         button.id = 'but-' + element['id'];
-        button.setAttribute('onclick','razvozkaReturnAll(this, ' + element['id'] + ');');
+        button.setAttribute('onclick', 'razvozkaReturnAll(this, ' + element['id'] + ');');
         button.classList.add('btn-bg');
         button.innerHTML = handshakeIcon;
         if (element['returned_all']) {
@@ -368,6 +369,7 @@ async function buildRowForSingle(element) {
         } else {
             button.classList.add('delete');
         }
+        newCell.appendChild(button);
     }
     newRow.appendChild(newCell);
     // customer_name
@@ -407,9 +409,9 @@ async function buildRowForSingle(element) {
     newRow.appendChild(newCell);
     // deliver_to icon
     newCell = document.createElement('td');
-    if (element['customer'] != null) {
-        const customer = JSON.parse(await fetchJsonData('/rzv/json_customer_select/' + element['customer']));
-        if (customer['subcontractor'] && element['to_do_deliver'] != null) {
+    if (element['customer_id'] != null) {
+        const customer = JSON.parse(await fetchJsonData('/rzv/json_customer_select/' + element['customer_id']));
+        if (customer['subcontractor'] && element['to_do_deliver'] != '') {
             newCell.setAttribute('obclick', 'event.stopPropagation()');
             newCell.classList.add('title-icon');
             newCell.dataset.title = 'Отправить на переработку';
