@@ -133,12 +133,12 @@ async function buildRow(element) {
     newRow.appendChild(newCell)
     // return_All icon
     newCell = document.createElement('td');
-    newCell.onclick = 'event.stopPropagation()';
+    newCell.setAttribute('onclick','event.stopPropagation()');
     if (element.fields['return_from']) {
         button = document.createElement('button');
         button.type = 'button';
         button.id = 'but-' + element['pk'];
-        button.onclick = 'razvozkaReturnAll(this, ' + element['pk'] + ');';
+        button.setAttribute('onclick','razvozkaReturnAll(this, ' + element['pk'] + ');');
         button.classList.add('btn-bg');
         button.innerHTML = handshakeIcon;
         if (element.fields['returned_all']) {
@@ -174,9 +174,9 @@ async function buildRow(element) {
     // return from icon
     newCell = document.createElement('td');
     if (element.fields['return_from']) {
-        newCell.onclick = 'event.stopPropagation()';
+        newCell.setAttribute('onclick', 'event.stopPropagation()');
         newCell.classList.add('title-icon-big');
-        newCell.onmouseenter = 'plannedReturnsList(' + element['pk'] + ', this);';
+        newCell.setAttribute('onmouseenter', 'plannedReturnsList(' + element['pk'] + ', this);');
         button = document.createElement('button');
         button.type = 'button';
         button.classList.add('btn-submit', 'btn-bg');
@@ -189,13 +189,13 @@ async function buildRow(element) {
     if (element.fields['customer'] != null) {
         const customer = fetchJsonData('/rzv/json_customer_select/' + element.fields['customer']);
         if (customer['subcontractor'] && element.fields['to_do_deliver'] != null) {
-            newCell.onclick = 'event.stopPropagation()';
+            newCell.setAttribute('obclick', 'event.stopPropagation()');
             newCell.classList.add('title-icon');
             newCell.dataset.title = 'Отправить на переработку';
             button = document.createElement('button');
             button.type = 'button';
             button.classList.add('btn-delete', 'btn-bg');
-            button.onclick = 'razvozkaDeliverTo(this, ' + element['pk'] + ');';
+            button.setAttribute('onclick', 'razvozkaDeliverTo(this, ' + element['pk'] + ');');
             button.innerHTML = deliverToIcon;
             if (element.fields['deliver_to']) {
                 button.classList.add('delete-neg');
@@ -206,13 +206,13 @@ async function buildRow(element) {
     newRow.appendChild(newCell);
     // delete icon
     newCell = document.createElement('td');
-    newCell.onclick = 'event.stopPropagation()';
+    newCell.setAttribute('onclick', 'event.stopPropagation()');
     newCell.classList.add('title-icon');
     newCell.dataset.title = 'Удалить';
     button = document.createElement('button');
     button.type = 'button';
     button.classList.add('btn-delete', 'btn-bg');
-    button.onclick = 'razvozkaDelete(this, ' + element['pk'] + ');';
+    button.setAttribute('onclick', 'razvozkaDelete(this, ' + element['pk'] + ');');
     button.innerHTML = deleteIcon;
     newCell.appendChild(button);
     newRow.appendChild(newCell);
