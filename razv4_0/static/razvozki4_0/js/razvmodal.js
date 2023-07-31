@@ -147,15 +147,6 @@ async function returnList(custId) {
     document.querySelector('#delivered_to_customer').innerHTML = optionString;
 }
 
-async function customerById(custId) {
-    const urlCustomer = '/rzv/json_customer_select/' + custId;
-    return JSON.parse(await fetchJsonData(urlCustomer));
-}
-
-async function razvozkaReturnsById(razvId) {
-    const returnUrl = '/rzv/json_returns/' + razvId;
-    return await fetchJsonData(returnUrl);
-}
 
 async function returnCheckList(razvId) {
     const returnCheckedList = await razvozkaReturnsById(razvId);

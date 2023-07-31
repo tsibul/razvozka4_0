@@ -406,3 +406,13 @@ async function buildRowForSingle(element) {
     newRow.appendChild(newCell);
     return newRow;
 }
+
+async function customerById(custId) {
+    const urlCustomer = '/rzv/json_customer_select/' + custId;
+    return JSON.parse(await fetchJsonData(urlCustomer));
+}
+
+async function razvozkaReturnsById(razvId) {
+    const returnUrl = '/rzv/json_returns/' + razvId;
+    return await fetchJsonData(returnUrl);
+}
