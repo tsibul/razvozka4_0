@@ -140,43 +140,6 @@ async function razvozkaReturnsInfoById(razvId) {
 }
 
 
-const returnAllForm = document.getElementById('deliverModalForm');
-
-returnAllForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const formData = new FormData(returnAllForm);
-
-    fetch('/rzv/razvozka_returned_all/', {
-        method: 'POST',
-        body: formData,
-    })
-        .then((response) => {
-            closeModal()
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    const returnClause = returnAllForm.querySelector('#to_return_from_customer')
-    const returnObjects = returnClause.querySelectorAll('.check-input')
-    let checked = true;
-    returnObjects.forEach(function (checkbox) {
-        if (checkbox.checked == false) {
-            checked = false
-        }
-    });
-    const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
-    if (checked) {
-        document.getElementById(butId).classList.remove('btn-delete')
-        document.getElementById(butId).classList.add('btn-submit')
-    } else {
-        document.getElementById(butId).classList.add('btn-delete')
-        document.getElementById(butId).classList.remove('btn-submit')
-    }
-
-
-});
-
 async function buildRow(element) {
     const newRow = document.createElement('tr');
     newRow.classList.add('edit-modal');
