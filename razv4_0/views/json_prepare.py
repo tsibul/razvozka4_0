@@ -120,3 +120,17 @@ def search_razvozki_last_as_json(request, search_string, last_element):
     razvozki = serialize('python', razvozki_query)
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
     return JsonResponse(razvozki, safe=False)
+
+
+def customer_list_as_json(request, last_element):
+    customer_query = Customer.objects.all().order_by('name')[last_element:last_element + 49]
+    customers = serialize('python', customer_query)
+    customers = json.dumps(customers, ensure_ascii=False, default=str)
+    return JsonResponse(customers, safe=False)
+
+
+def customer_last_as_json(request, last_element):
+    customer_query = Customer.objects.all().order_by('name')[last_element + 49:last_element + 50]
+    customers = serialize('python', customer_query)
+    customers = json.dumps(customers, ensure_ascii=False, default=str)
+    return JsonResponse(customers, safe=False)
