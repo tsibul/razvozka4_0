@@ -11,11 +11,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name='driver.py',
+            model_name='driver',
             name='icon_reference',
         ),
         migrations.AlterField(
-            model_name='driver.py',
+            model_name='driver',
             name='icon_code',
             field=models.CharField(blank=True, default='razvozki4_0/icons/truck.svg', max_length=255, null=True),
         ),
