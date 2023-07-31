@@ -2,18 +2,15 @@ const tableRender = document.querySelector("#render");
 const urlList = tableRender.dataset.url;
 const urlLast = tableRender.dataset.url_last;
 
-let cachedRazvozkiLast = null;
-let cachedRazvozkiList = null;
-
 async function razvLast(lastElement) {
-    let data = await fetchJsonData(urlList + lastElement);
-    cachedRazvozkiLast = JSON.parse(data);
+    const data = await fetchJsonData(urlLast + lastElement);
+    const cachedRazvozkiLast = JSON.parse(data);
     return cachedRazvozkiLast;
 }
 
 async function razvList(lastElement) {
-    let data = await fetchJsonData(urlLast + lastElement);
-    cachedRazvozkiList = JSON.parse(data);
+    const data = await fetchJsonData(urlList + lastElement);
+    const cachedRazvozkiList = JSON.parse(data);
     return cachedRazvozkiList;
 }
 
