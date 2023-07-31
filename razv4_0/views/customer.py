@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from razv4_0.models import Customer, Razvozka
 
 
-def customer(request):
+def customer_list(request):
     navi = 'customer'
     customers = Customer.objects.all().order_by('name')[:49]
     end_customer = Customer.objects.all()[49:50]
@@ -10,3 +10,25 @@ def customer(request):
                                         fulfilled=True, customer__subcontractor=True).count()
     context = {'navi': navi, 'customers': customers, 'end_customer': end_customer, 'to_return': to_return}
     return render(request, 'customer.html', context)
+
+
+def customer_update(request):
+    customer_id = request.POST['cst_id']
+    name = request.POST['name']
+    address = request.POST['address']
+    contact = request.POST['contact']
+    subcontractor = request.POST['subcontractor']
+    if subcontractor == 'false':
+        subcontractor = False
+    else:
+        subcontractor = True
+    if customer_id != 'undefined':
+        customer = Customer.objects.get(id=customer_id)
+        customer.name = name
+    else:
+        customer = Customer(name=name)
+    customer.address = address
+    customer.contact = contact
+    customer.subcontractor = subcontractor
+    customer.save()
+    return HttpResponse()

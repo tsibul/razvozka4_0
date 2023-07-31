@@ -108,7 +108,74 @@ async function buildCustomerRow(element){
     button.type = 'button';
     button.classList.add('btn-delete', 'btn-bg');
     button.setAttribute('onclick', 'customerDelete(this, ' + element['pk'] + ');');
+    button.textContent = 'удалить';
     newCell.appendChild(button);
     newRow.appendChild(newCell);
     return newRow;
 }
+
+async function buildCustomerRowForSingle(element){
+    const newRow = document.createElement('tr');
+    newRow.classList.add('cst-modal');
+    newRow.dataset.id = element['id'];
+    // name
+    let newCell = document.createElement('td');
+    let cellContent = document.createTextNode(element['name']);
+    newCell.appendChild(cellContent);
+    newCell.style.fontWeight = 'bold';
+    newRow.appendChild(newCell);
+    // address
+    newCell = document.createElement('td');
+    cellContent = document.createTextNode(element['address']);
+    newCell.appendChild(cellContent);
+    newRow.appendChild(newCell);
+    // contact
+    newCell = document.createElement('td');
+    cellContent = document.createTextNode(element['contact']);
+    newCell.appendChild(cellContent);
+    newRow.appendChild(newCell);
+    // subcontractor
+    newCell = document.createElement('td');
+    const cellText = element['subcontractor'] ? 'Да' :'Нет';
+    cellContent = document.createTextNode(cellText);
+    newCell.appendChild(cellContent);
+    newRow.appendChild(newCell);
+    // button
+    newCell = document.createElement('td');
+    newCell.setAttribute('onclick', 'event.stopPropagation()');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.classList.add('btn-delete', 'btn-bg');
+    button.setAttribute('onclick', 'customerDelete(this, ' + element['id'] + ');');
+    button.textContent = 'удалить';
+    newCell.appendChild(button);
+    newRow.appendChild(newCell);
+    return newRow;
+}
+
+const updateForm = document.getElementById('updateForm');
+
+updateForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(updateForm);
+
+    fetch('/rzv/customer_update/', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(async () => {
+            closeModal()
+            const inputId = Array.from(updateForm.childNodes).find((node) => node.id === 'cst_id');
+            const cstId = inputId.value;
+            if (cstId != null){
+            const modalRows = document.querySelectorAll(".cst-modal");
+            const editRow = Array.from(modalRows).find((node) => node.dataset.id === cstId);
+            const customerEdit = JSON.parse(await fetchJsonData('/rzv/json_customer_select/' + cstId));
+            const newRow = await buildCustomerRowForSingle(customerEdit);
+            editRow.innerHTML = newRow.innerHTML;}
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});
