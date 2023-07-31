@@ -2,6 +2,11 @@ from django.db import models
 from auditlog.registry import auditlog
 
 
+class DriverIcons(models.Model):
+    description = models.CharField(max_length=100)
+    icon_url = models.CharField(max_length=255)
+
+
 class Driver(models.Model):
     code = models.CharField(max_length=2)
     description = models.CharField(max_length=100)
