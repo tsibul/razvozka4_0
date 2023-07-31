@@ -11,17 +11,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='driver.py',
+            model_name='driver',
             name='icon_code',
             field=models.CharField(blank=True, max_length=800, null=True),
         ),
         migrations.AlterField(
-            model_name='driver.py',
+            model_name='driver',
             name='phone1',
             field=models.CharField(max_length=12),
         ),
         migrations.AlterField(
-            model_name='driver.py',
+            model_name='driver',
             name='phone2',
             field=models.CharField(blank=True, max_length=12, null=True),
         ),

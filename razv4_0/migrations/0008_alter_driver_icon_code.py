@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='driver.py',
+            model_name='driver',
             name='icon_code',
             field=models.CharField(blank=True, default='icons/truck.svg', max_length=255, null=True),
         ),
