@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='driver',
+            model_name='driver.py',
             name='icon_code',
             field=models.CharField(blank=True, max_length=400, null=True),
         ),

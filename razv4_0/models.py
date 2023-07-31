@@ -2,13 +2,18 @@ from django.db import models
 from auditlog.registry import auditlog
 
 
+class DriverIcons(models.Model):
+    description = models.CharField(max_length=100)
+    icon_url = models.CharField(max_length=255)
+
+
 class Driver(models.Model):
     code = models.CharField(max_length=2)
     description = models.CharField(max_length=100)
     phone1 = models.CharField(max_length=12)
     phone2 = models.CharField(max_length=12, null=True, blank=True)
     car_no = models.CharField(max_length=9, null=True, blank=True)
-    icon_code = models.CharField(max_length=255, default='icons/truck.svg', null=True, blank=True)
+    icon_code = models.CharField(max_length=255, default='razvozki4_0/icons/truck.svg', null=True, blank=True)
 
     def __repr__(self):
         return self.description
