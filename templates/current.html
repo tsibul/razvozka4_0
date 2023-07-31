@@ -192,7 +192,7 @@
                         <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
                             {% for driver in drivers %}
                                 <option value="{{ driver.id }}"
-                                        {#                                        {% if driver.id == '1' %}selected{% endif %}#}
+                                        {#                                        {% if driver.py.id == '1' %}selected{% endif %}#}
                                 >{{ driver.description }}</option>
                             {% endfor %}
                         </select>
