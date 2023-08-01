@@ -151,7 +151,7 @@ input[type=checkbox] {
 /* table */
 
 .table {
-    min-width: 60%;
+    width: 100%;
     border: 2px solid dimgray;
     border-collapse: collapse;
 }
@@ -170,7 +170,8 @@ input[type=checkbox] {
     padding: 4px;
 }
 
-.table td {
+.td-end {
+    text-align: right;
 }
 
 .table tbody tr:hover {
@@ -178,14 +179,16 @@ input[type=checkbox] {
 }
 
 .planned-table {
-    max-width: 70%;
+    width: 70%;
     border: 1px solid;
     max-height: 190px; /* Set the maximum height to 140px */
     overflow-y: auto; /* Add vertical scrollbar when needed */
     border-radius: 4px;
+    margin-right: 10px;
 }
 
 .planned-thead {
+    width: 100%;
     position: sticky;
     top: 0;
 }
