@@ -8,6 +8,7 @@ urlpatterns = [
     path('accounts/login/', views.custom_login, name='custom_login'),
     path('accounts/logout/', views.custom_logout, name='custom_logout'),
 
+    path('', views.index, name='index'),
     path('current/', views.current_rzv, name='current_rzv'),
     path('current_update', views.update_rzv, name='update_current'),
     path('razvozka_update', views.update_total_rzv, name='update_rzv'),

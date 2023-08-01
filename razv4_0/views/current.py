@@ -7,6 +7,10 @@ from datetime import date, timedelta, datetime
 from django.db.models import Min
 
 
+def index(request):
+    return HttpResponseRedirect(reverse('razv4_0:current_rzv'))
+
+
 def current_rzv(request):
     navi = 'current'
     current_date = date.today()
