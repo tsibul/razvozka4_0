@@ -14,6 +14,7 @@ class Driver(models.Model):
     phone2 = models.CharField(max_length=12, null=True, blank=True)
     car_no = models.CharField(max_length=9, null=True, blank=True)
     icon_code = models.CharField(max_length=255, default='icons/truck.svg', null=True, blank=True)
+    deleted = models.BooleanField(default=False)
 
     def __repr__(self):
         return self.description
@@ -28,6 +29,7 @@ class Customer(models.Model):
     contact = models.CharField(max_length=255)
     mappoint = models.CharField(max_length=255, default='', help_text="Yandex mappoint")
     subcontractor = models.BooleanField(default=False, help_text='True if subcontractor')
+    deleted = models.BooleanField(default=False)
 
     def __repr__(self):
         return f"Customer(name={self.name!r}, contact={self.contact!r})"
@@ -58,6 +60,7 @@ class Razvozka(models.Model):
                                   help_text='plan (last) date of transportation')
     date_create = models.DateField(null=True, help_text='date of create razvozka')
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(

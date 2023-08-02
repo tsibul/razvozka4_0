@@ -16,14 +16,14 @@ def current_rzv(request):
     current_date = date.today()
     date_begin = current_date - timedelta(days=(current_date.weekday() + 7))
     date_end = current_date + timedelta(days=(14 - current_date.weekday()))
-    razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end).order_by('-date', 'date_id').annotate(
+    razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end, deleted=False).order_by('-date', 'date_id').annotate(
         returned_all=Min('take__deliver__return_all'))
-    razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
+    razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until')
     plan_number = razvozki_plan.count()
-    customers = Customer.objects.all().order_by('name')
-    drivers = Driver.objects.all().order_by('id')
+    customers = Customer.objects.filter(deleted=False).order_by('name')
+    drivers = Driver.objects.filter(deleted=False).order_by('id')
     to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
-                                        fulfilled=True, customer__subcontractor=True).count()
+                                        fulfilled=True, customer__subcontractor=True, deleted=False).count()
 
     context = {'razvozki': razvozki, 'navi': navi, 'razvozki_plan': razvozki_plan, 'customers': customers,
                'drivers': drivers, 'to_return': to_return, 'plan_number': plan_number}

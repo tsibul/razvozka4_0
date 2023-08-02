@@ -6,14 +6,14 @@ from razv4_0.models import Driver, Customer, Razvozka, Razvozka_returns
 
 def total_rzv(request):
     navi = 'razv'
-    razvozki_plan = Razvozka.objects.filter(date=None).order_by('date_until')
-    razvozki = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[:19]
-    end_razvozki = Razvozka.objects.filter(date__isnull=False).order_by('-date', 'date_id')[19:20]
+    razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until')
+    razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id')[:19]
+    end_razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id')[19:20]
     razvozki = razvozki_plan.union(razvozki)
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')
     to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
-                                                   fulfilled=True, customer__subcontractor=True).count()
+                                                   fulfilled=True, customer__subcontractor=True, deleted=False).count()
     url_list = '/rzv/json_razvozki_list/'
     url_last = '/rzv/json_razvozki_last/'
     context = {'razvozki': razvozki, 'navi': navi, 'customers': customers, 'url_list': url_list, 'url_last': url_last,

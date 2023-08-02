@@ -21,5 +21,6 @@ def razvozka_deliver_to(request, razv_id):
 def razvozka_delete(request, razv_id):
     razv_to_delete = Razvozka.objects.get(id=razv_id)
     if not razv_to_delete.fulfilled:
-        razv_to_delete.delete()
+        razv_to_delete.deleted = True
+        razv_to_delete.save()
     return HttpResponse()
