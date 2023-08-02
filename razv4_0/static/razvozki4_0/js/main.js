@@ -115,7 +115,7 @@ async function razvozkaDelete(obj, razvId) {
     if (!razvozka['fulfilled']) {
         obj.parentElement.parentElement.style.display = 'none';
         const url = '/rzv/razvozka_delete/' + razvId;
-        fetch(url);
+        await fetch(url);
     }
 }
 
