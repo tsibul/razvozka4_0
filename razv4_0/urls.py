@@ -13,9 +13,13 @@ urlpatterns = [
     path('current_update', views.update_rzv, name='update_current'),
     path('razvozka_update', views.update_total_rzv, name='update_rzv'),
     path('search_rzv', views.search_all, name='search_rzv'),
+
     path('customer/', views.customer_list, name='customer'),
     path('customer_update/', views.customer_update, name='customer_update'),
+    path('customer_delete/<int:cust_id>', views.customer_delete, name='customer_delete'),
+
     path('driver/', views.driver, name='driver'),
+    path('driver_delete/<int:drv_id>', views.driver_delete, name='driver_delete'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),

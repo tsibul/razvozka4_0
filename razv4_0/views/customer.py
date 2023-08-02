@@ -32,3 +32,10 @@ def customer_update(request):
     customer.subcontractor = subcontractor
     customer.save()
     return HttpResponse()
+
+
+def customer_delete(request, cust_id):
+    customer_to_delete = Customer.objects.get(id=cust_id)
+    customer_to_delete.deleted = True
+    customer_to_delete.save()
+    return HttpResponse()

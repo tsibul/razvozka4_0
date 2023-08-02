@@ -29,9 +29,11 @@
                         <td><img src="{% static drv.icon_code %}" alt="drv icon"></td>
                         <td onclick="event.stopPropagation()" data-title="Удалить"
                             class="title-icon">
-                            <button type="button" class="btn-delete btn-bg"
-                                    onclick="">удалить
-                            </button>
+                            <a href="{% url 'razv4_0:driver_delete'  drv.id %}">
+                                <button type="button" class="btn-delete btn-bg"
+                                        onclick="">удалить
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -57,12 +59,12 @@
                         <label for="icon"><strong>подрядчик</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <ul class="modal-input modal-id" id="icon">
                             {% for icon in driver_icons %}
-                            <li>
-                                <input type="checkbox" value="{{ icon.id }}" id="icon-{{ icon.id }}">
-                                <img src="{% static icon.icon_url %}" alt="icon">
-                                <label for="icon-{{ icon.id }}"><strong>{{ icon.description }}</strong></label>
-                            </li>
-                            {%  endfor %}
+                                <li>
+                                    <input type="checkbox" value="{{ icon.id }}" id="icon-{{ icon.id }}">
+                                    <img src="{% static icon.icon_url %}" alt="icon">
+                                    <label for="icon-{{ icon.id }}"><strong>{{ icon.description }}</strong></label>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <label for="code"><strong>код</strong></label>
@@ -86,6 +88,5 @@
     </div>
 
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
-    <script src="{% static 'razvozki4_0/js/spread_table.js' %}"></script>
 
 {% endblock %}
