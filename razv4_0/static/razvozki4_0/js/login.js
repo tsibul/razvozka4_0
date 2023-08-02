@@ -24,6 +24,9 @@ function closeModal() {
     if (document.querySelector('#customerModal') != null) {
         document.querySelector("#customerModal").style.display = 'none';
     }
+    if (document.querySelector('#driverModal') != null) {
+        document.querySelector("#driverModal").style.display = 'none';
+    }
 }
 
 closeButtons.forEach(function (row) {
