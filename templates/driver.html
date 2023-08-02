@@ -53,7 +53,7 @@
                     <p id="modal-title">Редактировать</p>
                     <span class="close">&times;</span>
                 </div>
-                <input name="cst_id" type="text" id="cst_id" hidden>
+                <input name="drv_id" type="text" id="drv_id" hidden>
                 <div class="modal-body">
                     <div>
                         <label for="icon"><strong>подрядчик</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -68,7 +68,7 @@
                         </ul>
                     </div>
                     <label for="code"><strong>код</strong></label>
-                    <input name="name" id="code" class="modal-input" required>
+                    <input name="code" id="code" class="modal-input" required>
                     <label for="description"><strong>описание</strong></label>
                     <input name="description" id="description" class="modal-input" required>
                     <label for="phone1"><strong>телефон 1</strong></label>
@@ -76,7 +76,7 @@
                     <label for="phone2"><strong>телефон 2</strong></label>
                     <input name="phone2" id="phone2" class="modal-input">
                     <label for="car_no"><strong>телефон 1</strong></label>
-                    <textarea name="car_no" id="car-no" class="modal-input"></textarea>
+                    <input name="car_no" id="car_no" class="modal-input">
                     <input name="icon_code" id="icon_code" type="text" hidden class="modal-input">
                 </div>
                 <div class="modal-buttons">
@@ -88,5 +88,6 @@
     </div>
 
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/driver.js' %}"></script>
 
 {% endblock %}

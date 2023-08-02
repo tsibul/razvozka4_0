@@ -1,4 +1,6 @@
-from django.http import HttpResponseRedirect
+import json
+
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -20,3 +22,9 @@ def driver_delete(request, drv_id):
     driver_to_delete.deleted = True
     driver_to_delete.save()
     return HttpResponseRedirect(reverse('razv4_0:driver'))
+
+
+def driver_as_json(request, drv_id):
+    drv = Driver.objects.get(id=drv_id).__dict__
+    json_driver = json.dumps(drv, ensure_ascii=False, default=str)
+    return JsonResponse(json_driver, safe=False)

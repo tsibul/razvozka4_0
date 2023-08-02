@@ -34,6 +34,7 @@ urlpatterns = [
 
     path('json_razvozka/<int:razv_id>', views.razvozka_as_json),
     path('json_customer_select/<int:cst_id>', views.customer_as_json),
+    path('json_driver_select/<int:drv_id>', views.driver_as_json),
     path('json_customer/', views.customers_as_json),
     path('json_open_deliveries/', views.open_deliveries_as_json),
     path('json_deliveries/<int:cust_id>', views.deliveries_as_json),
