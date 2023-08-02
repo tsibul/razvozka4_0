@@ -179,3 +179,12 @@ updateForm.addEventListener('submit', async function (event) {
             console.error(error);
         });
 });
+
+async function customerDelete(obj, custId) {
+    const cstUrl = '/rzv/json_customer_select/' + custId;
+    const razvozka = JSON.parse(await fetchJsonData(cstUrl));
+    obj.parentElement.parentElement.style.display = 'none';
+    const url = '/rzv/customer_delete/' + custId;
+    await fetch(url);
+}
+
