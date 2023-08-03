@@ -16,7 +16,8 @@ def current_rzv(request):
     current_date = date.today()
     date_begin = current_date - timedelta(days=(current_date.weekday() + 7))
     date_end = current_date + timedelta(days=(14 - current_date.weekday()))
-    razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end, deleted=False).order_by('-date', 'date_id').annotate(
+    razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end, deleted=False).order_by('-date',
+                                                                                                        'date_id').annotate(
         returned_all=Min('take__deliver__return_all'))
     razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until')
     plan_number = razvozki_plan.count()
@@ -55,6 +56,7 @@ def update_rzv(request):
     if customer_id != '':
         razvozka.customer = Customer.objects.get(id=customer_id)
     razvozka.driver = Driver.objects.get(id=request.POST['driver'])
+    razvozka.save()
     rzv_return_quantity = int(request.POST['rzv_quantity'])
     j = 0
     if rzv_return_quantity:

@@ -149,10 +149,12 @@ async function returnList(custId) {
 
 
 async function returnCheckList(razvId) {
-    const returnCheckedList = await razvozkaReturnsById(razvId);
-    returnCheckedList.forEach(function (returnRazvozkaId) {
-        document.querySelector('.returnNo' + returnRazvozkaId).checked = true;
-    });
+    if (razvId != null) {
+        const returnCheckedList = await razvozkaReturnsById(razvId);
+        returnCheckedList.forEach(function (returnRazvozkaId) {
+            document.querySelector('.returnNo' + returnRazvozkaId).checked = true;
+        });
+    }
 }
 
 const updateForm = document.getElementById('updateForm');
