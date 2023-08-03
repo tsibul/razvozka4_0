@@ -6,7 +6,7 @@
 }
 
 input[type=checkbox] {
-  accent-color: #293d32;
+    accent-color: #293d32;
 }
 
 .auth-required {
@@ -230,8 +230,28 @@ input[type=checkbox] {
     width: 99%;
 }
 
-.current-pure{
+.current-pure {
     margin-top: 59px;
+}
+
+
+.icon-list {
+    list-style: none;
+    column-count: 3;
+    height: 160px;
+}
+
+.icon-list li {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-top: 4px;
+}
+
+.icon-img {
+    align-self: end;
+    margin: 0px 2px;
+        vertical-align: bottom;
+
 }
 
 /* Not printable elements*/
