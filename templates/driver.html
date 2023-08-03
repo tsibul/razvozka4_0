@@ -47,7 +47,7 @@
     {#    driver Modal #}
     <div id="driverModal" class="modal">
         <div class="modal-content">
-            <form method="post" action="">
+            <form method="post" action="{%  url 'razv4_0:driver_update' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
@@ -59,10 +59,8 @@
                         <ul class="modal-input icon-list" id="icon">
                             {% for icon in driver_icons %}
                                 <li>
-                                    <input type="checkbox" name="{{ icon.icon_url }}" class="{{ icon.icon_url }}"
-                                           id="chk-{{ icon.id }}">
-                                    <input type="text" name="url-{{ icon.id }}" id="url-{{ icon.id }}"
-                                           value="{{ icon.icon_url }}" hidden>
+                                    <input type="radio" class="{{ icon.icon_url }}"
+                                           id="chk-{{ icon.id }}" name="chk" value="{{ icon.icon_url }}">
                                     <img src="{% static icon.icon_url %}" alt="icon" class="icon-img">
                                     <label for="icon-{{ icon.id }}"><strong>{{ icon.description }}</strong></label>
                                 </li>
@@ -70,16 +68,16 @@
                         </ul>
                     </div>
                     <label for="code"><strong>код</strong></label>
-                    <input name="code" id="code" class="modal-input" required>
+                    <input name="code" id="code" class="modal-input" size="2" required>
                     <label for="description"><strong>описание</strong></label>
-                    <input name="description" id="description" class="modal-input" required>
+                    <input name="description" id="description" class="modal-input" size="100" required>
                     <label for="phone1"><strong>телефон 1</strong></label>
-                    <input name="phone1" id="phone1" class="modal-input">
+                    <input name="phone1" id="phone1" class="modal-input" size="12">
                     <label for="phone2"><strong>телефон 2</strong></label>
-                    <input name="phone2" id="phone2" class="modal-input">
-                    <label for="car_no"><strong>телефон 1</strong></label>
-                    <input name="car_no" id="car_no" class="modal-input">
-                    <input name="icon_code" id="icon_code" type="text" hidden class="modal-input">
+                    <input name="phone2" id="phone2" class="modal-input" size="12">
+                    <label for="car_no"><strong>номер машины</strong></label>
+                    <input name="car_no" id="car_no" class="modal-input" size="9">
+                    <input name="icon_code" id="icon_code" type="text" hidden class="modal-input" size="255">
                 </div>
                 <div class="modal-buttons">
                     <button type="reset" class="btn-delete close">Отменить</button>

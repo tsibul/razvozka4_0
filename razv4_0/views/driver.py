@@ -24,13 +24,40 @@ def driver_delete(request, drv_id):
     return HttpResponseRedirect(reverse('razv4_0:driver'))
 
 
+def driver_update(request):
+    drv_id = request.POST['drv_id']
+    description = request.POST['description']
+    code = request.POST['code']
+    phone1 = request.POST['phone1']
+    phone2 = request.POST['phone2']
+    car_no = request.POST['car_no']
+    if drv_id:
+        driver_to_update = Driver.objects.get(id=drv_id)
+        driver_to_update.description = description
+    else:
+        driver_to_update = Driver(description=description)
+    driver_to_update.code = code
+    driver_to_update.phone1 = phone1
+    driver_to_update.phone2 = phone2
+    driver_to_update.car_no = car_no
+    # icons_quantity = DriverIcons.objects.all().count()
+    # for i in range(1, icons_quantity + 1):
+    #     try:
+    #         request.POST['chk-' + str(i)]
+    #         driver_to_update.icon_code = request.POST['url-' + str(i)]
+    #     except:
+    #         pass
+    driver_to_update.save()
+    return HttpResponseRedirect(reverse('razv4_0:driver'))
+
+
 def driver_as_json(request, drv_id):
     drv = Driver.objects.get(id=drv_id).__dict__
     json_driver = json.dumps(drv, ensure_ascii=False, default=str)
     return JsonResponse(json_driver, safe=False)
 
 
-def driver_icon_as_json(request, drv_url):
+def driver_icon_from_url_as_json(request, drv_url):
     drv_icon = DriverIcons.objects.get(icon_url=drv_url).__dict__
     json_driver_icon = json.dumps(drv_icon, ensure_ascii=False, default=str)
     return JsonResponse(json_driver_icon, safe=False)

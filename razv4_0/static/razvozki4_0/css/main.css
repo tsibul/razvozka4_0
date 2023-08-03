@@ -9,6 +9,11 @@ input[type=checkbox] {
     accent-color: #293d32;
 }
 
+input[type=radio] {
+    accent-color: #293d32;
+}
+
+
 .auth-required {
     margin: 80px;
     text-align: center;

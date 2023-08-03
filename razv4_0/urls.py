@@ -20,6 +20,7 @@ urlpatterns = [
 
     path('driver/', views.driver, name='driver'),
     path('driver_delete/<int:drv_id>', views.driver_delete, name='driver_delete'),
+    path('driver_update', views.driver_update, name='driver_update'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('json_date_id/<str:date_str>', views.data_id_as_json),
     path('json_customer_name/<int:cst_id>', views.customer_name_as_json),
     path('json_driver_url/<int:driver_id>', views.driver_icon_as_json),
+    path('json_driver_url_from_url/<str:drv_url>', views.driver_icon_from_url_as_json),
     path('json_driver_description/<int:driver_id>', views.driver_description_as_json),
     path('json_returns/<int:razv_id>', views.returns_as_id_json),
     path('json_returns_full_info/<int:razv_id>', views.returns_as_json),
