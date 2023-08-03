@@ -4,7 +4,7 @@ from auditlog.registry import auditlog
 
 class DriverIcons(models.Model):
     description = models.CharField(max_length=100)
-    icon_url = models.CharField(max_length=255)
+    icon_url = models.CharField(max_length=255, null=True)
 
 
 class Driver(models.Model):
