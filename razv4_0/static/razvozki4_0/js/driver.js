@@ -19,6 +19,7 @@ async function openDriverModal(titleText, modalData) {
     for (const key in inputs(modal)) {
         inputs(modal)[key].value = modalData[key];
     }
+
     modal.style.display = "block";
 }
 
@@ -29,6 +30,7 @@ async function prepareToEditDriver(element){
         if (drvId != null) {
             driver = JSON.parse(await fetchJsonData(jsonUrl));
         }
+        document.getElementsByClassName(driver['icon_code'])[0].checked = true;
         const titleText = drvId == null ? 'Новый водитель' : 'Редактировать водителя';
         await openDriverModal(titleText, driver);
 }

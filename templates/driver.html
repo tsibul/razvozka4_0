@@ -56,12 +56,14 @@
                 <input name="drv_id" type="text" id="drv_id" hidden>
                 <div class="modal-body">
                     <div>
-                        <label for="icon"><strong>подрядчик</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <ul class="modal-input modal-id" id="icon">
+                        <ul class="modal-input icon-list" id="icon">
                             {% for icon in driver_icons %}
                                 <li>
-                                    <input type="checkbox" value="{{ icon.id }}" id="icon-{{ icon.id }}">
-                                    <img src="{% static icon.icon_url %}" alt="icon">
+                                    <input type="checkbox" name="{{ icon.icon_url }}" class="{{ icon.icon_url }}"
+                                           id="chk-{{ icon.id }}">
+                                    <input type="text" name="url-{{ icon.id }}" id="url-{{ icon.id }}"
+                                           value="{{ icon.icon_url }}" hidden>
+                                    <img src="{% static icon.icon_url %}" alt="icon" class="icon-img">
                                     <label for="icon-{{ icon.id }}"><strong>{{ icon.description }}</strong></label>
                                 </li>
                             {% endfor %}
