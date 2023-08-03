@@ -136,3 +136,13 @@ def customer_last_as_json(request, last_element):
     customers = serialize('python', customer_query)
     customers = json.dumps(customers, ensure_ascii=False, default=str)
     return JsonResponse(customers, safe=False)
+
+
+def deliver_list_as_json(request, razv_id):
+    deliver_id = Razvozka_returns.objects.filter(deliver__id=razv_id).last()
+    delivers = ''
+    if deliver_id:
+        deliver_id = deliver_id.take.id
+        deliver_query = Razvozka.objects.get(id=deliver_id).__dict__
+        delivers = json.dumps(deliver_query, ensure_ascii=False, default=str)
+    return JsonResponse(delivers, safe=False)
