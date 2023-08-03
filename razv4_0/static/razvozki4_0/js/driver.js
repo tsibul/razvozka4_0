@@ -17,7 +17,7 @@ async function openDriverModal(titleText, modalData) {
     const modalTitle = modal.querySelector("#modal-title");
     modalTitle.textContent = titleText;
     for (const key in inputs(modal)) {
-        inputs(modal)[key].value = modalData[key];
+        inputs(modal)[key].value = modalData[key] || '';
     }
 
     modal.style.display = "block";
