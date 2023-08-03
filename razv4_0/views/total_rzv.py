@@ -46,6 +46,7 @@ def update_total_rzv(request):
     if customer_id != '':
         razvozka.customer = Customer.objects.get(id=customer_id)
     razvozka.driver = Driver.objects.get(id=request.POST['driver'])
+    razvozka.save()
     rzv_return_quantity = int(request.POST['rzv_quantity'])
     j = 0
     if rzv_return_quantity:
