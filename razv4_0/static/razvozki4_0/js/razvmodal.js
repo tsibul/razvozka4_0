@@ -35,34 +35,34 @@ async function openEditModal(titleText, modalData) {
     }
 }
 
-async function prepareToOpenModal(element){
-        const razvId = element.dataset.id;
-        const razvDate = element.dataset.date;
-        const jsonUrl = '/rzv/json_razvozka/' + razvId;
-        let razvozka = {date_id: 1, driver_id: 1};
-        if (razvId != null) {
-            razvozka = JSON.parse(await fetchJsonData(jsonUrl));
-            if (razvozka['customer_id'] != null) {
-                const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
-                razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
-            }
-            if (razvozka['driver_id'] == null) {
-                razvozka['driver_id'] = 1;
-            }
-        } else if (razvDate != null) {
-            razvozka = {
-                date: razvDate,
-                date_until: razvDate,
-                date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate),
-                driver_id: 1,
-            }
-        } else {
-            razvozka['driver_id'] = 1
+async function prepareToOpenModal(element) {
+    const razvId = element.dataset.id;
+    const razvDate = element.dataset.date;
+    const jsonUrl = '/rzv/json_razvozka/' + razvId;
+    let razvozka = {date_id: 1, driver_id: 1};
+    if (razvId != null) {
+        razvozka = JSON.parse(await fetchJsonData(jsonUrl));
+        if (razvozka['customer_id'] != null) {
+            const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
+            razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
         }
-        document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
-            razvozka['driver_id']);
-        const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
-        if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
+        if (razvozka['driver_id'] == null) {
+            razvozka['driver_id'] = 1;
+        }
+    } else if (razvDate != null) {
+        razvozka = {
+            date: razvDate,
+            date_until: razvDate,
+            date_id: await fetchJsonData('/rzv/json_date_id/' + razvDate),
+            driver_id: 1,
+        }
+    } else {
+        razvozka['driver_id'] = 1
+    }
+    document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
+        razvozka['driver_id']);
+    const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
+    if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
 }
 
 table.addEventListener("click", async (event) => {
@@ -172,9 +172,11 @@ updateForm.addEventListener('submit', async function (event) {
             const razvId = inputId.value;
             const modalRows = document.querySelectorAll(".edit-modal");
             const editRow = Array.from(modalRows).find((node) => node.dataset.id === razvId);
-            const razvozkaEdit = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
-            const newRow = await buildRowForSingle(razvozkaEdit);
-            editRow.innerHTML = newRow.innerHTML;
+            if (editRow != null) {
+                const razvozkaEdit = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
+                const newRow = await buildRowForSingle(razvozkaEdit);
+                editRow.innerHTML = newRow.innerHTML;
+            }
         })
         .catch((error) => {
             console.error(error);
@@ -183,37 +185,62 @@ updateForm.addEventListener('submit', async function (event) {
 
 const returnAllForm = document.getElementById('deliverModalForm');
 
-returnAllForm.addEventListener('submit', function (event) {
-    event.preventDefault();
+if (returnAllForm != null) {
+    returnAllForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    const formData = new FormData(returnAllForm);
+        const formData = new FormData(returnAllForm);
 
-    fetch('/rzv/razvozka_returned_all/', {
-        method: 'POST',
-        body: formData,
-    })
-        .then((response) => {
-            closeModal()
+        fetch('/rzv/razvozka_returned_all/', {
+            method: 'POST',
+            body: formData,
         })
-        .catch((error) => {
-            console.error(error);
+            .then((response) => {
+                closeModal()
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        const returnClause = returnAllForm.querySelector('#to_return_from_customer')
+        const returnObjects = returnClause.querySelectorAll('.check-input')
+        let checked = true;
+        returnObjects.forEach(function (checkbox) {
+            if (checkbox.checked == false) {
+                checked = false
+            }
         });
-    const returnClause = returnAllForm.querySelector('#to_return_from_customer')
-    const returnObjects = returnClause.querySelectorAll('.check-input')
-    let checked = true;
-    returnObjects.forEach(function (checkbox) {
-        if (checkbox.checked == false) {
-            checked = false
+        const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
+        if (checked) {
+            document.getElementById(butId).classList.remove('btn-delete')
+            document.getElementById(butId).classList.add('btn-submit')
+        } else {
+            document.getElementById(butId).classList.add('btn-delete')
+            document.getElementById(butId).classList.remove('btn-submit')
         }
+
+
     });
-    const butId = 'but-' + returnAllForm.querySelector('#razv-id').value;
-    if (checked) {
-        document.getElementById(butId).classList.remove('btn-delete')
-        document.getElementById(butId).classList.add('btn-submit')
-    } else {
-        document.getElementById(butId).classList.add('btn-delete')
-        document.getElementById(butId).classList.remove('btn-submit')
+}
+
+async function planRazvozka(razvId) {
+    const razvozka = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
+
+    const plan = await fetchJsonData('/rzv/json_deliver/' + razvId);
+    let planRazv = {
+        address: razvozka['address'],
+        contact: razvozka['contact'],
+        customer_id: razvozka['customer_id'],
+        customer_name: razvozka['customer_name'],
+        date: null,
+        date_id: 1,
+        date_until: null,
+        map_point: razvozka['map_point'],
+        to_do_deliver: null,
+        to_do_take: razvozka['to_do_deliver'],
+        driver_id: 1,
+    };
+    if (plan !== '') {
+        planRazv = JSON.parse(plan);
     }
-
-
-});
+    await openEditModal('запланировать', planRazv);
+}
