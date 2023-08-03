@@ -25,6 +25,12 @@ function closeModal() {
         document.querySelector("#customerModal").style.display = 'none';
     }
     if (document.querySelector('#driverModal') != null) {
+        const iconList = document.querySelector('#icon').childNodes;
+        iconList.forEach(function (element) {
+            if(element.tagName === 'LI') {
+                element.childNodes[1].checked = false;
+            }
+        });
         document.querySelector("#driverModal").style.display = 'none';
     }
 }
