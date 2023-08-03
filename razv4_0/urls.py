@@ -47,6 +47,7 @@ urlpatterns = [
     path('json_returns/<int:razv_id>', views.returns_as_id_json),
     path('json_returns_full_info/<int:razv_id>', views.returns_as_json),
     path('json_return_all_min/<int:razv_id>', views.returned_all_as_json),
+    path('json_deliver/<int:razv_id>', views.deliver_list_as_json),
 
     path('json_razvozki_list/<int:last_element>', views.razvozki_list_as_json),
     path('json_razvozki_last/<int:last_element>', views.razvozki_last_list_as_json),
