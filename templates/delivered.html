@@ -50,8 +50,14 @@
                                 <div><strong>СДАТЬ: </strong>{{ rzv.to_do_deliver }}</div>
                             {% endif %}
                         </td>
-                        <td><button type="button" class="btn-submit submit-neg">Запланировать</button></td>
-                        <td><button type="button" class="btn-neutral neutral-neg">Закрыть</button></td>
+                        <td>
+                            <button type="button" class="btn-submit submit-neg" onclick="planRazvozka({{ rzv.id }});">
+                                Запланировать
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-neutral neutral-neg">Закрыть</button>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
