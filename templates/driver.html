@@ -47,7 +47,7 @@
     {#    driver Modal #}
     <div id="driverModal" class="modal">
         <div class="modal-content">
-            <form method="post" action="{%  url 'razv4_0:driver_update' %}">
+            <form method="post" action="{% url 'razv4_0:driver_update' %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <p id="modal-title">Редактировать</p>
@@ -61,8 +61,9 @@
                                 <li>
                                     <input type="radio" class="{{ icon.icon_url }}"
                                            id="chk-{{ icon.id }}" name="chk" value="{{ icon.icon_url }}">
-                                    <img src="{% static icon.icon_url %}" alt="icon" class="icon-img">
-                                    <label for="icon-{{ icon.id }}"><strong>{{ icon.description }}</strong></label>
+                                    <label for="chk-{{ icon.id }}"><img src="{% static icon.icon_url %}" alt="icon"
+                                                                        class="icon-img"><strong>{{ icon.description }}
+                                    </strong></label>
                                 </li>
                             {% endfor %}
                         </ul>

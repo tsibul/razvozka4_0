@@ -23,16 +23,16 @@ async function openDriverModal(titleText, modalData) {
     modal.style.display = "block";
 }
 
-async function prepareToEditDriver(element){
-        const drvId = element.dataset.id;
-        const jsonUrl = '/rzv/json_driver_select/' + drvId;
-        let driver = {name: null};
-        if (drvId != null) {
-            driver = JSON.parse(await fetchJsonData(jsonUrl));
-        }
+async function prepareToEditDriver(element) {
+    const drvId = element.dataset.id;
+    const jsonUrl = '/rzv/json_driver_select/' + drvId;
+    let driver = {name: null};
+    if (drvId != null) {
+        driver = JSON.parse(await fetchJsonData(jsonUrl));
         document.getElementsByClassName(driver['icon_code'])[0].checked = true;
-        const titleText = drvId == null ? 'Новый водитель' : 'Редактировать водителя';
-        await openDriverModal(titleText, driver);
+    } else document.getElementById('chk-1').checked = true;
+    const titleText = drvId == null ? 'Новый водитель' : 'Редактировать водителя';
+    await openDriverModal(titleText, driver);
 }
 
 table.addEventListener("click", async (event) => {

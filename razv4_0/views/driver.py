@@ -31,6 +31,7 @@ def driver_update(request):
     phone1 = request.POST['phone1']
     phone2 = request.POST['phone2']
     car_no = request.POST['car_no']
+    icon_code = request.POST['chk']
     if drv_id:
         driver_to_update = Driver.objects.get(id=drv_id)
         driver_to_update.description = description
@@ -40,13 +41,7 @@ def driver_update(request):
     driver_to_update.phone1 = phone1
     driver_to_update.phone2 = phone2
     driver_to_update.car_no = car_no
-    # icons_quantity = DriverIcons.objects.all().count()
-    # for i in range(1, icons_quantity + 1):
-    #     try:
-    #         request.POST['chk-' + str(i)]
-    #         driver_to_update.icon_code = request.POST['url-' + str(i)]
-    #     except:
-    #         pass
+    driver_to_update.icon_code = icon_code
     driver_to_update.save()
     return HttpResponseRedirect(reverse('razv4_0:driver'))
 
