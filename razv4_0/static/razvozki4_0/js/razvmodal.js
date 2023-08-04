@@ -159,32 +159,33 @@ async function returnCheckList(razvId) {
 
 const updateForm = document.getElementById('updateForm');
 
-updateForm.addEventListener('submit', async function (event) {
-    event.preventDefault();
+if(updateForm !== null) {
+    updateForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-    const formData = new FormData(updateForm);
+        const formData = new FormData(updateForm);
 
-    fetch('/rzv/razvozka_update', {
-        method: 'POST',
-        body: formData,
-    })
-        .then(async (response) => {
-            closeModal()
-            const inputId = Array.from(updateForm.childNodes).find((node) => node.id === 'razv_id');
-            const razvId = inputId.value;
-            const modalRows = document.querySelectorAll(".edit-modal");
-            const editRow = Array.from(modalRows).find((node) => node.dataset.id === razvId);
-            if (editRow != null) {
-                const razvozkaEdit = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
-                const newRow = await buildRowForSingle(razvozkaEdit);
-                editRow.innerHTML = newRow.innerHTML;
-            }
+        fetch('/rzv/razvozka_update', {
+            method: 'POST',
+            body: formData,
         })
-        .catch((error) => {
-            console.error(error);
-        });
-});
-
+            .then(async (response) => {
+                closeModal()
+                const inputId = Array.from(updateForm.childNodes).find((node) => node.id === 'razv_id');
+                const razvId = inputId.value;
+                const modalRows = document.querySelectorAll(".edit-modal");
+                const editRow = Array.from(modalRows).find((node) => node.dataset.id === razvId);
+                if (editRow != null) {
+                    const razvozkaEdit = JSON.parse(await fetchJsonData('/rzv/json_razvozka/' + razvId));
+                    const newRow = await buildRowForSingle(razvozkaEdit);
+                    editRow.innerHTML = newRow.innerHTML;
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    });
+}
 const returnAllForm = document.getElementById('deliverModalForm');
 
 if (returnAllForm != null) {
