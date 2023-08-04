@@ -52,15 +52,12 @@ class Razvozka(models.Model):
     deliver_to = models.BooleanField(default=False, help_text='transportation to processing')
     return_from = models.BooleanField(default=False, help_text='return products from processing')
     return_all = models.BooleanField(default=False, help_text='False if some part was not return')
-
-    return_goods = models.ForeignKey('self', models.SET_NULL, null=True, blank=True,
-                                     help_text='from which delivery return')
-
     date_until = models.DateField(null=True,
                                   help_text='plan (last) date of transportation')
     date_create = models.DateField(null=True, help_text='date of create razvozka')
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     deleted = models.BooleanField(default=False)
+    return_close_without_delivery = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(
