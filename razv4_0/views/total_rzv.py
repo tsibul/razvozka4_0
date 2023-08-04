@@ -53,7 +53,7 @@ def update_total_rzv(request):
         for i in range(0, rzv_return_quantity):
             razvozka_delivered = Razvozka.objects.get(id=request.POST['rzv_no_' + str(i)])
             try:
-                razvozka_return = Razvozka_returns.objects.get(take=razvozka, deliver=razvozka_delivered)
+                razvozka_return = Razvozka_returns.objects.get(take=razvozka, deliver=razvozka_delivered, deleted=False)
             except:
                 razvozka_return = Razvozka_returns(take=razvozka, deliver=razvozka_delivered)
             try:
@@ -63,7 +63,8 @@ def update_total_rzv(request):
             except:
                 j += 1
                 if razvozka_return.id:
-                    razvozka_return.delete()
+                    razvozka_return.deleted = True
+                    razvozka_return.save()
     if j == rzv_return_quantity:
         razvozka.return_from = False
     razvozka.save()

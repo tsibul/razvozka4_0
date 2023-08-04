@@ -84,6 +84,7 @@ class Razvozka_returns(models.Model):
     take = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='take')
     deliver = models.ForeignKey(Razvozka, on_delete=models.CASCADE, related_name='deliver')
     returned = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
 
 
 auditlog.register(Customer)

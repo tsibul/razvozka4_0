@@ -1,7 +1,6 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
+from django.http import  HttpResponse
 
-from razv4_0.models import Razvozka, Razvozka_returns, Customer
+from razv4_0.models import Razvozka
 
 
 def razvozka_fulfilled(request, razv_id):

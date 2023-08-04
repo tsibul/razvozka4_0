@@ -64,12 +64,12 @@ def driver_description_as_json(request, driver_id):
 
 
 def returns_as_id_json(request, razv_id):
-    returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values_list('deliver__id', flat=True))
+    returns = list(Razvozka_returns.objects.filter(take__id=razv_id, deleted=False).values_list('deliver__id', flat=True))
     return JsonResponse(returns, safe=False)
 
 
 def returns_as_json(request, razv_id):
-    returns = list(Razvozka_returns.objects.filter(take__id=razv_id).values(
+    returns = list(Razvozka_returns.objects.filter(take__id=razv_id, deleted=False).values(
         'deliver__id', 'deliver__date', 'deliver__to_do_deliver', 'deliver__return_all'))
     return JsonResponse(returns, safe=False)
 
@@ -92,7 +92,7 @@ def razvozki_last_list_as_json(request, last_element):
 
 def returned_all_as_json(request, razv_id):
 
-    returned_all = Razvozka_returns.objects.filter(take_id=razv_id)
+    returned_all = Razvozka_returns.objects.filter(take_id=razv_id, deleted=False)
     if returned_all.count():
         returned_all = returned_all.annotate(minimum=Min('deliver__return_all')).values('minimum')[0]['minimum']
     else:
@@ -139,7 +139,7 @@ def customer_last_as_json(request, last_element):
 
 
 def deliver_list_as_json(request, razv_id):
-    deliver_id = Razvozka_returns.objects.filter(deliver__id=razv_id).last()
+    deliver_id = Razvozka_returns.objects.filter(deliver__id=razv_id, deleted=False).last()
     delivers = ''
     if deliver_id:
         deliver_id = deliver_id.take.id

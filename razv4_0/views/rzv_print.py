@@ -1,6 +1,6 @@
 from razv4_0.models import Razvozka
 from django.shortcuts import render
-from datetime import datetime, date
+from datetime import datetime
 
 
 def print_all(request, date_rzv):
