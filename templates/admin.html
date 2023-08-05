@@ -3,10 +3,7 @@
 {% block title %}машины{% endblock %}
 {% block content %}
     {% if request.user.is_superuser %}
-        <br><br> <br>
-        <h2>Перенос из версии 3.0</h2>
-        <br>
-        <div class="">
+        <div class="planned">
             <form action="{% url 'razv4_0:admin_import' %}">
                 {% csrf_token %}
                 <button class="btn-submit submit-neg" type="submit">Перенос данных из версии 3.0</button>
