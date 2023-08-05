@@ -10,7 +10,7 @@ from razv4_0.models import Razvozka, ImportRazvozka, ImportCustomer, Customer, R
 def admin(request):
     navi = 'admin'
     to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
-                                                   fulfilled=True, customer__subcontractor=True, deleted=False).count()
+                                        fulfilled=True, customer__subcontractor=True, deleted=False).count()
     context = {'navi': navi, 'to_return': to_return}
 
     return render(request, 'admin.html', context)
@@ -39,4 +39,42 @@ def admin_import(request):
 
 
 def admin_delete_all():
-    return
+    Razvozka.objects.all().delete()
+    Customer.objects.all().delete()
+    Razvozka_returns.objects.all().delete()
+
+
+def admin_transfer(request):
+    admin_delete_all()
+    import_customers = ImportCustomer.objects.all()
+    customer_list = []
+    for import_customer in import_customers:
+        customer_list.append(Customer(id=import_customer.id, name=import_customer.name, address=import_customer.address,
+                                      contact=import_customer.contact, mappoint=import_customer.mappoint,
+                                      subcontractor=import_customer.subcontractor))
+    Customer.objects.bulk_create(customer_list)
+    import_razvozka = ImportRazvozka.objects.all()
+    razvozka_list = []
+    for rzv in import_razvozka:
+        razvozka = Razvozka(id=rzv.id, date=rzv.date, date_id=rzv.date_id,
+                            customer_name=rzv.customer_name, address=rzv.address, contact=rzv.contact,
+                            to_do_deliver=rzv.to_do_deliver, to_do_take=rzv.to_do_take,
+                            map_point=rzv.map_point, fulfilled=rzv.fulfilled, deliver_to=rzv.deliver_to,
+                            return_from=rzv.return_from, return_all=rzv.return_all, date_until=rzv.date_until,
+                            date_create=rzv.date_create)
+        try:
+            customer = Customer.objects.get(id=rzv.customer.id)
+            razvozka.customer = customer
+        except:
+            pass
+        razvozka_list.append(razvozka)
+    Razvozka.objects.bulk_create(razvozka_list)
+    return_list = []
+    return_razvozka = ImportRazvozka.objects.filter(return_goods__isnull=False)
+    for return_rzv in return_razvozka:
+        take = Razvozka.objects.get(id=return_rzv.id)
+        deliver = Razvozka.objects.get(id=return_rzv.return_goods.id)
+        razvozka_return = Razvozka_returns(take=take, deliver=deliver, returned=deliver.return_all)
+        return_list.append(razvozka_return)
+    Razvozka_returns.objects.bulk_create(return_list)
+    return HttpResponseRedirect(reverse('razv4_0:admin'))

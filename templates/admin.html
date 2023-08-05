@@ -3,14 +3,26 @@
 {% block title %}машины{% endblock %}
 {% block content %}
     {% if request.user.is_superuser %}
-        <div class="current current-pure">
-            <br>
+        <br><br> <br>
+        <h2>Перенос из версии 3.0</h2>
+        <br>
+        <div class="">
             <form action="{% url 'razv4_0:admin_import' %}">
                 {% csrf_token %}
                 <p>
                     <button class="btn-submit submit-neg" type="submit">Импорт данных</button>
                     импорт баз: в <strong>ImportCustomer</strong> из файла customer.sql, в
                     <strong>ImportRazvozka</strong> из файла razvozka.sql, в <strong>Driver</strong> из файла driver.sql
+                </p>
+            </form>
+        </div>
+        <br>
+        <div class="">
+            <form action="{% url 'razv4_0:admin_transfer' %}">
+                {% csrf_token %}
+                <p>
+                    <button class="btn-submit submit-neg" type="submit">Преобразование импорта</button>
+                    Удаление старых баз и импорт данных из <strong>ImportCustomer</strong> и <strong>ImportRazvozka</strong>
                 </p>
             </form>
         </div>

@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('admin/', views.admin, name='admin'),
     path('admin_import/', views.admin_import, name='admin_import'),
+    path('admin_transfer/', views.admin_transfer, name='admin_transfer'),
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
