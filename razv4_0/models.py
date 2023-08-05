@@ -84,7 +84,40 @@ class Razvozka_returns(models.Model):
     deleted = models.BooleanField(default=False)
 
 
+class ImportCustomer(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+    contact = models.CharField(max_length=255)
+    mappoint = models.CharField(max_length=255, default='', help_text="Yandex mappoint")
+    subcontractor = models.BooleanField(default=False, help_text='True if subcontractor')
+
+
+class ImportRazvozka(models.Model):
+    date = models.DateField(help_text='date of transportation')
+    date_id = models.SmallIntegerField(default=0, help_text='order inside date')
+    customer = models.ForeignKey(ImportCustomer, models.SET_NULL, null=True, blank=True,
+                                 help_text='customer base if exist')
+    customer_name = models.CharField(max_length=100, help_text='customer as text could differ from db')
+    address = models.CharField(max_length=255, help_text='real address')
+    contact = models.CharField(max_length=255, help_text='real contacts')
+    to_do_deliver = models.CharField(max_length=255, help_text='things for delivery')
+    to_do_take = models.CharField(max_length=255, help_text='things to take from')
+    map_point = models.CharField(max_length=255, help_text='Yandex mappoint')
+    clr = models.CharField(max_length=30, default='', help_text='text color')
+    fulfilled = models.BooleanField(default=True, help_text='True is fulfilled')
+    deliver_to = models.BooleanField(default=False, help_text='transportation to processing')
+    return_from = models.BooleanField(default=False, help_text='return products from processing')
+    return_all = models.BooleanField(default=False, help_text='False if some part was not return')
+    return_goods = models.ForeignKey('self', models.SET_NULL, null=True, blank=True,
+                                     help_text='from which delivery return')
+    date_until = models.DateField(default='2022-08-01', null=True, blank=True, help_text='plan (last) date of '
+                                                                                         'transportation')
+    date_create = models.DateField(default='2022-08-01', null=True, blank=True, help_text='date of create razvozka')
+
+
 auditlog.register(Customer)
 auditlog.register(Razvozka)
 auditlog.register(Razvozka_returns)
 auditlog.register(Driver)
+auditlog.register(ImportCustomer)
+auditlog.register(ImportRazvozka)
