@@ -34,7 +34,7 @@ def admin_import(request):
         drv_queries = drv_file.read()
     with connection.cursor() as cursor:
         cursor.execute(drv_queries)
-
+    admin_transfer()
     return HttpResponseRedirect(reverse('razv4_0:admin'))
 
 
@@ -44,7 +44,7 @@ def admin_delete_all():
     Razvozka_returns.objects.all().delete()
 
 
-def admin_transfer(request):
+def admin_transfer():
     admin_delete_all()
     import_customers = ImportCustomer.objects.all()
     customer_list = []
@@ -77,4 +77,3 @@ def admin_transfer(request):
         razvozka_return = Razvozka_returns(take=take, deliver=deliver, returned=deliver.return_all)
         return_list.append(razvozka_return)
     Razvozka_returns.objects.bulk_create(return_list)
-    return HttpResponseRedirect(reverse('razv4_0:admin'))
