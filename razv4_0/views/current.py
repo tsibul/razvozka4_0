@@ -18,7 +18,7 @@ def current_rzv(request):
     date_end = current_date + timedelta(days=(14 - current_date.weekday()))
     razvozki = Razvozka.objects.filter(date__gte=date_begin, date__lt=date_end, deleted=False).order_by('-date',
                                                                                                         'date_id').annotate(
-        returned_all=Min('take__deliver__return_all'))
+        returned_all=Min('take__returned'))
     razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until')
     plan_number = razvozki_plan.count()
     customers = Customer.objects.filter(deleted=False).order_by('name')

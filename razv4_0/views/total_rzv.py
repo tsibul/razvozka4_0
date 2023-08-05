@@ -1,3 +1,4 @@
+from django.db.models import Min
 from django.http import HttpResponse
 from django.shortcuts import render
 from datetime import date, datetime
@@ -6,9 +7,12 @@ from razv4_0.models import Driver, Customer, Razvozka, Razvozka_returns
 
 def total_rzv(request):
     navi = 'razv'
-    razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until')
-    razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id')[:19]
-    end_razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id')[19:20]
+    razvozki_plan = Razvozka.objects.filter(date=None, deleted=False).order_by('date_until').annotate(
+        returned_all=Min('take__returned'))
+    razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id').annotate(
+        returned_all=Min('take__returned'))[:19]
+    end_razvozki = Razvozka.objects.filter(date__isnull=False, deleted=False).order_by('-date', 'date_id').annotate(
+        returned_all=Min('take__returned'))[19:20]
     razvozki = razvozki_plan.union(razvozki)
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')

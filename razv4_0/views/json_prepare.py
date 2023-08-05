@@ -94,7 +94,7 @@ def returned_all_as_json(request, razv_id):
 
     returned_all = Razvozka_returns.objects.filter(take_id=razv_id, deleted=False)
     if returned_all.count():
-        returned_all = returned_all.annotate(minimum=Min('deliver__return_all')).values('minimum')[0]['minimum']
+        returned_all = returned_all.annotate(minimum=Min('returned')).values('minimum')[0]['minimum']
     else:
         returned_all = False
     return JsonResponse(returned_all, safe=False)
