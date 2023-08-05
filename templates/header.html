@@ -23,6 +23,9 @@
             Товары у подрядчиков<span class="top-index">{{ to_return }}</span></a></li>
         <li><a href="{% url 'razv4_0:customer' %}" class="menu-item {% if navi == 'customer' %}active{% endif %}">Клиенты</a></li>
         <li><a href="{% url 'razv4_0:driver' %}" class="menu-item {% if navi == 'driver' %}active{% endif %}">Транспорт</a></li>
+    {%  if request.user.is_superuser %}
+        <li><a href="" class="menu-item {% if navi == 'admin' %}active{% endif %}">Админ</a></li>
+    {%  endif %}
     </ul>
     <span class="menu-end">
         <form action="{%  url 'razv4_0:search_rzv' %}" method="post">
