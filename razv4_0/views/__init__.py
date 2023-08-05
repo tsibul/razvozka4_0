@@ -8,4 +8,5 @@ from razv4_0.views.delivered_not_returned import *
 from razv4_0.views.search import *
 from razv4_0.views.customer import *
 from razv4_0.views.driver import *
+from razv4_0.views.admin import *
 

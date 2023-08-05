@@ -1,0 +1,23 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block title %}машины{% endblock %}
+{% block content %}
+    {% if request.user.is_superuser %}
+        <div class="current current-pure">
+        <br>
+        <form action="{% url 'razv4_0:admin_import' %}" >
+            {%  csrf_token %}
+            <p>
+        <button class="btn-submit submit-neg" type="submit">Импорт данных</button>
+                импорт баз: в <strong>ImportCustomer</strong> из файла customer.sql, в <strong>ImportRazvozka</strong> из файла razvozka.sql
+            </p>
+            </form>
+        </div>
+
+    {% else %}
+        <h1 class="auth-required">Недостаточно прав</h1>
+    {% endif %}
+
+    <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
+
+{% endblock %}

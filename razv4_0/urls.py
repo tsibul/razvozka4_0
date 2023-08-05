@@ -22,6 +22,9 @@ urlpatterns = [
     path('driver_delete/<int:drv_id>', views.driver_delete, name='driver_delete'),
     path('driver_update', views.driver_update, name='driver_update'),
 
+    path('admin/', views.admin, name='admin'),
+    path('admin_import/', views.admin_import, name='admin_import'),
+
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
 
