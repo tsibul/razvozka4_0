@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<span class="no-print title-line">
+<div class="no-print title-line">
     <button onclick="window.print()" class="btn-submit btn-bg">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
              class="bi bi-printer" viewBox="0 0 16 16">
@@ -27,7 +27,7 @@
             <option value="{{ drv.id }}" {% if driver_id == drv.id %}selected{% endif %}>{{ drv.description }}</option>
         {% endfor %}
     </select>
-</span>
+</div>
 <div class="title-line"><h3>Развозка(путевой лист) на</h3>&nbsp;
     <h1>{{ razvozki.first.date|date:'d.m.Y' }}</h1>&nbsp;номер&nbsp;{{ razvozki.first.date|date:'dmy' }}
 </div>
