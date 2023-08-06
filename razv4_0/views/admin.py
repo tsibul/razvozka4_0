@@ -17,6 +17,8 @@ def admin(request):
 
 
 def admin_import(request):
+    ImportCustomer.objects.all().delete()
+    ImportRazvozka.objects.all().delete()
     rzv_sql_path = 'razv4_0/static/razvozki4_0/files/razvozka.sql'
     cst_sql_path = 'razv4_0/static/razvozki4_0/files/customer.sql'
     drv_sql_path = 'razv4_0/static/razvozki4_0/files/driver.sql'
