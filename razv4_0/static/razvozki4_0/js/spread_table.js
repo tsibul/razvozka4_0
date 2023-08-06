@@ -4,14 +4,12 @@ const urlLast = tableRender.dataset.url_last;
 
 async function razvLast(lastElement) {
     const data = await fetchJsonData(urlLast + lastElement);
-    const cachedRazvozkiLast = JSON.parse(data);
-    return cachedRazvozkiLast;
+    return JSON.parse(data);
 }
 
 async function razvList(lastElement) {
     const data = await fetchJsonData(urlList + lastElement);
-    const cachedRazvozkiList = JSON.parse(data);
-    return cachedRazvozkiList;
+    return JSON.parse(data);
 }
 
 tableRender.addEventListener("mouseover", async (event) => {
