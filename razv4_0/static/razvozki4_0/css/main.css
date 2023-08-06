@@ -13,7 +13,6 @@ input[type=radio] {
     accent-color: #293d32;
 }
 
-
 .auth-required {
     margin: 80px;
     text-align: center;
@@ -255,8 +254,15 @@ input[type=radio] {
 .icon-img {
     align-self: end;
     margin: 0px 2px;
-        vertical-align: bottom;
+    vertical-align: bottom;
 
+}
+
+.title-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 6px 22px 0px;
 }
 
 /* Not printable elements*/

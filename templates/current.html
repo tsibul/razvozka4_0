@@ -62,7 +62,7 @@
                             </button>
                         </th>
                         <th colspan="1">Развозка на {{ date.grouper|date:'d.m.Y' }}</th>
-                        <th colspan="1"><a href="{% url 'razv4_0:print_all'  date.grouper|date:'Y-m-d' %}"
+                        <th colspan="1"><a href="{% url 'razv4_0:print_one'  date.grouper|date:'Y-m-d' 0 %}"
                                            target="_blank">
                             <button type="button" class="btn-submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
@@ -189,7 +189,7 @@
                     <div class="menu ">
                         <label for="driver-input"><strong>транспорт</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;
                         <p><img src="{% static drivers.first.icon_code %}" id="driver-icon"></p>&nbsp;
-                        <select name="driver" class="modal-input" id="driver-input" onchange="selectDriver(this);">
+                        <select name="driver" class="modal-input decorated" id="driver-input" onchange="selectDriver(this);">
                             {% for driver in drivers %}
                                 <option value="{{ driver.id }}"
                                         {#                                        {% if driver.py.id == '1' %}selected{% endif %}#}

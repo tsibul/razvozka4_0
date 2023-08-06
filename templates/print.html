@@ -6,19 +6,47 @@
     <title>Печать</title>
 
     <link href="{% static 'razvozki4_0/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'razvozki4_0/css/modal.css' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
 </head>
 <body>
-<span class="no-print">
+<span class="no-print title-line">
     <button onclick="window.print()" class="btn-submit btn-bg">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
-     class="bi bi-printer" viewBox="0 0 16 16">
+             class="bi bi-printer" viewBox="0 0 16 16">
                                     <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
                                     <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
                                 </svg>&nbsp;Печать</button>
     <button onclick="window.close();return false;" class="btn-delete btn-bg">Назад</button>
+    &nbsp;<img src="
+        {% if driver %}{% static driver.icon_code %}{% else %}{% static 'razvozki4_0/icons/truck.svg' %}{% endif %}">&nbsp;
+    <select class="modal-input" data-date="{{ date_rzv }}" onchange="selectDriverPrint(this);">
+        <option value="0">выберите транспорт</option>
+        {% for drv in drivers %}
+            <option value="{{ drv.id }}" {% if driver_id == drv.id %}selected{% endif %}>{{ drv.description }}</option>
+        {% endfor %}
+    </select>
 </span>
-<h1>Развозка на {{ razvozki.first.date|date:'d.m.Y' }}</h1>
+<div class="title-line"><h3>Развозка(путевой лист) на</h3>&nbsp;
+    <h1>{{ razvozki.first.date|date:'d.m.Y' }}</h1>&nbsp;номер&nbsp;{{ razvozki.first.date|date:'dmy' }}
+</div>
+<div class="title-line">
+    организация&nbsp;
+    <strong>ООО "Вики Восток"</strong>
+    <small>ИНН 772318182 Московская обл. г.о . Балашиха дер. Полтево влад 115 +74956404825</small>
+</div>
+<div class="title-line">
+    ТС&nbsp;тип:&nbsp;{{ driver.car_type }}&nbsp;марка:&nbsp;{{ driver.car_model }}&nbsp;гос.&nbsp;номер:&nbsp;{{ driver.car_no }}
+    одометр начало:&nbsp;<input type="text" class="modal-id" readonly>&nbsp;
+    одометр конец:&nbsp<input type="text" class="modal-id" readonly>&nbsp;
+</div>
+<div class="title-line">
+    водитель:&nbsp;{{ driver.driver_name }}
+    время выезда:&nbsp;<input type="text" class="modal-id" readonly>&nbsp;
+    время возврата:&nbsp<input type="text" class="modal-id" readonly>
+</div>
+
+<script src="{% static 'razvozki4_0/js/print.js' %}"></script>
 </body>
 </html>
