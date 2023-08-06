@@ -95,14 +95,14 @@ class ImportCustomer(models.Model):
 class ImportRazvozka(models.Model):
     date = models.DateField(help_text='date of transportation')
     date_id = models.SmallIntegerField(default=0, help_text='order inside date')
-    customer = models.ForeignKey(ImportCustomer, models.SET_NULL, null=True, blank=True,
-                                 help_text='customer base if exist')
     customer_name = models.CharField(max_length=100, help_text='customer as text could differ from db')
     address = models.CharField(max_length=255, help_text='real address')
     contact = models.CharField(max_length=255, help_text='real contacts')
     to_do_deliver = models.CharField(max_length=255, help_text='things for delivery')
     to_do_take = models.CharField(max_length=255, help_text='things to take from')
     map_point = models.CharField(max_length=255, help_text='Yandex mappoint')
+    customer = models.ForeignKey(ImportCustomer, models.SET_NULL, null=True, blank=True,
+                                 help_text='customer base if exist')
     clr = models.CharField(max_length=30, default='', help_text='text color')
     fulfilled = models.BooleanField(default=True, help_text='True is fulfilled')
     deliver_to = models.BooleanField(default=False, help_text='transportation to processing')
