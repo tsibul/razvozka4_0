@@ -160,10 +160,19 @@ input[type=radio] {
     border-collapse: collapse;
 }
 
+.table-print{
+    margin: 10px 4px;
+    font-size: 20px;
+}
+
 
 .table thead {
     text-align: left;
     background-color: #a4c1b1;
+}
+
+.table-print thead{
+    text-align: center;
 }
 
 .table tr {

@@ -15,10 +15,11 @@ def print_one(request, date_rzv, driver_id):
                                     razvozka__date=datetime.strptime(date_rzv, '%Y-%m-%d').date()).distinct()
     if driver_id != 0:
         razvozki = Razvozka.objects.filter(date=datetime.strptime(date_rzv, '%Y-%m-%d').date(), driver__id=driver_id,
-                                           deleted=False)
+                                           deleted=False).order_by('date_id')
         driver = Driver.objects.get(deleted=False, id=driver_id)
     else:
-        razvozki = Razvozka.objects.filter(date=datetime.strptime(date_rzv, '%Y-%m-%d').date(), deleted=False)
+        razvozki = Razvozka.objects.filter(date=datetime.strptime(date_rzv, '%Y-%m-%d').date(), deleted=False).order_by(
+            'date_id')
         driver = ''
 
     context = {'razvozki': razvozki, 'drivers': drivers, 'driver': driver, 'date_rzv': date_rzv, 'driver_id': driver_id}

@@ -33,19 +33,44 @@
 </div>
 <div class="title-line">
     организация&nbsp;
-    <strong>ООО "Вики Восток"</strong>
+    <strong>ООО "Вики Восток"</strong>&nbsp;
     <small>ИНН 772318182 Московская обл. г.о . Балашиха дер. Полтево влад 115 +74956404825</small>
 </div>
 <div class="title-line">
-    ТС&nbsp;тип:&nbsp;{{ driver.car_type }}&nbsp;марка:&nbsp;{{ driver.car_model }}&nbsp;гос.&nbsp;номер:&nbsp;{{ driver.car_no }}
-    одометр начало:&nbsp;<input type="text" class="modal-id" readonly>&nbsp;
-    одометр конец:&nbsp<input type="text" class="modal-id" readonly>&nbsp;
+    ТС&nbsp;тип:&nbsp;<strong>{{ driver.car_type }}</strong>&nbsp;марка:&nbsp;
+    <strong>{{ driver.car_model }}</strong>&nbsp;гос.&nbsp;номер:&nbsp;<strong>{{ driver.car_no }}</strong>&nbsp;одометр
+    конец:&nbsp<input type="text" class="modal-id" readonly>&nbsp;
 </div>
 <div class="title-line">
     водитель:&nbsp;{{ driver.driver_name }}
     время выезда:&nbsp;<input type="text" class="modal-id" readonly>&nbsp;
     время возврата:&nbsp<input type="text" class="modal-id" readonly>
 </div>
+<table class="table table-print">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>клиент</th>
+        <th>адрес</th>
+        <th>контакт</th>
+        <th>что сделать</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for rzv in razvozki %}
+        <tr>
+            <td>{{ rzv.date_id }}</td>
+            <td>{{ rzv.customer_name }}</td>
+            <td><strong>{{ rzv.address }}</strong></td>
+            <td>{{ rzv.contact }}</td>
+            <td><strong>{% if rzv.to_do_deliver %}СДАТЬ: </strong>{{ rzv.to_do_deliver }}<strong> {% endif %}
+                {% if rzv.to_do_take %}ЗАБРАТЬ: </strong>{{ rzv.to_do_take }}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<div class="modal-buttons">Логист ______________ /______________/</div>
 
 <script src="{% static 'razvozki4_0/js/print.js' %}"></script>
 </body>
