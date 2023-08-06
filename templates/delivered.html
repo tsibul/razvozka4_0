@@ -56,7 +56,9 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="btn-neutral neutral-neg">Закрыть</button>
+                            <button type="button" class="btn-neutral neutral-neg" data-id="{{ rzv.id }}"
+                                    onclick="closeDeliveredRazvozka(this);">Закрыть
+                            </button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -140,8 +142,33 @@
             </form>
         </div>
     </div>
+    {#    close Modal #}
+    <div id="returnOtherModal" class="modal">
+        <div class="modal-content">
+            <form method="post" action="{% url 'razv4_0:close_delivered' %}" id="returnOtherForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <p id="modal-title">Закрыть развозку</p>
+                    <span onclick="closeDeliveredModal();">&times;</span>
+                </div>
+                <input name="rzv_id" type="text" id="rzv_id" hidden>
+                <div class="modal-body">
+                    <label for="return_close_without_delivery"><strong>причина закрытия</strong></label>
+                    <textarea name="return_close_without_delivery" id="return_close_without_delivery"
+                              class="modal-input" required></textarea>
+                </div>
+                <div class="input-line">
+                    <div class="modal-buttons" onclick="event.stopPropagation()">
+                        <button type="reset" class="btn-delete" onclick="closeDeliveredModal();">Отменить</button>
+                        <button type="submit" class="btn-submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="{% static 'razvozki4_0/js/main.js' %}"></script>
     <script src="{% static 'razvozki4_0/js/razvmodal.js' %}"></script>
+    <script src="{% static 'razvozki4_0/js/delivered.js' %}"></script>
 
 {% endblock %}

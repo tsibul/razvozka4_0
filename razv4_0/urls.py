@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('razvozki/', views.total_rzv, name='total_rzv'),
     path('deliver_no_return/', views.deliver_no_return, name='deliver_no_return'),
+    path('deliver_close/', views.close_delivered, name='close_delivered'),
 
     path('print/<str:date_rzv>', views.print_all, name='print_all'),
     path('print/<str:date_rzv>/<int:driver_id>', views.print_one, name='print_one'),
