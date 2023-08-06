@@ -13,8 +13,11 @@ class Driver(models.Model):
     phone1 = models.CharField(max_length=12)
     phone2 = models.CharField(max_length=12, null=True, blank=True)
     car_no = models.CharField(max_length=9, null=True, blank=True)
+    car_model = models.CharField(max_length=100, null=True)
     icon_code = models.CharField(max_length=255, default='icons/truck.svg', null=True, blank=True)
     deleted = models.BooleanField(default=False)
+    driver_name = models.CharField(max_length=255, null=True)
+    car_type = models.CharField(max_length=40, null=True)
 
     def __repr__(self):
         return self.description
@@ -58,6 +61,7 @@ class Razvozka(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     deleted = models.BooleanField(default=False)
     return_close_without_delivery = models.CharField(max_length=255, blank=True, null=True)
+    return_close_date = models.DateField(null=True)
 
     def __str__(self):
         return str(self.date) + '| ' + str(self.customer_name) + '| ' + str(self.to_do_deliver) + '| ' + str(

@@ -9,9 +9,12 @@
                 <tr>
                     <th>код</th>
                     <th>описание</th>
+                    <th>Ф.И.О.</th>
                     <th>телефон1</th>
                     <th>телефон2</th>
                     <th>номер машины</th>
+                    <th>марка машины</th>
+                    <th>тип ТС</th>
                     <th>значок</th>
                     <th class="drv-modal">
                         <button type="button" class="btn-submit submit-neg btn-bg">добавить</button>
@@ -23,9 +26,12 @@
                     <tr class="drv-modal" data-id="{{ drv.id }}">
                         <td>{{ drv.code }}</td>
                         <td><strong>{{ drv.description }}</strong></td>
+                        <td><strong>{{ drv.driver_name }}</strong></td>
                         <td>{{ drv.phone1 }}</td>
                         <td>{{ drv.phone2 }}</td>
                         <td>{{ drv.car_no }}</td>
+                        <td>{{ drv.car_model}}</td>
+                        <td>{{ drv.car_type }}</td>
                         <td><img src="{% static drv.icon_code %}" alt="drv icon"></td>
                         <td onclick="event.stopPropagation()" data-title="Удалить"
                             class="title-icon">
@@ -72,12 +78,18 @@
                     <input name="code" id="code" class="modal-input" size="2" required>
                     <label for="description"><strong>описание</strong></label>
                     <input name="description" id="description" class="modal-input" size="100" required>
+                    <label for="driver_name"><strong>Ф.И.О.</strong></label>
+                    <input name="driver_name" id="driver_name" class="modal-input" size="255" required>
                     <label for="phone1"><strong>телефон 1</strong></label>
                     <input name="phone1" id="phone1" class="modal-input" size="12">
                     <label for="phone2"><strong>телефон 2</strong></label>
                     <input name="phone2" id="phone2" class="modal-input" size="12">
                     <label for="car_no"><strong>номер машины</strong></label>
                     <input name="car_no" id="car_no" class="modal-input" size="9">
+                    <label for="car_model"><strong>модель машины</strong></label>
+                    <input name="car_model" id="car_model" class="modal-input" size="100">
+                    <label for="car_type"><strong>тип ТС</strong></label>
+                    <input name="car_type" id="car_type" class="modal-input" size="40">
                     <input name="icon_code" id="icon_code" type="text" hidden class="modal-input" size="255">
                 </div>
                 <div class="modal-buttons">

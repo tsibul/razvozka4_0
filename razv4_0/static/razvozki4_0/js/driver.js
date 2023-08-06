@@ -6,9 +6,12 @@ function inputs(modal) {
         id: modal.querySelector('#drv_id'),
         code: modal.querySelector("#code"),
         description: modal.querySelector("#description"),
+        driver_name: modal.querySelector("#driver_name"),
         phone1: modal.querySelector("#phone1"),
         phone2: modal.querySelector('#phone2'),
         car_no: modal.querySelector('#car_no'),
+        car_type: modal.querySelector('#car_type'),
+        car_model: modal.querySelector('#car_model'),
         icon_code: modal.querySelector('#icon_code')
     }
 }

@@ -27,10 +27,13 @@ def driver_delete(request, drv_id):
 def driver_update(request):
     drv_id = request.POST['drv_id']
     description = request.POST['description']
+    driver_name = request.POST['driver_name']
     code = request.POST['code']
     phone1 = request.POST['phone1']
     phone2 = request.POST['phone2']
     car_no = request.POST['car_no']
+    car_type = request.POST['car_type']
+    car_model = request.POST['car_model']
     icon_code = request.POST['chk']
     if drv_id:
         driver_to_update = Driver.objects.get(id=drv_id)
@@ -38,9 +41,12 @@ def driver_update(request):
     else:
         driver_to_update = Driver(description=description)
     driver_to_update.code = code
+    driver_to_update.driver_name = driver_name
     driver_to_update.phone1 = phone1
     driver_to_update.phone2 = phone2
     driver_to_update.car_no = car_no
+    driver_to_update.car_model = car_model
+    driver_to_update.car_type = car_type
     driver_to_update.icon_code = icon_code
     driver_to_update.save()
     return HttpResponseRedirect(reverse('razv4_0:driver'))
