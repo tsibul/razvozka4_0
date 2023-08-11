@@ -15,7 +15,7 @@ SECRET_KEY = sec_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.0.1.16']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.0.1.17', '0.0.0.0']
 
 INSTALLED_APPS = [
     'razv4_0.apps.Razv40Config',
