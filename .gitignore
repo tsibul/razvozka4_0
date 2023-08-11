@@ -5,3 +5,9 @@
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/razvozki4_0.iml
 /.idea/vcs.xml
+/venv
+razv4_0/__pycache__/
+razv4_0/migrations/__pycache__/
+razv4_0/views/__pycache__/
+razvozki4_0/__pycache__/
+startrazv4_0.sh
