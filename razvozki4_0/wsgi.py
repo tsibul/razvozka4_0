@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'razvozki4_0.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'razvozki4_0.settings_prd')
 
 application = get_wsgi_application()
