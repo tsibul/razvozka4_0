@@ -50,7 +50,8 @@ async function prepareToOpenModal(element) {
         if (razvozka['customer_id'] != null) {
             const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
             console.log(Date.now() + ' sopen cust');
-            razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
+//            razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
+            razvozka['customer_customer_name'] = razvozka['customer_name'];
             console.log(Date.now() + ' open cust');
 
         }
