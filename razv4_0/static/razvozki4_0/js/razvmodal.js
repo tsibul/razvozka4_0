@@ -25,9 +25,11 @@ async function openEditModal(titleText, modalData) {
     // Populate the modal fields with the data
     const modalTitle = modal.querySelector("#modal-title");
     modalTitle.textContent = titleText;
+    console.log(Date.now() + ' fill modal');
     for (const key in inputs(modal)) {
         inputs(modal)[key].value = modalData[key] || "";
     }
+    console.log(Date.now() + ' open modal');
     modal.style.display = "block";
     if (modalData['customer_id'] != null) {
         await returnList(modalData['customer_id']);
@@ -42,6 +44,7 @@ async function prepareToOpenModal(element) {
     let razvozka = {date_id: 1, driver_id: 1};
     if (razvId != null) {
         razvozka = JSON.parse(await fetchJsonData(jsonUrl));
+        if(razvozka['fulfilled']) return;
         if (razvozka['customer_id'] != null) {
             const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
             razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
@@ -62,13 +65,15 @@ async function prepareToOpenModal(element) {
     document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
         razvozka['driver_id']);
     const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
-    if (!razvozka['fulfilled']) openEditModal(titleText, razvozka);
+    await openEditModal(titleText, razvozka);
 }
 
 table.addEventListener("click", async (event) => {
+    console.log(Date.now() + ' start listener');
     const target = event.target;
     const element = target.closest(".edit-modal");
     if (element && table.contains(element)) {
+        console.log(Date.now() + ' start modal');
         await prepareToOpenModal(element);
     }
 });
