@@ -3,6 +3,11 @@
 {% block title %}Текущие развозки{% endblock %}
 {% block content %}
     {% if request.user.is_authenticated %}
+        <div hidden>
+        {% for drv in drivers %}
+            <input id="driver-icon-{{ drv.id }}" value="{{ drv.icon_code }}">
+        {% endfor %}
+        </div>
         <div class="planned">
             <button type="button" class="btn-submit btn-bg on-top-3" onclick="prepareToOpenModal(this);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="22" fill="currentColor" viewBox="0 0 16 16">

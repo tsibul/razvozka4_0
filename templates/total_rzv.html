@@ -3,6 +3,11 @@
 {% block title %}Текущие развозки{% endblock %}
 {% block content %}
     {% if request.user.is_authenticated %}
+        <div hidden>
+        {% for drv in drivers %}
+            <input id="driver-icon-{{ drv.id }}" value="{{ drv.icon_code }}">
+        {% endfor %}
+        </div>
         <div class="current current-pure">
             <table id="render" class="table razv-table" data-url="{{url_list}}" data-url_last="{{ url_last }}">
                 <thead class="razvozki-thead">
