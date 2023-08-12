@@ -68,8 +68,6 @@ async function prepareToOpenModal(element) {
         razvozka['driver_id'] = 1
     }
     console.log(Date.now() + ' sopen driver');
-    // document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
-    //     razvozka['driver_id']);
     document.querySelector('#driver-icon').src = '/static/' +
         document.getElementById('driver-icon-' + razvozka['driver_id']).value;
     console.log(Date.now() + ' open driver');
@@ -139,7 +137,8 @@ async function selectCustomer(obj) {
 
 async function selectDriver(obj) {
     const driverId = obj.value;
-    document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' + driverId);
+    document.querySelector('#driver-icon').src = '/static/' +
+        document.getElementById('driver-icon-' + driverId).value;
 }
 
 async function returnList(custId) {
