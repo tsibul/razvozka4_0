@@ -48,9 +48,7 @@ async function prepareToOpenModal(element) {
         console.log(Date.now() + ' open razv');
         if(razvozka['fulfilled']) return;
         if (razvozka['customer_id'] != null) {
-            const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
             console.log(Date.now() + ' sopen cust');
-//            razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
             razvozka['customer_customer_name'] = razvozka['customer_name'];
             console.log(Date.now() + ' open cust');
 
@@ -147,13 +145,12 @@ async function returnList(custId) {
     const razvozkiList = JSON.parse(await fetchJsonData(urlRazvozki));
     let optionString = '';
     if (razvozkiList.length > 0) {
-//        const customer = await customerById(custId);
         optionString += '<p><strong>возврат поставленого ' + razvozkiList[0].fields['customer_name'] + '</strong></p>'
     }
     let i = 0;
     razvozkiList.forEach(function (razvozka) {
         optionString += '<span><input type="checkbox" class="checkbox ' + 'returnNo' + razvozka['pk'] + '" name="rzv_check_' + i + '" id="rzv_check_' + i + '">' +
-            '<input type="text" value="' + razvozka['pk'] + '" + name="rzv_no_' + i + '" hidden>&nbsp;' +
+            '<input type="text" value="' + razvozka['pk'] + '" name="rzv_no_' + i + '" hidden>&nbsp;' +
             '<label for="rzv_check_' + i + '">от&nbsp;<strong>' + dateRus(razvozka.fields['date']) + '</strong> ' + razvozka.fields['to_do_deliver'] + '</label></span>'
         i++;
     });
