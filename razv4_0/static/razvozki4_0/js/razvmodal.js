@@ -46,7 +46,7 @@ async function prepareToOpenModal(element) {
         console.log(Date.now() + ' sopen razv');
         razvozka = JSON.parse(await fetchJsonData(jsonUrl));
         console.log(Date.now() + ' open razv');
-        if(razvozka['fulfilled']) return;
+        if (razvozka['fulfilled']) return;
         if (razvozka['customer_id'] != null) {
             const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
             console.log(Date.now() + ' sopen cust');
@@ -68,8 +68,10 @@ async function prepareToOpenModal(element) {
         razvozka['driver_id'] = 1
     }
     console.log(Date.now() + ' sopen driver');
-    document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
-        razvozka['driver_id']);
+    // document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
+    //     razvozka['driver_id']);
+    document.querySelector('#driver-icon').src = '/static/' +
+        document.getElementById('driver-icon-' + razvozka['driver_id']).value;
     console.log(Date.now() + ' open driver');
 
     const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
@@ -171,7 +173,7 @@ async function returnCheckList(razvId) {
 
 const updateForm = document.getElementById('updateForm');
 
-if(updateForm !== null) {
+if (updateForm !== null) {
     updateForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
