@@ -147,8 +147,8 @@ async function returnList(custId) {
     const razvozkiList = JSON.parse(await fetchJsonData(urlRazvozki));
     let optionString = '';
     if (razvozkiList.length > 0) {
-        const customer = await customerById(custId);
-        optionString += '<p><strong>возврат поставленого ' + customer['name'] + '</strong></p>'
+//        const customer = await customerById(custId);
+        optionString += '<p><strong>возврат поставленого ' + razvozkiList[0].fields['customer_name'] + '</strong></p>'
     }
     let i = 0;
     razvozkiList.forEach(function (razvozka) {
