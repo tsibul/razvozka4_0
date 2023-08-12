@@ -25,11 +25,9 @@ async function openEditModal(titleText, modalData) {
     // Populate the modal fields with the data
     const modalTitle = modal.querySelector("#modal-title");
     modalTitle.textContent = titleText;
-    console.log(Date.now() + ' fill modal');
     for (const key in inputs(modal)) {
         inputs(modal)[key].value = modalData[key] || "";
     }
-    console.log(Date.now() + ' open modal');
     modal.style.display = "block";
     if (modalData['customer_id'] != null) {
         await returnList(modalData['customer_id']);
@@ -43,15 +41,11 @@ async function prepareToOpenModal(element) {
     const jsonUrl = '/rzv/json_razvozka/' + razvId;
     let razvozka = {date_id: 1, driver_id: 1};
     if (razvId != null) {
-        console.log(Date.now() + ' sopen razv');
         razvozka = JSON.parse(await fetchJsonData(jsonUrl));
-        console.log(Date.now() + ' open razv');
         if(razvozka['fulfilled']) return;
         if (razvozka['customer_id'] != null) {
             const cstUrl = '/rzv/json_customer_name/' + razvozka['customer_id'];
-            console.log(Date.now() + ' sopen cust');
             razvozka['customer_customer_name'] = await fetchJsonData(cstUrl);
-            console.log(Date.now() + ' open cust');
 
         }
         if (razvozka['driver_id'] == null) {
@@ -67,10 +61,8 @@ async function prepareToOpenModal(element) {
     } else {
         razvozka['driver_id'] = 1
     }
-    console.log(Date.now() + ' sopen driver');
     document.querySelector('#driver-icon').src = await fetchJsonData('/rzv/json_driver_url/' +
         razvozka['driver_id']);
-    console.log(Date.now() + ' open driver');
 
     const titleText = razvId == null ? 'Новая развозка' : 'Редактировать развозку';
     await openEditModal(titleText, razvozka);
@@ -80,7 +72,6 @@ table.addEventListener("click", async (event) => {
     const target = event.target;
     const element = target.closest(".edit-modal");
     if (element && table.contains(element)) {
-        console.log(Date.now() + ' start modal');
         await prepareToOpenModal(element);
     }
 });
