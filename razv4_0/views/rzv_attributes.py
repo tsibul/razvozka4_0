@@ -1,4 +1,4 @@
-from django.http import  HttpResponse
+from django.http import HttpResponse
 
 from razv4_0.models import Razvozka
 

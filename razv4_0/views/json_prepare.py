@@ -64,7 +64,8 @@ def driver_description_as_json(request, driver_id):
 
 
 def returns_as_id_json(request, razv_id):
-    returns = list(Razvozka_returns.objects.filter(take__id=razv_id, deleted=False).values_list('deliver__id', flat=True))
+    returns = list(
+        Razvozka_returns.objects.filter(take__id=razv_id, deleted=False).values_list('deliver__id', flat=True))
     return JsonResponse(returns, safe=False)
 
 
@@ -91,7 +92,6 @@ def razvozki_last_list_as_json(request, last_element):
 
 
 def returned_all_as_json(request, razv_id):
-
     returned_all = Razvozka_returns.objects.filter(take_id=razv_id, deleted=False)
     if returned_all.count():
         returned_all = returned_all.annotate(minimum=Min('returned')).values('minimum')[0]['minimum']
@@ -102,10 +102,10 @@ def returned_all_as_json(request, razv_id):
 
 def search_razvozki_list_as_json(request, search_string, last_element):
     razvozki_query = Razvozka.objects.filter((Q(customer_name__icontains=search_string) |
-                                             Q(address__icontains=search_string) |
-                                             Q(contact__icontains=search_string) |
-                                             Q(to_do_take__icontains=search_string) |
-                                             Q(to_do_deliver__icontains=search_string)) &
+                                              Q(address__icontains=search_string) |
+                                              Q(contact__icontains=search_string) |
+                                              Q(to_do_take__icontains=search_string) |
+                                              Q(to_do_deliver__icontains=search_string)) &
                                              Q(deleted=False)).order_by('-date')[last_element: last_element + 19]
     razvozki = serialize('python', razvozki_query)
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)
@@ -114,10 +114,10 @@ def search_razvozki_list_as_json(request, search_string, last_element):
 
 def search_razvozki_last_as_json(request, search_string, last_element):
     razvozki_query = Razvozka.objects.filter((Q(customer_name__icontains=search_string) |
-                                             Q(address__icontains=search_string) |
-                                             Q(contact__icontains=search_string) |
-                                             Q(to_do_take__icontains=search_string) |
-                                             Q(to_do_deliver__icontains=search_string)) &
+                                              Q(address__icontains=search_string) |
+                                              Q(contact__icontains=search_string) |
+                                              Q(to_do_take__icontains=search_string) |
+                                              Q(to_do_deliver__icontains=search_string)) &
                                              Q(deleted=False))[last_element + 19: last_element + 20]
     razvozki = serialize('python', razvozki_query)
     razvozki = json.dumps(razvozki, ensure_ascii=False, default=str)

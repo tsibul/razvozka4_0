@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseRedirect
 
 
 def custom_login(request):
@@ -21,4 +20,3 @@ def custom_logout(request):
     logout(request)
     return redirect('/rzv/current')
 
-#    return redirect('your_redirect_url')  # Замените 'your_redirect_url' на URL-адрес, на который перенаправлять после выхода

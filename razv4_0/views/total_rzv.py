@@ -17,7 +17,7 @@ def total_rzv(request):
     customers = Customer.objects.all().order_by('name')
     drivers = Driver.objects.all().order_by('id')
     to_return = Razvozka.objects.filter(date__isnull=False, return_all=False, deliver_to=True,
-                                                   fulfilled=True, customer__subcontractor=True, deleted=False).count()
+                                        fulfilled=True, customer__subcontractor=True, deleted=False).count()
     url_list = '/rzv/json_razvozki_list/'
     url_last = '/rzv/json_razvozki_last/'
     context = {'razvozki': razvozki, 'navi': navi, 'customers': customers, 'url_list': url_list, 'url_last': url_last,
