@@ -18,7 +18,7 @@
 <div class="header">
     <ul class="menu">
         <li class="list-button"><img src="{% static 'razvozki4_0/icons/list.svg' %}" width="30" alt="menu-icon"></li>
-        <li><a href="http://10.0.1.17/wcenter/">Главная</a>
+        <li><a href="http://10.0.1.17/wcenter/" class="menu-item">Главная</a>
         <li><a href="{% url 'razv4_0:current_rzv' %}" class="menu-item {% if navi == 'current' %}active{% endif %}">Текущее</a>
         </li>
         <li><a href="{% url 'razv4_0:total_rzv' %}" class="menu-item {% if navi == 'razv' %}active{% endif %}">Все развозки</a></li>
