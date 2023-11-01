@@ -100,7 +100,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/razv4_0'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Путь, куда будут собраны статические файлы
 
 
