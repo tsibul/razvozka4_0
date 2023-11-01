@@ -61,6 +61,9 @@ TEMPLATES = [
     },
 ]
 
+SESSION_COOKIE_NAME = 'razvozka_session'
+
+
 WSGI_APPLICATION = 'razvozki4_0.wsgi.application'
 
 DATABASES = {
