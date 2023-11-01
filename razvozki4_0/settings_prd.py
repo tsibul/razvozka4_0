@@ -101,7 +101,7 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/razv4_0'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Путь, куда будут собраны статические файлы
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Путь, куда будут собраны статические файлы
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
