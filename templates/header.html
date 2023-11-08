@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <title>Развозки 4.0</title>
 
+    <script src="https://kit.fontawesome.com/e2a5b405b2.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="{% static 'razvozki4_0/icons/earlybirdorange.svg' %}">
-
     <link href="{% static 'razvozki4_0/css/header.css' %}" rel="stylesheet">
     <link href="{% static 'razvozki4_0/css/main.css' %}" rel="stylesheet">
     <link href="{% static 'razvozki4_0/css/modal.css' %}" rel="stylesheet">
-
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
 </head>
@@ -18,20 +17,25 @@
 <div class="header">
     <ul class="menu">
         <li class="list-button"><img src="{% static 'razvozki4_0/icons/list.svg' %}" width="30" alt="menu-icon"></li>
-        <li><a href="http://10.0.1.17/wcenter/" class="menu-item">Главная</a>
+        <li><a href="http://10.0.1.17/wcenter/" class="menu-item"><i class="fa fa-solid fa-arrows-to-circle"></i></a>
         <li><a href="{% url 'razv4_0:current_rzv' %}" class="menu-item {% if navi == 'current' %}active{% endif %}">Текущее</a>
         </li>
-        <li><a href="{% url 'razv4_0:total_rzv' %}" class="menu-item {% if navi == 'razv' %}active{% endif %}">Все развозки</a></li>
-        <li><a href="{% url 'razv4_0:deliver_no_return' %}" class="menu-item {% if navi == 'deliver' %}active{% endif %}">
+        <li><a href="{% url 'razv4_0:total_rzv' %}" class="menu-item {% if navi == 'razv' %}active{% endif %}">Все
+            развозки</a></li>
+        <li><a href="{% url 'razv4_0:deliver_no_return' %}"
+               class="menu-item {% if navi == 'deliver' %}active{% endif %}">
             Товары у подрядчиков<span class="top-index">{{ to_return }}</span></a></li>
-        <li><a href="{% url 'razv4_0:customer' %}" class="menu-item {% if navi == 'customer' %}active{% endif %}">Клиенты</a></li>
-        <li><a href="{% url 'razv4_0:driver' %}" class="menu-item {% if navi == 'driver' %}active{% endif %}">Транспорт</a></li>
-    {%  if request.user.is_superuser %}
-        <li><a href="{% url 'razv4_0:admin' %}" class="menu-item {% if navi == 'admin' %}active{% endif %}">Админ</a></li>
-    {%  endif %}
+        <li><a href="{% url 'razv4_0:customer' %}" class="menu-item {% if navi == 'customer' %}active{% endif %}">Клиенты</a>
+        </li>
+        <li><a href="{% url 'razv4_0:driver' %}"
+               class="menu-item {% if navi == 'driver' %}active{% endif %}">Транспорт</a></li>
+        {% if request.user.is_superuser %}
+            <li><a href="{% url 'razv4_0:admin' %}"
+                   class="menu-item {% if navi == 'admin' %}active{% endif %}">Админ</a></li>
+        {% endif %}
     </ul>
     <span class="menu-end">
-        <form action="{%  url 'razv4_0:search_rzv' %}" method="post">
+        <form action="{% url 'razv4_0:search_rzv' %}" method="post">
             {% csrf_token %}
             <input type="text" placeholder="Поиск" class="search" name="search_string">
             <input type="text" hidden class="search" value="{{ navi }}" name="navi">
